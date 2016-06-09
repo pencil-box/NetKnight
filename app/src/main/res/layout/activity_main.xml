@@ -9,8 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pencilbox.netknight.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="启动DemoAty"
+        android:id="@+id/btn_2_demo_aty"/>
+
 </RelativeLayout>
