@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NetKnight</string>
+    <drawable name="normal">#0b0202</drawable>
+    <drawable name="pressed">#f9f7f7</drawable>
+    <color name="wnormal">#FFF</color>
+    <color name="wpressed">#0b0202</color>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">移动+WIFI</string>
 </resources>

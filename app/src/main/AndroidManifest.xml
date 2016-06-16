@@ -8,16 +8,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.DemoAty"></activity>
-
+        <activity android:name=".view.DemoAty" />
+        <activity android:name=".view.MainApp" />
+        <activity android:name=".view.MainAddress" />
+        <activity android:name=".view.MainIp" />
+        <activity android:name=".view.MainPrefer" />
+        <activity android:name=".view.NetDariy" />
+        <activity android:name=".view.GraspBag" />
+        <activity android:name=".view.NetCellular" />
+        <activity android:name=".view.NetWifi"></activity>
     </application>
 
 </manifest>

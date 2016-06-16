@@ -1,19 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:andriod="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.pencilbox.netknight.MainActivity">
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    tools:context="com.pencilbox.netknight.view.MainActivity">
 
-
-    <Button
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="启动DemoAty"
-        android:id="@+id/btn_2_demo_aty"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/middle"
+        ></FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/middle"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/relayout_app"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_app"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_selector"
+                android:text="应用"
+                android:textColor="#fff" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relayout_ip"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_ip"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_selector"
+                android:text="IP"
+                android:textColor="#fff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relayout_address"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector">
+
+            <Button
+                android:id="@+id/btn_address"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_selector"
+                android:text="域名"
+                android:textColor="#fff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relayout_prefer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_prefer"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_selector"
+                android:text="偏好"
+                android:textColor="#fff" />
+        </RelativeLayout>
+    </LinearLayout>
+
 
 </RelativeLayout>

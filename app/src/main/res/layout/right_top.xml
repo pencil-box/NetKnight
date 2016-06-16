@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_appsort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#060000"
+        android:textColor="#fff"
+        android:text="按应用名称排序"
+        />
+    <Button
+        android:id="@+id/btn_netusesort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#060000"
+        android:textColor="#fff"
+        android:text="按移动网络用量排序"
+        />
+    <Button
+        android:id="@+id/btn_netlimitsort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#060000"
+        android:textColor="#fff"
+        android:text="按移动网络权限排序"/>
+    <Button
+        android:id="@+id/btn_wifisort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#060000"
+        android:textColor="#fff"
+        android:text="按WIFI流量排序"/>
+    <Button
+        android:id="@+id/btn_wifilimitsort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#060000"
+        android:textColor="#fff"
+        android:text="按WIFI权限排序"/>
+
+
+</LinearLayout>

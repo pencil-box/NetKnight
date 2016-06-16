@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/net_cellular"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pencilbox.netknight.view.NetCellular">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="我是移动网络"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+</LinearLayout>
