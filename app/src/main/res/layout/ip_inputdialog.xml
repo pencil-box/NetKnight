@@ -13,16 +13,17 @@
         android:textAlignment="center"
         android:textSize="30sp"
         android:textColor="#fff"
-        android:background="#d94287dc"
+        android:background="#815a82b3"
         />
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="起始:"
             android:textSize="20sp" />
     </LinearLayout>
@@ -35,16 +36,17 @@
             android:id="@+id/edit_ipstartin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#c2eced" />
+            android:background="#d3b6d4" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="终止:"
             android:textSize="20sp">
 
@@ -60,7 +62,7 @@
             android:id="@+id/edit_ipstartend"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#c2eced" />
+            android:background="#d3b6d4" />
 
 
     </LinearLayout>

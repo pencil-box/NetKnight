@@ -22,7 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#815a82b3" />
+        app:tabTextColor="#FFFFFF"
+        app:tabIndicatorColor="#FFFFFF"
+        app:tabSelectedTextColor="#ffffff"
+        android:background="#815a82b3" />````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
     <LinearLayout
         android:id="@+id/diary_top"
