@@ -29,6 +29,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private MainPrefer prefer_fragment;
     private Button btn_app, btn_ip, btn_address, btn_prefer;
 
+    private PopupWindow popupWindow;
+
 
     // private Button mDemoBtn2DemoAty;
 
@@ -145,41 +147,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.btn_prefer:
                 initFragement(3);
                 break;
-            /*
-            case R.id.btn_topleft:
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                    return;
-                } else {
-                    initmPopupWindowViewleft();
-                    popupWindow.showAsDropDown(v, 0, 5);
-                }
-                break;
-
-            case R.id.btn_topright:
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    popupWindow.dismiss();
-                    return;
-                } else {
-                    initmPopupWindowViewright();
-                    popupWindow.showAsDropDown(v, 0, 5);
-                }
-                break;
-
-            case R.id.btn_dariy:
-                Intent intent = new Intent();
-                intent.setClass(this, NetDariy.class);
-                startActivity(intent);
-                this.finish();
-                break;
-            case R.id.btn_bag:
-                Intent intent1 = new Intent();
-                intent1.setClass(this, GraspBag.class);
-                startActivity(intent1);
-                this.finish();
-                break;
-                */
-
             default:
                 break;
 
@@ -187,4 +154,47 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     }
+    /*
+    public void initmPopupWindowViewleft() {
+        View customView = getLayoutInflater().inflate(R.layout.mainleft_top,
+                null, false);
+        popupWindow = new PopupWindow(customView, 500, 600);
+        // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
+        popupWindow.setAnimationStyle(R.style.ways);
+        // 自定义view添加触摸事件
+        customView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (popupWindow != null && popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                    popupWindow = null;
+                }
+
+                return false;
+            }
+        });
+
+
+        Button btn_dariy = (Button) customView.findViewById(R.id.btn_dariy);
+        Button btn_bag = (Button) customView.findViewById(R.id.btn_bag);
+        btn_dariy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                startActivity(intent.setClass(MainActivity.this, NetDiary.class));
+            }
+        });
+        btn_bag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent();
+                startActivity(intent1.setClass(MainActivity.this, GraspBag.class));
+
+            }
+        });
+
+
+    }
+    */
 }

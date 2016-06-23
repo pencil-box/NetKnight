@@ -10,7 +10,7 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#0b0202"
+        android:background="#fff"
         android:orientation="horizontal">
 
         <ImageButton
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@mipmap/top1" />
+            android:background="@mipmap/unfold_more" />
 
         <TextView
             android:id="@+id/textView"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@mipmap/ip_add" />
+            android:background="@mipmap/plus" />
     </LinearLayout>
 
     <RelativeLayout

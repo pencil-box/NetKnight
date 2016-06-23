@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">NetKnight</string>
-    <drawable name="normal">#0b0202</drawable>
+    <drawable name="normal">#4b8bb6</drawable>
     <drawable name="pressed">#f9f7f7</drawable>
     <color name="wnormal">#FFF</color>
     <color name="wpressed">#0b0202</color>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">移动+WIFI</string>
+    <string name="title_activity_main_tabbed">防火墙</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_dairy_tabbed">DairyTabbed</string>
 </resources>

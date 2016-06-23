@@ -19,14 +19,8 @@ public class MainPrefer extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.prefer_main, container, false);
-    }
-
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ImageButton btn_pretopleft = (ImageButton) getActivity().findViewById(R.id.btn_pretopleft);
-        btn_pretopleft.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.prefer_main, container, false);
+        view.findViewById(R.id.btn_pretopleft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -37,9 +31,12 @@ public class MainPrefer extends Fragment {
                     popupWindow.showAsDropDown(v, 0, 5);
                 }
             }
-
-
         });
+        return view;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void initmPopupWindowViewleft() {
@@ -69,7 +66,7 @@ public class MainPrefer extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), NetDariy.class);
+                intent.setClass(getActivity(), DairyTabbed.class);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -86,5 +83,10 @@ public class MainPrefer extends Fragment {
         });
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

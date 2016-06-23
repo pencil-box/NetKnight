@@ -1,7 +1,9 @@
 package com.pencilbox.netknight.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
 
@@ -19,14 +22,8 @@ public class MainIp extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.ip_main, container, false);
-    }
-
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ImageButton btn_iptopleft = (ImageButton) getActivity().findViewById(R.id.btn_iptopleft);
-        btn_iptopleft.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.ip_main, container, false);
+        view.findViewById(R.id.btn_iptopleft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -36,9 +33,22 @@ public class MainIp extends Fragment {
                     initmPopupWindowViewleft();
                     popupWindow.showAsDropDown(v, 0, 5);
                 }
+            }
+        });
+        view.findViewById(R.id.btn_ipadd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getActivity()).setView(LayoutInflater.from(getActivity())
+                        .inflate(R.layout.ip_inputdialog, null)).create().show();
 
             }
         });
+
+        return view;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void initmPopupWindowViewleft() {
@@ -68,7 +78,7 @@ public class MainIp extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), NetDariy.class);
+                intent.setClass(getActivity(), DairyTabbed.class);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -87,5 +97,8 @@ public class MainIp extends Fragment {
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

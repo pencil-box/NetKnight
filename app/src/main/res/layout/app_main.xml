@@ -11,61 +11,117 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#0b0202"
+        android:background="#fff"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btn_topleft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@mipmap/top1" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="295dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="防火墙"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#fff"
-            android:textSize="26sp" />
+            android:layout_weight="1">
 
-        <ImageButton
-            android:id="@+id/btn_topright"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_gravity="center"
-            android:background="@mipmap/top2" />
+            <ImageButton
+                android:id="@+id/btn_topleft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@mipmap/unfold_more" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="295dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="防火墙"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="26sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/btn_topright"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/more"></ImageButton>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/app_midlle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/topPanel">
+        android:layout_height="30dp"
+        android:layout_below="@+id/topPanel"
+        >
 
+        <TextView
+            android:id="@+id/middle_net"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="联网应用"
+            android:layout_alignParentLeft="true"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            />
         <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/signal"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/wifi"
+            />
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/app_mid" />
-    </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_below="@+id/app_midlle">
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.45"
             android:gravity="center"
             android:text="我是应用首页"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:text="跳转到流量日记 tabbed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dariy_change"
+             />
+
+        <Button
+            android:id="@+id/change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转到main tabbed" />
     </LinearLayout>
 </RelativeLayout>

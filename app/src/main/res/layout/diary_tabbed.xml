@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.pencilbox.netknight.view.DairyTabbed">
+
+    <!--   <android.support.design.widget.AppBarLayout
+           android:id="@+id/dariy_appbar"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:theme="@style/AppTheme.AppBarOverlay">
+           </android.support.design.widget.AppBarLayout>
+
+           -->
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/dariy_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#815a82b3" />
+
+    <LinearLayout
+        android:id="@+id/diary_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#fff">
+
+        <ImageButton
+            android:id="@+id/btn_diarytopleft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/unfold_more" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:text="流量日记"
+            android:textAlignment="center"
+            android:textSize="26sp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </Spinner>
+
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/dariy_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/dariy_tabs"
+        android:layout_below="@+id/diary_top"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/diary_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email" />
+
+</RelativeLayout>

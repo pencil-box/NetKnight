@@ -14,7 +14,8 @@ public class NetWifi extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.net_cellular, container, false);
+        View view = inflater.inflate(R.layout.net_wifi, container, false);
+        return view;
 
 
     }

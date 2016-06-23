@@ -1,13 +1,10 @@
 package com.pencilbox.netknight.view;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +13,7 @@ import android.widget.PopupWindow;
 
 import com.pencilbox.netknight.R;
 
-public class NetDariy extends FragmentActivity implements View.OnClickListener {
+public class NetDiary extends FragmentActivity implements View.OnClickListener {
     private PopupWindow popupWindow;
     private ImageButton btn_netleft;
     private NetCellular net_fragment;
@@ -27,7 +24,7 @@ public class NetDariy extends FragmentActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.net_dariy);
+        setContentView(R.layout.net_diary);
         init();
         initFragement(0);
 
@@ -140,14 +137,12 @@ public class NetDariy extends FragmentActivity implements View.OnClickListener {
                 break;
             case R.id.netbtn_wall:
                 Intent intent = new Intent();
-                intent.setClass(this, MainActivity.class);
-                startActivity(intent);
+                startActivity(intent.setClass(this, MainActivity.class));
                 this.finish();
                 break;
             case R.id.netbtn_bag:
                 Intent intent1 = new Intent();
-                intent1.setClass(this, GraspBag.class);
-                startActivity(intent1);
+                startActivity(intent1.setClass(this, GraspBag.class));
                 this.finish();
                 break;
             case R.id.btn_net:

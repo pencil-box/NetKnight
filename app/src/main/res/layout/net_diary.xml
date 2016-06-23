@@ -3,44 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pencilbox.netknight.view.NetDariy">
+    tools:context="com.pencilbox.netknight.view.NetDiary">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#1b0404">
+        android:background="#fff">
 
         <ImageButton
             android:id="@+id/btn_nettopleft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@mipmap/top1" />
+            android:background="@mipmap/unfold_more" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#1b0404"
+            android:background="#fff"
             android:text="流量日记"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#fff" />
+            android:textSize="26sp" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
         </Spinner>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@mipmap/delete" />
 
 
     </LinearLayout>
@@ -50,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
-        android:background="#1b0404">
+        android:background="#5e9eda">
 
         <Button
             android:id="@+id/btn_net"
@@ -91,8 +83,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/net_mid1"></FrameLayout>
-
-
 
 
 </RelativeLayout>

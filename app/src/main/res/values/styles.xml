@@ -4,10 +4,15 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
+
     <style name="ways">
         <item name="android:windowEnterAnimation">@anim/in_lefttoright</item>
         <item name="android:windowExitAnimation">@anim/out_righttoleft</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

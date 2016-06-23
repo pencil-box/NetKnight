@@ -3,6 +3,7 @@ package com.pencilbox.netknight.view;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,13 +21,8 @@ public class MainAddress extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.address_main, container, false);
-    }
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ImageButton btn_adtopleft = (ImageButton) getActivity().findViewById(R.id.btn_adtopleft);
-        btn_adtopleft.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.address_main, container, false);
+        view.findViewById(R.id.btn_adtopleft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -36,10 +32,21 @@ public class MainAddress extends Fragment {
                     initmPopupWindowViewleft();
                     popupWindow.showAsDropDown(v, 0, 5);
                 }
+
             }
-
-
         });
+        view.findViewById(R.id.btn_addressadd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getActivity()).setView(LayoutInflater.from(getActivity())
+                        .inflate(R.layout.ip_inputdialog, null)).create().show();
+            }
+        });
+        return view;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void initmPopupWindowViewleft() {
@@ -62,14 +69,14 @@ public class MainAddress extends Fragment {
             }
         });
 
-        /** 在这里可以实现自定义视图的功能 */
+
         Button btn_dariy = (Button) customView.findViewById(R.id.btn_dariy);
         Button btn_bag = (Button) customView.findViewById(R.id.btn_bag);
         btn_dariy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), NetDariy.class);
+                intent.setClass(getActivity(), DairyTabbed.class);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -86,5 +93,10 @@ public class MainAddress extends Fragment {
         });
 
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

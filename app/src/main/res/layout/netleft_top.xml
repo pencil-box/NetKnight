@@ -7,16 +7,16 @@
         android:id="@+id/netbtn_wall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#060000"
-        android:textColor="#fff"
+        android:background="#3a9ed7"
         android:text="防火墙"
+        android:textColor="#fff"
         />
 
     <Button
         android:id="@+id/netbtn_bag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#060000"
+        android:background="#3a9ed7"
         android:textColor="#fff"
         android:text="网络抓包"/>
 

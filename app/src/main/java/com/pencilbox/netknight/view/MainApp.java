@@ -20,15 +20,58 @@ public class MainApp extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.app_main, container, false);
 
-        return inflater.inflate(R.layout.app_main, container, false);
+        view.findViewById(R.id.change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                startActivity(intent.setClass(getActivity(),MainTabbed.class));
+                getActivity().finish();
+            }
+        });
+        view.findViewById(R.id.dariy_change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                startActivity(intent.setClass(getActivity(),DairyTabbed.class));
+                getActivity().finish();
+            }
+        });
+        view.findViewById(R.id.btn_topleft).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow != null && popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                    return;
+                } else {
+                    initmPopupWindowViewleft();
+                    popupWindow.showAsDropDown(v, 0, 5);
+                }
 
+            }
+        });
+
+        view.findViewById(R.id.btn_topright).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow != null && popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                    return;
+                } else {
+                    initmPopupWindowViewright();
+                    popupWindow.showAsDropDown(v, 0, 5);
+                }
+
+            }
+        });
+        return view;
 
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ImageButton btn_topleft = (ImageButton) getActivity().findViewById(R.id.btn_topleft);
+       super.onActivityCreated(savedInstanceState);
+       /*  ImageButton btn_topleft = (ImageButton) getActivity().findViewById(R.id.btn_topleft);
         ImageButton btn_topright = (ImageButton) getActivity().findViewById(R.id.btn_topright);
         btn_topleft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +87,7 @@ public class MainApp extends Fragment implements View.OnClickListener {
 
 
         });
+
         btn_topright.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +100,7 @@ public class MainApp extends Fragment implements View.OnClickListener {
                 }
 
             }
-        });
+        });*/
     }
 
     private void initmPopupWindowViewleft() {
@@ -79,6 +123,7 @@ public class MainApp extends Fragment implements View.OnClickListener {
             }
         });
 
+
         /** 在这里可以实现自定义视图的功能 */
         Button btn_dariy = (Button) customView.findViewById(R.id.btn_dariy);
         Button btn_bag = (Button) customView.findViewById(R.id.btn_bag);
@@ -86,7 +131,7 @@ public class MainApp extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), NetDariy.class);
+                intent.setClass(getActivity(), DairyTabbed.class);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -104,6 +149,7 @@ public class MainApp extends Fragment implements View.OnClickListener {
 
 
     }
+
     private void initmPopupWindowViewright() {
         View customView = getActivity().getLayoutInflater().inflate(R.layout.right_top,
                 null, false);
@@ -140,8 +186,13 @@ public class MainApp extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
