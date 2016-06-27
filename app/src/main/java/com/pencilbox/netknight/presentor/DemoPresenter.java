@@ -14,7 +14,9 @@ public class DemoPresenter implements IDemoPresenter {
     private IDemoView mIDemoView;
 
 
-    public DemoPresenter(IDemoView iDemoView) {
+
+
+    public DemoPresenter(IDemoView iDemoView){
 
         mIDemoView = iDemoView;
 
@@ -47,6 +49,7 @@ public class DemoPresenter implements IDemoPresenter {
 
             }
         }.execute();
+
 
 
     }
