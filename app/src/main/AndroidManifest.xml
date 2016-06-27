@@ -17,8 +17,6 @@
         <activity android:name=".view.MainIp" />
         <activity android:name=".view.MainPrefer" />
         <activity android:name=".view.GraspBag" />
-        <activity android:name=".view.NetCellular" />
-        <activity android:name=".view.NetWifi" />
 
         <activity
             android:name=".view.DairyTabbed"
