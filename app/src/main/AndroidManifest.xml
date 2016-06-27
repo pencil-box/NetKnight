@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pencilbox.netknight">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,14 +18,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.DemoAty" />
-        <activity android:name=".view.MainApp" />
-        <activity android:name=".view.MainAddress" />
-        <activity android:name=".view.MainIp" />
-        <activity android:name=".view.MainPrefer" />
         <activity android:name=".view.NetDariy" />
         <activity android:name=".view.GraspBag" />
-        <activity android:name=".view.NetCellular" />
-        <activity android:name=".view.NetWifi"></activity>
+
+        <service android:name=".service.NetKnightService"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService"/>
+            </intent-filter>
+        </service>
+
+
     </application>
 
 </manifest>

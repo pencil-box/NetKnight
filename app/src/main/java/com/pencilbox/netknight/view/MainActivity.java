@@ -36,8 +36,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
-        initFragement(0);
+
+        //方便检测
+        Intent intent1 = new Intent();
+        intent1.setClass(this, GraspBag.class);
+        startActivity(intent1);
+        finish();
+
+
+//        init();
+//        initFragement(0);
 
         // mDemoBtn2DemoAty = (Button) findViewById(R.id.btn_2_demo_aty);
 

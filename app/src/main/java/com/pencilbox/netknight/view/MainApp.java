@@ -21,11 +21,15 @@ public class MainApp extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
+
+
         return inflater.inflate(R.layout.app_main, container, false);
 
 
     }
 
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ImageButton btn_topleft = (ImageButton) getActivity().findViewById(R.id.btn_topleft);
