@@ -55,6 +55,7 @@ public class MainAddress extends Fragment {
         popupWindow = new PopupWindow(customView, 500, 600);
         // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
         popupWindow.setAnimationStyle(R.style.ways);
+        popupWindow.setOutsideTouchable(true);
         // 自定义view添加触摸事件
         customView.setOnTouchListener(new View.OnTouchListener() {
 

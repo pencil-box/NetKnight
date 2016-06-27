@@ -3,6 +3,7 @@ package com.pencilbox.netknight.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 import com.pencilbox.netknight.R;
+
 
 public class GraspBag extends AppCompatActivity implements View.OnClickListener {
     private ImageButton btn_graspleft;
@@ -57,7 +59,6 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
                 startActivity(intent1);
                 this.finish();
                 break;
-
             default:
                 break;
         }
@@ -70,7 +71,9 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         popupWindow = new PopupWindow(customView, 500, 600);
         // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
         popupWindow.setAnimationStyle(R.style.ways);
+        popupWindow.setOutsideTouchable(true);
         // 自定义view添加触摸事件
+
         customView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -84,6 +87,7 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+
         /** 在这里可以实现自定义视图的功能 */
         Button btn_wall = (Button) customView.findViewById(R.id.graspbtn_wall);
         Button btn_dariy = (Button) customView.findViewById(R.id.graspbtn_dariy);
@@ -91,4 +95,18 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         btn_dariy.setOnClickListener(this);
 
     }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Intent intent = new Intent();
+            startActivity(intent.setClass(this, MainTabbed.class));
+            this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
+

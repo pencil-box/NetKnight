@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -71,6 +72,7 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         popupWindow = new PopupWindow(customView, 500, 600);
         // 设置动画效果 [R.style.AnimationFade 是自己事先定义好的]
         popupWindow.setAnimationStyle(R.style.ways);
+        popupWindow.setOutsideTouchable(true);
         // 自定义view添加触摸事件
         customView.setOnTouchListener(new View.OnTouchListener() {
 
@@ -84,6 +86,7 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
                 return false;
             }
         });
+
 
         /** 在这里可以实现自定义视图的功能 */
         Button btn_wall = (Button) customView.findViewById(R.id.netbtn_wall);
@@ -101,7 +104,7 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.netbtn_wall:
                 Intent intent = new Intent();
                 startActivity(intent.setClass(this, MainTabbed.class));
@@ -174,5 +177,17 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
             }
             return null;
         }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Intent intent = new Intent();
+            startActivity(intent.setClass(this, MainTabbed.class));
+            this.finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

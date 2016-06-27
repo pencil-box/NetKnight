@@ -14,15 +14,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.pencilbox.netknight.R;
 
 public class MainTabbed extends AppCompatActivity {
-
+    PopupWindow popupWindow;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -138,4 +140,5 @@ public class MainTabbed extends AppCompatActivity {
             return null;
         }
     }
+
 }
