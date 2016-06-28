@@ -13,4 +13,9 @@ public class Constants {
     public final static int ACCESS_TYPE_REMIND = 4;
 
 
+    public final static int OPTION_ADD = 1;
+    public final static int OPTION_DELETE = 2;
+    public final static int OPTION_CHANGE =3;
+    public final static int OPTION_QUARY = 4;
+
 }
