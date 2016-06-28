@@ -9,6 +9,8 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 
+import com.pencilbox.netknight.net.ByteBufferPool;
+import com.pencilbox.netknight.net.Packet;
 import com.pencilbox.netknight.utils.EncodeUtils;
 import com.pencilbox.netknight.utils.FileUtils;
 import com.pencilbox.netknight.utils.MyLog;
@@ -63,90 +65,78 @@ public class NetKnightService extends VpnService implements Runnable {
 
         System.out.println("线程动起来了");
 
-        DatagramChannel channel = null;
 
-        FileInputStream inputStream = new FileInputStream(mInterface.getFileDescriptor());
 
 
         FileChannel vpnInput = new FileInputStream(mInterface.getFileDescriptor()).getChannel();
         FileChannel vpnOutput = new FileOutputStream(mInterface.getFileDescriptor()).getChannel();
 
-        FileInputStream fileInputStream = new FileInputStream(mInterface.getFileDescriptor());
-        FileOutputStream fileOutputStream = new FileOutputStream(mInterface.getFileDescriptor());
-
-        int bufferSize = 16384;
 
 
-        //TODO 这里不能直接通过inputStream流读写是为何呢
-        ByteBuffer buffer2Net = null;
 
-        buffer2Net = ByteBuffer.allocateDirect(bufferSize);
 
         ByteBuffer buffer4Net = null;
-        int i = 0;
 
         while (true) {
+            ByteBuffer buffer2Net = ByteBufferPool.acquire();
 
 
             try {
 
-
-
                 int inputSize = vpnInput.read(buffer2Net);
                 MyLog.logd(this, "-----readData:-------size:" + inputSize);
 
+                if(inputSize>0){
 
-                if(inputSize>0) {
-                    byte[] data = new byte[bufferSize];
-                    fileInputStream.read(data);
-                    MyLog.logd(this, "Soc:IP :" + new Byte(data[12]).intValue()+"."+(int)data[13]+"."+data[14]+"."+data[15]);
+                    //flip是做啥子的呢
+                    buffer2Net.flip();
+
+                    //从应用中发送的包
+                    Packet packet2net = new Packet(buffer2Net);
+                    MyLog.logd(this,"--------data read----------");
+                    MyLog.logd(this,packet2net.toString());
 
 
-                    MyLog.logd(this, "De:IP :" + new Byte(data[16]).intValue()+"."+(int)data[17]+"."+data[18]+"."+data[19]);
+                    //TODO 执行握手咯
 
-//                    if(i==0) {
-                    if(data[0]!=0) {
+                    if(packet2net.isTCP()&&packet2net.tcpHeader.isSYN()){
+                        packet2net.swapSourceAndDestination();
+                        ByteBuffer bufferFromNet = ByteBufferPool.acquire();
+//                        Packet packet4net = new Packet();
 
-                        data[12] = -64;
-                        data[13] = -88;
-                        data[14]= 3;
-                        data[15] = 66;
+                        packet2net.updateTcpBufferByItself(bufferFromNet);
 
-                        fileOutputStream.write(data);
-                        MyLog.logd(this, "data has been writen");
-                        i++;
-//                    }
+                        MyLog.logd(this,"--------data write-------\n"+packet2net.toString());
+
+
+
                     }
 
-                }
 
-//                if(inputSize>0&&buffer2Net!=null){
-//
-//            //flip是做啥子的呢
-//                    buffer2Net.flip();
-//                    MyLog.logd(this,"--------data read----------");
-//
-////                    Packet packet = Packet(buffer2Net);
+
+
+//                    Packet packet = Packet(buffer2Net);
 //                    byte data = buffer2Net.get();
-//
+
 //                    MyLog.logd(this,"test 12:"+EncodeUtils.byte2bits((byte) 8));
 //
 //                    MyLog.logd(this,"data :"+EncodeUtils.byte2bits(data));
 //                    MyLog.logd(this,"data1:"+EncodeUtils.byte2bits(buffer2Net.get()));
 //                    MyLog.logd(this,"data2:"+EncodeUtils.byte2bits(buffer2Net.get()));
 //                    MyLog.logd(this,"data3:"+EncodeUtils.byte2bits(buffer2Net.get()));
-//
-//
-//                }
 
 
-                ExecutorService executorService;
+                }
 
-                ConcurrentLinkedQueue<String> a;
 
-            } catch (IOException e) {
+                } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+
+
+
 
 
 //            try {
