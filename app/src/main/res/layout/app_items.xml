@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/app_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="3dip"
             android:layout_toRightOf="@id/app_label"
             android:text="Label"
-            android:textColor="#FFD700"></TextView>
+            android:textColor="#3191e6"></TextView>
 
         <TextView
             android:id="@+id/app_name"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/app_label"
             android:layout_below="@id/tvAppLabel"
-            android:textColor="#FFD700"></TextView>
+            android:textColor="#3191e6"></TextView>
 
         <Spinner
             android:id="@+id/app_choose"
