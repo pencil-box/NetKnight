@@ -10,15 +10,21 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.presentor.BlockingIpImpl;
+import com.pencilbox.netknight.presentor.IBlockingIpPresenter;
 
-public class MainIp extends Fragment {
+public class MainIp extends Fragment implements IBlockingIpView {
     private PopupWindow popupWindow;
+
+
+    private IBlockingIpPresenter mBlockingIpPresenter ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,12 +50,12 @@ public class MainIp extends Fragment {
             }
         });
 
+
+        mBlockingIpPresenter = new BlockingIpImpl(this);
+
         return view;
     }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 
     private void initmPopupWindowViewleft() {
         View customView = getActivity().getLayoutInflater().inflate(R.layout.mainleft_top,
@@ -98,8 +104,19 @@ public class MainIp extends Fragment {
 
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onLoadBlockingList(BaseAdapter adapter) {
+
+    }
+
+    @Override
+    public void onListRefresh() {
+
+    }
+
+    @Override
+    public void onOptionFailed(int typeId, String msg) {
+
     }
 }
