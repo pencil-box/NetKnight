@@ -9,14 +9,14 @@ import android.widget.BaseAdapter;
 public interface IBlockingIpPresenter {
 
     //添加
-    public void addBlockingIp(String originIp,String endIp);
+     void addBlockingIp(String originIp,String endIp);
 
-    public void changeBlockingIp(long blockingIpId,String originIp,String endIp);
+     void changeBlockingIp(long blockingIpId,String originIp,String endIp);
 
-    public void deleteBlockingIp(long blockingIpId);
+     void deleteBlockingIp(long blockingIpId);
 
 
     //加载阻断Ip列表
-    public void loadBlockingIpList();
+     void loadBlockingIpList();
 
 }
