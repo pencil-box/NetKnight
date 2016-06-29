@@ -3,7 +3,7 @@ package com.pencilbox.netknight.presentor;
 /**
  * Created by tang on 2016/6/29.
  */
-public interface PreferPresenter {
+public interface IPreferPresenter {
 
     //加载权限列表
     void loadPermission();

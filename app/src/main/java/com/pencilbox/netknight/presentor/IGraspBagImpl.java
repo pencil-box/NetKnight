@@ -1,14 +1,14 @@
 package com.pencilbox.netknight.presentor;
 
-import com.pencilbox.netknight.view.GraspBagView;
+import com.pencilbox.netknight.view.IGraspBagView;
 /**
  * Created by tang on 2016/6/28.
  */
-public class GraspBagImpl implements GraspBagPresenter {
+public class IGraspBagImpl implements IGraspBagPresenter {
 
-    private GraspBagView mGraspBag;
+    private IGraspBagView mGraspBag;
 
-    public GraspBagImpl(GraspBagView graspBag){
+    public IGraspBagImpl(IGraspBagView graspBag){
 
 
         mGraspBag = graspBag;

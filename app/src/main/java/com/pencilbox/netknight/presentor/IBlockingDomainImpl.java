@@ -6,11 +6,11 @@ import com.pencilbox.netknight.view.IBlockingIpView;
 /**
  * Created by tang on 2016/6/29.
  */
-public class BlockingDomainImpl implements BlockingDomainPresenter {
+public class IBlockingDomainImpl implements IBlockingDomainPresenter {
 
     private IBlockingIpView  doName;
 
-    public BlockingDomainImpl(IBlockingIpView domainName){
+    public IBlockingDomainImpl(IBlockingIpView domainName){
 
         doName = domainName;
     }

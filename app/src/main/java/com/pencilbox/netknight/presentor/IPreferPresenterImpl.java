@@ -1,17 +1,17 @@
 package com.pencilbox.netknight.presentor;
 
-import com.pencilbox.netknight.view.PreferView;
+import com.pencilbox.netknight.view.IPreferView;
 
 /**
  * Created by tang on 2016/6/29.
  */
-public class PreferPresenterImpl implements PreferPresenter{
+public class IPreferPresenterImpl implements IPreferPresenter {
 
-    private PreferView mPreferView;
+    private IPreferView mIPreferView;
 
-    public PreferPresenterImpl(PreferView preferView){
+    public IPreferPresenterImpl(IPreferView IPreferView){
 
-        mPreferView = preferView;
+        mIPreferView = IPreferView;
 
     }
 
