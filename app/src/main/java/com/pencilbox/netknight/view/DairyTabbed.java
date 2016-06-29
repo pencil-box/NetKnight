@@ -14,17 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.presentor.DairyImpl;
+import com.pencilbox.netknight.presentor.IDairyPresenter;
 
-public class DairyTabbed extends AppCompatActivity implements View.OnClickListener {
+public class DairyTabbed extends AppCompatActivity implements View.OnClickListener , IDairyView{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private PopupWindow popupWindow;
     private ViewPager mViewPager;
+    private IDairyPresenter iDairyPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,8 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         init();
         TabLayout tabLayout = (TabLayout) findViewById(R.id.dariy_tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        iDairyPresenter = new DairyImpl(this);
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.dariy_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +123,31 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
                 break;
 
         }
+    }
+
+    @Override
+    public void onLoadDatachartList(BaseAdapter adapter) {
+
+    }
+
+    @Override
+    public void getshowDataofWifi(long wifiSize) {
+
+    }
+
+    @Override
+    public void getshowDataofCelluar(long mobileSize) {
+
+    }
+
+    @Override
+    public void getshowDataofWifiCelluar(long wificelluarSize) {
+
+    }
+
+    @Override
+    public void onDatachartListRefresh() {
+
     }
 /*
     @Override

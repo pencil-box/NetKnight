@@ -13,6 +13,13 @@ public interface IDairyView {
     //初始化数据的回调
     void onLoadDatachartList(BaseAdapter adapter);
 
+    void getshowDataofWifi(long wifiSize);
+
+    void getshowDataofCelluar(long mobileSize);
+
+    void getshowDataofWifiCelluar(long wificelluarSize);
+
+
     void onDatachartListRefresh();
 
 

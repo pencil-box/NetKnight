@@ -14,20 +14,21 @@ public class DairyImpl implements IDairyPresenter {
     public DairyImpl(IDairyView mDairyView) {
 
         this.mDairyView = mDairyView;
+        mDairyView.onDatachartListRefresh();
+    }
+
+
+    @Override
+    public void showUseOfWifi(long id, long recordTime) {
     }
 
     @Override
-    public void showUseOfWifi(long id, int time) {
+    public void showUseOfCelluar(long id, long recordTime) {
 
     }
 
     @Override
-    public void showUseOfCelluar(long id, int time) {
-
-    }
-
-    @Override
-    public void showUseOfWifiCelluar(long id, int time) {
+    public void showUseOfWifiCelluar(long id, long recordTime) {
 
     }
 

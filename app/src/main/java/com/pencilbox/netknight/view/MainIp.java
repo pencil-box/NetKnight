@@ -51,7 +51,6 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
 
         mBlockingIpPresenter = new BlockingIpImpl(this);
-
         return view;
     }
 
@@ -72,7 +71,6 @@ public class MainIp extends Fragment implements IBlockingIpView {
                     popupWindow.dismiss();
                     popupWindow = null;
                 }
-
                 return false;
             }
         });
@@ -106,6 +104,7 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
     @Override
     public void onLoadBlockingList(BaseAdapter adapter) {
+
 
     }
 

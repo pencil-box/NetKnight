@@ -6,11 +6,11 @@ package com.pencilbox.netknight.presentor;
 
 public interface IDairyPresenter {
     //选择显示的时间数据用量
-    void showUseOfWifi(long id, int time);
+    void showUseOfWifi(long id, long recordTime);
 
-    void showUseOfCelluar(long id, int time);
+    void showUseOfCelluar(long id, long recordTime);
 
-    void showUseOfWifiCelluar(long id, int time);
+    void showUseOfWifiCelluar(long id, long recordTime);
 
     //加载选择的表图
     void loadDatachart();
