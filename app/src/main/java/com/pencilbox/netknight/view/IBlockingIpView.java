@@ -21,7 +21,4 @@ public interface IBlockingIpView {
      */
      void onOptionFailed(int optionId,String msg);
 
-
-
-
 }
