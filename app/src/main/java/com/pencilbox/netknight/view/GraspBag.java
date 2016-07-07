@@ -91,8 +91,8 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
 
                 break;
             case R.id.btn_stop_capture:
-//                stopVpnService();
-                AppUtils.getAppPackegeName(this);
+                stopVpnService();
+//                AppUtils.getAppPackegeName(this);
 
                 break;
             case R.id.btn_connect_server_by_http:
@@ -129,6 +129,8 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
      * 停止vpnservice
      */
     private void stopVpnService(){
+
+
 
 
     }

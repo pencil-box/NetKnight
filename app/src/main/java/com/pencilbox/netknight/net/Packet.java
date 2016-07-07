@@ -43,6 +43,19 @@ public class Packet {
     private boolean isTCP;
     private boolean isUDP;
 
+    /**
+     * 获取payloadSize的大小
+     * @return
+     */
+    public int getPayloadSize(){
+        if(backingBuffer!=null){
+
+          return  backingBuffer.limit() - backingBuffer.position();
+        }
+        return 0;
+    }
+
+
     //通过ByteBuffer获取报文信息
     public Packet(ByteBuffer buffer) throws UnknownHostException {
         this.ip4Header = new IP4Header(buffer);
@@ -60,11 +73,12 @@ public class Packet {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Packet{");
         sb.append("ip4Header=").append(ip4Header);
-        if (isTCP) sb.append(", \r\ntcpHeader=").append(tcpHeader);
-        else if (isUDP) sb.append(", \r\nudpHeader=").append(udpHeader);
+        if (isTCP) sb.append(", tcpHeader=").append(tcpHeader);
+        else if (isUDP) sb.append(", udpHeader=").append(udpHeader);
 
-        if (backingBuffer != null)
+        if (backingBuffer != null) {
             sb.append(", payloadSize=").append(backingBuffer.limit() - backingBuffer.position());
+        }
         sb.append('}');
         return sb.toString();
     }
@@ -107,25 +121,9 @@ public class Packet {
         }
     }
 
-    //根据自己来更新数据包
-    public void updateTcpBufferByItself(ByteBuffer buffer){
-
-        if(isTCP){
-
-            if(tcpHeader.isSYN()){
-                //SYN则变成SYN + ACK码
-                updateTCPBuffer(buffer,(byte)(TCPHeader.SYN|TCPHeader.ACK),tcpHeader.sequenceNumber,tcpHeader.sequenceNumber+1,0);
-
-                MyLog.logd(this,"###SYN→SYN|ACK###\n"+this.toString());
-            }
-
-        }
 
 
-    }
-
-
-    //更新咯
+    //更新咯,position从0开始写入到40 buffer 40后的为实际的数据
     public void updateTCPBuffer(ByteBuffer buffer, byte flags, long sequenceNum, long ackNum, int payloadSize) {
         buffer.position(0);
         fillHeader(buffer);
