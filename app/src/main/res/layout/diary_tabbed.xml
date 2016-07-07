@@ -67,12 +67,12 @@
         android:layout_below="@+id/diary_top"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.FloatingActionButton
+  <!--  <android.support.design.widget.FloatingActionButton
         android:id="@+id/diary_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/dariy_container"
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_dialog_email" />
-
+-->
 </RelativeLayout>

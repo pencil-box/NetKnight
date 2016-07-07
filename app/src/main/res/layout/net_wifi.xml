@@ -12,11 +12,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <TextView
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/wifi_chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="我是WIFI网络"
-            android:textAlignment="center" />
+            android:layout_height="match_parent">
+
+        </com.github.mikephil.charting.charts.LineChart>
     </LinearLayout>
 
 </RelativeLayout>

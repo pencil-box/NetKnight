@@ -233,10 +233,7 @@ public class MainApp extends Fragment implements View.OnClickListener, AdapterVi
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -271,5 +268,9 @@ public class MainApp extends Fragment implements View.OnClickListener, AdapterVi
 
             }
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

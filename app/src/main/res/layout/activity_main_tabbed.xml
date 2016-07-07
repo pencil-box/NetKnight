@@ -51,13 +51,13 @@
         app:tabTextColor="@color/white"                      // tab默认的文字颜色
      -->
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_alignBottom="@+id/container"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_dialog_email" />
-
+    <!-- <android.support.design.widget.FloatingActionButton
+         android:id="@+id/fab"
+         android:layout_alignBottom="@+id/container"
+         android:layout_alignParentRight="true"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@android:drawable/ic_dialog_email" />
+ -->
 
 </RelativeLayout>

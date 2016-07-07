@@ -13,7 +13,6 @@ import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.model.AppInfo;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by wu on 16/6/27.

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -52,7 +51,6 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
 
         mBlockingIpPresenter = new BlockingIpImpl(this);
-
         return view;
     }
 
@@ -73,7 +71,6 @@ public class MainIp extends Fragment implements IBlockingIpView {
                     popupWindow.dismiss();
                     popupWindow = null;
                 }
-
                 return false;
             }
         });
@@ -107,6 +104,7 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
     @Override
     public void onLoadBlockingList(BaseAdapter adapter) {
+
 
     }
 
