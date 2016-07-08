@@ -2,6 +2,8 @@ package com.pencilbox.netknight.model;
 
 import android.text.format.DateUtils;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,7 +11,7 @@ import java.util.Date;
  * Created by pencil-box on 16/6/27.
  * 流量实体类
  */
-public class Traffic {
+public class Traffic extends DataSupport{
 
     private long id;
     //以byte为单位

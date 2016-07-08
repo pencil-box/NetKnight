@@ -1,10 +1,12 @@
 package com.pencilbox.netknight.model;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by pencil-box on 16/6/27.
  * 阻断的域名
  */
-public class BlockName {
+public class BlockName extends DataSupport{
 
     //域名信息
     private String cName;
