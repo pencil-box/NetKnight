@@ -54,16 +54,6 @@
             android:layout_height="wrap_content"
             android:text="停止抓包"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_connect_server_by_http"
-            android:text="建立连接by http"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/tv_packet"/>
 
 
     </LinearLayout>

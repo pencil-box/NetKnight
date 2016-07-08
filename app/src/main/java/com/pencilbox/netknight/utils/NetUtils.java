@@ -25,45 +25,6 @@ import java.net.URLConnection;
 public class NetUtils {
 
 
-    private static final String HOST_IP = "192.168.0.105";
-    //请求http
-    public static void sendHttp(){
-
-
-        new AsyncTask<Void,Void,Void>(){
-            @Override
-            protected Void doInBackground(Void... params) {
-
-
-                MyLog.logd(this,"HTTP请求:"+HOST_IP);
-
-
-                HttpURLConnection connection;
-                InputStream in;
-                try {
-                    URL url = new URL("http://"+HOST_IP+":8080");
-
-                     connection = (HttpURLConnection) url.openConnection();
-
-                    in = new BufferedInputStream(connection.getInputStream());
-
-                    while(in.read()!=-1){
-
-                        System.out.print(in.read());
-                    }
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
-        }.execute();
-
-    }
-
 
     /**
      * 读/proc/net/tcp6的数据咯

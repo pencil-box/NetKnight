@@ -75,15 +75,6 @@ public class TCB
 
 
 
-    // TCP has more states, but we need only these
-//    public enum TCBStatus
-//    {
-//        SYN_SENT,
-//        SYN_RECEIVED,
-//        ESTABLISHED,
-//        CLOSE_WAIT,
-//        LAST_ACK,
-//    }
 
     //用来封装生成数据包
     public Packet referencePacket;
@@ -92,34 +83,9 @@ public class TCB
 //    public boolean waitingForNetworkData;
     public SelectionKey selectionKey;
 
-//    private static final int MAX_CACHE_SIZE = 50; // XXX: Is this ideal?
-//    private static LRUCache<String, TCB> tcbCache =
-//            new LRUCache<>(MAX_CACHE_SIZE, new LRUCache.CleanupCallback<String, TCB>()
-//            {
-//                @Override
-//                public void cleanup(Map.Entry<String, TCB> eldest)
-//                {
-//                    eldest.getValue().closeChannel();
-//                }
-//            });
 
 
 
-//    public static TCB getTCB(String ipAndPort)
-//    {
-//        synchronized (tcbCache)
-//        {
-//            return tcbCache.get(ipAndPort);
-//        }
-//    }
-//
-//    public static void putTCB(String ipAndPort, TCB tcb)
-//    {
-//        synchronized (tcbCache)
-//        {
-//            tcbCache.put(ipAndPort, tcb);
-//        }
-//    }
 
     public TCB(String ipAndPort, long mySequenceNum, long theirSequenceNum, long myAcknowledgementNum, long theirAcknowledgementNum,
               Packet referencePacket)
@@ -139,37 +105,4 @@ public class TCB
 
 
 
-//    public static void closeTCB(TCB tcb)
-//    {
-//        tcb.closeChannel();
-//        synchronized (tcbCache)
-//        {
-//            tcbCache.remove(tcb.ipAndPort);
-//        }
-//    }
-
-//    public static void closeAll()
-//    {
-//        synchronized (tcbCache)
-//        {
-//            Iterator<Map.Entry<String, TCB>> it = tcbCache.entrySet().iterator();
-//            while (it.hasNext())
-//            {
-//                it.next().getValue().closeChannel();
-//                it.remove();
-//            }
-//        }
-//    }
-
-//    private void closeChannel()
-//    {
-//        try
-//        {
-//            channel.close();
-//        }
-//        catch (IOException e)
-//        {
-//            // Ignore
-//        }
-//    }
 }
