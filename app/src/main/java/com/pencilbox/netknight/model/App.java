@@ -1,10 +1,12 @@
 package com.pencilbox.netknight.model;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by pencil-box on 16/6/27.
  * 应用信息表
  */
-public class App {
+public class App extends DataSupport{
 
     private long id;
     private String name;

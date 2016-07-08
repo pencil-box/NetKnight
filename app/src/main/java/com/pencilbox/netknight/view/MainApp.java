@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -22,9 +23,12 @@ import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.model.AppInfo;
 import com.pencilbox.netknight.presentor.AppInfoAdapter;
 
+import org.litepal.tablemanager.Connector;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.orhanobut.logger.Logger;
 
 
 public class MainApp extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -38,6 +42,10 @@ public class MainApp extends Fragment implements View.OnClickListener, AdapterVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_main, container, false);
+
+        //创建数据库
+        SQLiteDatabase db = Connector.getDatabase();
+        Logger.d("Database Created");
 
         app_listView = (ListView) view.findViewById(R.id.app_listview);
         listAppInfo = new ArrayList<AppInfo>();

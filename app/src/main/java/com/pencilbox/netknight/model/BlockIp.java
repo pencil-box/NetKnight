@@ -1,10 +1,12 @@
 package com.pencilbox.netknight.model;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by pencil-box on 16/6/27.
  * 阻塞IP段
  */
-public class BlockIp {
+public class BlockIp extends DataSupport{
     //xxx.xxx.xxx.xxx格式
     private String originIp;
     private String endIp;
