@@ -28,6 +28,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class NetKnightService extends VpnService implements Runnable {
 
+    //VPN转发的IP地址咯
+    public static String  VPN_ADDRESS = "10.1.10.1";
+
 
     //从虚拟网卡拿到的文件描述符
     private ParcelFileDescriptor mInterface;
@@ -53,16 +56,19 @@ public class NetKnightService extends VpnService implements Runnable {
         MyLog.logd(this, "onCreate");
 
         Builder builder = new Builder();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            try {
+//                mInterface = builder.setSession("NetKnight").setBlocking(false)
+//                        .addAddress(VPN_ADDRESS, 32).addAllowedApplication("com.devjiang").addRoute("0.0.0.0", 0).establish();
+//            } catch (PackageManager.NameNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                mInterface = builder.setSession("NetKnight").setBlocking(false)
-                        .addAddress("10.1.10.1", 32).addAllowedApplication("com.devjiang").addRoute("0.0.0.0", 0).establish();
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
+            mInterface = builder.setSession("NetKnight").setBlocking(false).addAddress(VPN_ADDRESS,32).addRoute("0.0.0.0",0).establish();
         }
-
-
         try {
             mChannelSelector = Selector.open();
         } catch (IOException e) {
@@ -88,8 +94,8 @@ public class NetKnightService extends VpnService implements Runnable {
 
 //        MyLog.logd(this,fd.toString());
 
-//        mNetOutput.start();
-//        mNetInput.start();
+        mNetOutput.start();
+        mNetInput.start();
         new Thread(this).start();
     }
 
@@ -116,7 +122,10 @@ public class NetKnightService extends VpnService implements Runnable {
 
         ByteBuffer buffer4Net;
         ByteBuffer buffer2Net = null;
-        boolean dataSend = true;
+        boolean isDataSend = true;
+
+//        int sleepTime = 1;
+
         try {
 
             while (true) {
@@ -129,14 +138,13 @@ public class NetKnightService extends VpnService implements Runnable {
 
 
                 //数据发送出去了,就get 新的咯
-                if(dataSend ) {
+                if(isDataSend ) {
                     buffer2Net = ByteBufferPool.acquire();
                 }else {
                     //未有数据发送,据清空咯
                     buffer2Net.clear();
                 }
                 int inputSize = vpnInput.read(buffer2Net);
-
 
                 if (inputSize > 0) {
                     MyLog.logd(this, "-----readData:-------size:" + inputSize);
@@ -151,14 +159,14 @@ public class NetKnightService extends VpnService implements Runnable {
                     if (packet2net.isTCP()) {
                         //目前支持TCP
                         mInputQueue.offer(packet2net);
-                        dataSend = true;
+                        isDataSend = true;
                     }else{
                         MyLog.logd(this,"暂时不支持其他类型数据!!");
-                    dataSend = false;
+                        isDataSend = false;
                     }
                 }else{
                     //与其release 还不如直接复用
-                    dataSend = false;
+                    isDataSend = false;
 //                    ByteBufferPool.release(buffer2Net);
 
                 }
@@ -179,17 +187,19 @@ public class NetKnightService extends VpnService implements Runnable {
                     ByteBufferPool.release(buffer4Net);
                 }
 
-//                Thread.sleep(1);
 
-
+                //可减少内存抖动??
+                if(!isDataSend) {
+                    Thread.sleep(15);
+                }
 
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-//            throw new RuntimeException(e);
-        }
-        finally {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
 
 
             try {
@@ -199,7 +209,6 @@ public class NetKnightService extends VpnService implements Runnable {
                 e.printStackTrace();
             }
 
-//            close();
         }
     }
 

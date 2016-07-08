@@ -1,9 +1,13 @@
 package com.pencilbox.netknight.net;
 
+import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.util.Log;
 
+import com.pencilbox.netknight.NetKnightApp;
+import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
+import com.pencilbox.netknight.utils.NetUtils;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -72,10 +76,13 @@ public class NetOutput extends Thread {
             try {
 
                 //阻塞等到有数据就处理
-                currentPacket = mInputQueue.take();
+                currentPacket = mInputQueue.poll();
 //                Thread.sleep(20000);
+                Thread.sleep(15);
 
-
+                if(currentPacket==null){
+                    continue;
+                }
             } catch (InterruptedException e) {
 //                e.printStackTrace();
                 Log.d(TAG, "Stop");
@@ -133,7 +140,7 @@ public class NetOutput extends Thread {
             //复用传进来的ByteBuffer
             ByteBufferPool.release(payloadBuffer);
 
-//            Log.d(TAG, "tcb初始化成功咯");
+            Log.d(TAG, "tcpOutput执行一遍");
 
 
         }
@@ -333,6 +340,29 @@ public class NetOutput extends Thread {
 
 
         Log.d(TAG, "initTcb ...");
+
+        //TODO 找到对应的uid咯
+
+
+        int uid =  NetUtils.readProcFile(referencePacket.tcpHeader.sourcePort);
+        MyLog.logd(this,"uid为:"+uid);
+
+        if(uid<10000){
+
+            Log.e(TAG,"连接失败");
+//            sendRST();
+
+            return ;
+        }
+
+
+        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
+
+        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
+
+
+
+
         referencePacket.swapSourceAndDestination();
 
         TCB tcb = new TCB(ipAndPort, new Random().nextInt(Short.MAX_VALUE), referencePacket.tcpHeader.sequenceNumber,

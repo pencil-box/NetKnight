@@ -27,9 +27,11 @@ public class AppUtils {
             packageName = packageList.get(i).packageName;
             if(!isSystem(packageName,context)){
 
-                System.out.println(packageList.get(i).packageName);
+                System.out.println(packageList.get(i).packageName+"&&Uid is"+packageList.get(i).applicationInfo.uid);
 
             }
+
+
 
 
         }
@@ -54,6 +56,19 @@ public class AppUtils {
         } catch (PackageManager.NameNotFoundException ignore) {
             return false;
         }
+    }
+
+
+    public static String getPackageNameByUid(Context context,int uid){
+
+
+        PackageManager pm = context.getPackageManager();
+        String[] packageName = pm.getPackagesForUid(uid);
+        if(packageName!=null&&packageName.length==1){
+            return packageName[0];
+        }
+
+        return "Null";
     }
 
 }

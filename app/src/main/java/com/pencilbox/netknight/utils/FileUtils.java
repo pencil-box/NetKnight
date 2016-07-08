@@ -72,4 +72,8 @@ public class FileUtils {
         return buffer;
 
     }
+
+
+
+//    public static String hex2
 }

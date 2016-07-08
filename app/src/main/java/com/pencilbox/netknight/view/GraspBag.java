@@ -12,10 +12,22 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.receiver.NetChangeReceiver;
 import com.pencilbox.netknight.service.NetKnightService;
 import com.pencilbox.netknight.utils.AppUtils;
+import com.pencilbox.netknight.utils.EncodeUtils;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.Buffer;
 
 public class GraspBag extends AppCompatActivity implements View.OnClickListener {
     private ImageButton btn_graspleft;
@@ -91,12 +103,21 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
 
                 break;
             case R.id.btn_stop_capture:
-                stopVpnService();
+//                stopVpnService();
 //                AppUtils.getAppPackegeName(this);
+
+//                readProcFile();
+
 
                 break;
             case R.id.btn_connect_server_by_http:
-                NetUtils.sendHttp();
+//                NetUtils.sendHttp();
+
+
+//                AppUtils.getAppPackegeName(this);
+//                System.out.println(EncodeUtils.hex2int("86E1"));
+//
+//                System.out.println(EncodeUtils.hex2int("DE11"));
                 break;
 
             default:
@@ -104,6 +125,8 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         }
 
     }
+
+
 
 
     private final int REQ_START_VPN = 100;

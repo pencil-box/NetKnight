@@ -16,6 +16,8 @@
 
 package com.pencilbox.netknight.net;
 
+import com.pencilbox.netknight.receiver.NetChangeReceiver;
+
 import java.io.IOException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
@@ -31,6 +33,29 @@ public class TCB
 {
     public String ipAndPort;
 
+    //记录发送的数据咯
+    private int sendMobileBytes =0;
+    private int sendWifiBytes =0;
+
+    //最后再存储相应的信息咯
+    public int getMobileBytes(){
+        return sendMobileBytes;
+    }
+    public int getWifiBytes(){
+        return sendWifiBytes;
+    }
+
+    public void caculateTransBytes(int payloadSize){
+
+        if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_WIFI){
+            sendWifiBytes+=payloadSize;
+            return ;
+        }
+        if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_MOBILE){
+            sendMobileBytes += payloadSize;
+            return;
+        }
+    }
 
 
     //客户端的顺序码,每次发送多少数据就加多少,普通的无负载的数据包算做是1byte
