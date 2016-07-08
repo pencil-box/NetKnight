@@ -115,6 +115,7 @@ public class MainApp extends Fragment implements View.OnClickListener, AdapterVi
 
     }
 
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
        /*  ImageButton btn_topleft = (ImageButton) getActivity().findViewById(R.id.btn_topleft);

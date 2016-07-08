@@ -2,22 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pencilbox.netknight">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
-        android:name="org.litepal.LitePalApplication"
+        android:name=".NetKnightApp"
         android:allowBackup="true"
         android:icon="@mipmap/knight"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.MainApp" />
-        <activity android:name=".view.MainAddress" />
-        <activity android:name=".view.MainIp" />
-        <activity android:name=".view.MainPrefer" />
         <activity android:name=".view.GraspBag" />
 
         <activity
@@ -33,6 +30,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".service.NetKnightService"
+            android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".receiver.NetChangeReceiver">
+        <intent-filter>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
+        </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
