@@ -19,9 +19,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
+import com.github.mikephil.charting.data.Entry;
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.presentor.DairyImpl;
 import com.pencilbox.netknight.presentor.IDairyPresenter;
+
+import java.util.ArrayList;
 
 public class DairyTabbed extends AppCompatActivity implements View.OnClickListener , IDairyView{
 
@@ -142,6 +145,21 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void getshowDataofWifiCelluar(long wificelluarSize) {
+
+    }
+
+    @Override
+    public void getDataOfWifi(ArrayList<Entry> yValue) {
+
+    }
+
+    @Override
+    public void getDataOfCelluar(ArrayList<Entry> yValue) {
+
+    }
+
+    @Override
+    public void getDataOfCelluarWifi(ArrayList<Entry> yValue) {
 
     }
 

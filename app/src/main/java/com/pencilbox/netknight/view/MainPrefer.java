@@ -139,7 +139,6 @@ public class MainPrefer extends Fragment {
                     popupWindow.dismiss();
                     popupWindow = null;
                 }
-
                 return false;
             }
         });

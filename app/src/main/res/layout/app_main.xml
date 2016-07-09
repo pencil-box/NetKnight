@@ -11,48 +11,48 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#fff"
-        >
+        android:background="#fff">
 
 
-            <ImageButton
-                android:id="@+id/btn_topleft"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="center"
-                android:background="@mipmap/unfold_more" />
+        <ImageButton
+            android:id="@+id/btn_topleft"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:background="@mipmap/unfold_more" />
 
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="防火墙"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="26sp" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="防火墙"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="26sp" />
 
-         <Switch
+        <Switch
             android:id="@+id/switch_vpnsevice"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-             android:layout_toLeftOf="@+id/btn_topright"
+            android:layout_toLeftOf="@+id/btn_topright"
             android:checked="false" />
 
 
-            <ImageButton
-                android:id="@+id/btn_topright"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:background="@mipmap/more">
+        <ImageButton
+            android:id="@+id/btn_topright"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/more">
 
-            </ImageButton>
+        </ImageButton>
 
 
     </RelativeLayout>
+    >>>>>>> 79efc1106cfa39a8b8fe2a38cc51aa39b35cea5c
 
     <RelativeLayout
         android:id="@+id/app_midlle"
@@ -94,8 +94,7 @@
             android:id="@+id/app_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            />
+            android:gravity="center" />
 
     </LinearLayout>
 </RelativeLayout>

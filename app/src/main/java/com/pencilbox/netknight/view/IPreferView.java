@@ -15,4 +15,5 @@ public interface IPreferView {
 
     //默认权限更新
     void onListShowRefresh();
+
 }

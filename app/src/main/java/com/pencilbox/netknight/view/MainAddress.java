@@ -2,26 +2,26 @@ package com.pencilbox.netknight.view;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+
 import android.widget.PopupWindow;
 
 import com.pencilbox.netknight.R;
 
+
+
+
+
 public class MainAddress extends Fragment {
     private PopupWindow popupWindow;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.address_main, container, false);
+        final View view = inflater.inflate(R.layout.address_main, container, false);
         view.findViewById(R.id.btn_adtopleft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,11 +35,14 @@ public class MainAddress extends Fragment {
 
             }
         });
+
         view.findViewById(R.id.btn_addressadd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getActivity()).setView(LayoutInflater.from(getActivity())
-                        .inflate(R.layout.ip_inputdialog, null)).create().show();
+                AddressInputDialog dialog = new AddressInputDialog();
+                dialog.show(getFragmentManager(), "Dialog");
+
+
             }
         });
         return view;
@@ -47,6 +50,7 @@ public class MainAddress extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
     }
 
     private void initmPopupWindowViewleft() {
@@ -96,8 +100,20 @@ public class MainAddress extends Fragment {
 
     }
 
+    /*
+        @Override
+        public void onDataInputListener(String start, String end) {
+            listaddress = new ArrayList<String>();
+            address_adapter = new ListAdapter(getActivity(), listaddress);
+            listaddress.add(start);
+            listaddress.add(end);
+            listViewaddress.setAdapter(address_adapter);
+        }
+    */
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 }

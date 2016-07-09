@@ -12,6 +12,7 @@ public interface IDairyPresenter {
 
     void showUseOfWifiCelluar(long id, long recordTime);
 
+
     //加载选择的表图
     void loadDatachart();
 }

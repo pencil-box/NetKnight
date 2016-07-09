@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class MainIp extends Fragment implements IBlockingIpView {
     private PopupWindow popupWindow;
 
 
-    private IBlockingIpPresenter mBlockingIpPresenter ;
+    private IBlockingIpPresenter mBlockingIpPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,8 +44,8 @@ public class MainIp extends Fragment implements IBlockingIpView {
         view.findViewById(R.id.btn_ipadd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getActivity()).setView(LayoutInflater.from(getActivity())
-                        .inflate(R.layout.ip_inputdialog, null)).create().show();
+                IpInputDialog dialog = new IpInputDialog();
+                dialog.show(getFragmentManager(), "Dialog");
 
             }
         });

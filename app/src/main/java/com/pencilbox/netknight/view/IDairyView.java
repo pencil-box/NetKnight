@@ -2,6 +2,9 @@ package com.pencilbox.netknight.view;
 
 import android.widget.BaseAdapter;
 
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +21,13 @@ public interface IDairyView {
     void getshowDataofCelluar(long mobileSize);
 
     void getshowDataofWifiCelluar(long wificelluarSize);
+
+    //获取表格流量数据
+    void getDataOfWifi(ArrayList<Entry> yValue);
+
+    void getDataOfCelluar(ArrayList<Entry> yValue);
+
+    void getDataOfCelluarWifi(ArrayList<Entry> yValue);
 
 
     void onDatachartListRefresh();
