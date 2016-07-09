@@ -5,28 +5,27 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topPanel"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#fff"
-        android:orientation="horizontal">
+        android:background="#fff">
+
 
         <ImageButton
             android:id="@+id/btn_topleft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
             android:layout_gravity="center"
             android:background="@mipmap/unfold_more" />
 
+
         <TextView
             android:id="@+id/textView"
-            android:layout_width="295dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
@@ -34,65 +33,26 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="26sp" />
 
+        <Switch
+            android:id="@+id/switch_vpnsevice"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/btn_topright"
+            android:checked="false" />
+
+
         <ImageButton
             android:id="@+id/btn_topright"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/more"></ImageButton>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/more">
+
+        </ImageButton>
 
 
-        <!--
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btn_topleft"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:background="@mipmap/unfold_more" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="295dp"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:text="防火墙"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="26sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/btn_topright"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/more"></ImageButton>
-
-                </RelativeLayout>
-        -->
-    </LinearLayout>
+    </RelativeLayout>
+    >>>>>>> 79efc1106cfa39a8b8fe2a38cc51aa39b35cea5c
 
     <RelativeLayout
         android:id="@+id/app_midlle"

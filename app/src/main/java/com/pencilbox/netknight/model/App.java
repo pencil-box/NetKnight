@@ -1,15 +1,40 @@
 package com.pencilbox.netknight.model;
 
+import android.graphics.drawable.Drawable;
+
+import org.litepal.annotation.Column;
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by pencil-box on 16/6/27.
  * 应用信息表
  */
-public class App {
+public class App extends DataSupport{
 
     private long id;
+    //app的label名称
     private String name;
-    //存储的时app icon的路径信息
-    private String icon;
+
+    //pkgname的信息
+    private String pkgname;
+
+
+    //存储的时app icon的drawable信息
+    @Column(ignore=true)
+    private Drawable icon;
+
+    //uid  userId每一个app对应的唯一uid
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+
 
     //wifi类型,移动数据访问类型,具体存储什么查看Constants
     private int wifiType;
@@ -31,11 +56,11 @@ public class App {
         this.name = name;
     }
 
-    public String getIcon() {
+    public Drawable getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(Drawable icon) {
         this.icon = icon;
     }
 
@@ -53,5 +78,13 @@ public class App {
 
     public void setMobileDataType(int mobileDataType) {
         this.mobileDataType = mobileDataType;
+    }
+
+    public String getPkgname() {
+        return pkgname;
+    }
+
+    public void setPkgname(String pkgname) {
+        this.pkgname = pkgname;
     }
 }

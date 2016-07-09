@@ -5,11 +5,8 @@ package com.pencilbox.netknight.presentor;
  */
 public interface IPreferPresenter {
 
-    //加载权限列表
+
     void loadPermission();
-
-
-
     //防火墙生效网络
     int ON_WIFI = 1;
     int ON_CELLULAR = 2;
@@ -27,6 +24,7 @@ public interface IPreferPresenter {
     int PERMIT =2;
     int FORBID = 3;
     int FORBID_BACK = 4;
+
 
     void changDefaultPermission(int defaultId,int permissionId);
 }

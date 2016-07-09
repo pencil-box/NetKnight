@@ -3,11 +3,13 @@ package com.pencilbox.netknight.model;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by wu on 16/6/27.
  */
 
-public class AppInfo {
+public class AppInfo extends DataSupport{
     private String appLabel;
     private Drawable appIcon;
     private Intent intent;

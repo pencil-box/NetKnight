@@ -32,20 +32,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grasp_top"
-        android:layout_margin="100dp">
+        android:orientation="vertical"
+        >
 
         <TextView
-            android:id="@+id/text_grasp"
+            android:id="@+id/text_capture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="选择应用    "
+            android:text="选择应用"
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/btn_grasp"
-            android:layout_width="match_parent"
+            android:id="@+id/btn_capture"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="RtlSymmetry" />
+            android:text="开始抓包" />
+
+        <Button
+            android:id="@+id/btn_stop_capture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止抓包"/>
+
+
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,7 +1,7 @@
 package com.pencilbox.netknight.presentor;
 
 import android.content.Context;
-import android.media.Image;
+import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.AppInfo;
+import com.pencilbox.netknight.model.App;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,22 +20,33 @@ import java.util.List;
  */
 
 public class AppInfoAdapter extends BaseAdapter {
-    private List<AppInfo> list_appinfo = null;
+    private List<App> list_appinfo = new ArrayList<>();
     LayoutInflater inflater = null;
 
-    public AppInfoAdapter(Context context, List<AppInfo> apps) {
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        list_appinfo = apps;
+
+    private PackageManager mPackageManager;
+
+    public void addAll(List<App> appLists){
+        list_appinfo.addAll(appLists);
     }
+
+    public AppInfoAdapter(Context context){
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+
+//    public AppInfoAdapter(Context context, List<AppInfo> apps) {
+
+//        list_appinfo = apps;
+//    }
 
     public int getCount() {
         // TODO Auto-generated method stub
-        System.out.println("size" + list_appinfo.size());
+//        System.out.println("size" + list_appinfo.size());
         return list_appinfo.size();
     }
 
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
+    public App getItem(int position) {
         return list_appinfo.get(position);
     }
 
@@ -55,10 +67,16 @@ public class AppInfoAdapter extends BaseAdapter {
             view = convertview;
             holder = (ViewHolder) convertview.getTag();
         }
-        AppInfo appInfo = (AppInfo) getItem(position);
-        holder.appIcon.setImageDrawable(appInfo.getAppIcon());
-        holder.tvAppLabel.setText(appInfo.getAppLabel());
-        holder.tvPkgName.setText(appInfo.getPkgName());
+
+        App appInfo = getItem(position);
+            holder.appIcon.setImageDrawable(appInfo.getIcon());
+        holder.tvAppLabel.setText(appInfo.getName());
+        holder.tvPkgName.setText(appInfo.getPkgname());
+
+//        AppInfo appInfo = (AppInfo) getItem(position);
+//        holder.appIcon.setImageDrawable(appInfo.getAppIcon());
+//        holder.tvAppLabel.setText(appInfo.getAppLabel());
+//        holder.tvPkgName.setText(appInfo.getPkgName());
         return view;
     }
 
