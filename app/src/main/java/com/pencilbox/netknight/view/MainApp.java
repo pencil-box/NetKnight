@@ -1,14 +1,8 @@
 package com.pencilbox.netknight.view;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,33 +12,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.App;
-import com.pencilbox.netknight.model.AppInfo;
-import com.pencilbox.netknight.presentor.AppInfoAdapter;
-
-import org.litepal.tablemanager.Connector;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.presentor.IAppInfoImpl;
 import com.pencilbox.netknight.presentor.IAppInfoPresenter;
-import com.pencilbox.netknight.utils.AppUtils;
+import com.pencilbox.netknight.service.NetKnightService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class MainApp extends Fragment implements View.OnClickListener ,IAppInfoView{
+public class MainApp extends Fragment implements View.OnClickListener, IAppInfoView {
     private PopupWindow popupWindow;
     private ListView app_listView = null;
     private List<String> data_appchoose = null;
     private Spinner app_choose;
     private ArrayAdapter<String> appchoose_adapter;
 
+
+    private Switch mFireWallSwitch;
 
     private IAppInfoPresenter mIAppInfoPresenter;
 
@@ -56,7 +47,37 @@ public class MainApp extends Fragment implements View.OnClickListener ,IAppInfoV
         app_listView = (ListView) view.findViewById(R.id.app_listview);
 
 
+        mFireWallSwitch = (Switch) view.findViewById(R.id.switch_vpnsevice);
+        mFireWallSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+
+                if(getActivity() instanceof  MainTabbed){
+
+                    if(isChecked){
+
+
+                        ((MainTabbed)getActivity()).startVpnService();
+
+                    }else{
+
+                        ((MainTabbed)getActivity()).stopVpnService();
+
+                    }
+
+
+                }else{
+
+                    Log.e("MainApp","--onCheckedChanged-- activity is not MainTabbed");
+                }
+
+
+
+            }
+        });
+        //设置firewall的状态咯
+        mFireWallSwitch.setChecked(NetKnightService.isRunning);
 
 
         //TODO 这个inflate是闹哪样?
@@ -117,7 +138,7 @@ public class MainApp extends Fragment implements View.OnClickListener ,IAppInfoV
          * Listview off apps in cellphone
          */
 
-        mIAppInfoPresenter = new IAppInfoImpl(getActivity(),this);
+        mIAppInfoPresenter = new IAppInfoImpl(getActivity(), this);
         mIAppInfoPresenter.loadAppList();
 
         return view;
@@ -222,7 +243,6 @@ public class MainApp extends Fragment implements View.OnClickListener ,IAppInfoV
     }
 
 
-
 //    @Override
 //    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //
@@ -233,10 +253,9 @@ public class MainApp extends Fragment implements View.OnClickListener ,IAppInfoV
 //    }
 
 
-
     @Override
     public void onLoadAppInfoList(BaseAdapter adapter) {
-Log.d("MainApp","加载数据咯");
+        Log.d("MainApp", "加载数据咯");
         app_listView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
@@ -244,7 +263,6 @@ Log.d("MainApp","加载数据咯");
 
     @Override
     public void onListRefresh() {
-
 
 
     }

@@ -1,5 +1,7 @@
 package com.pencilbox.netknight.view;
 
+import android.content.Intent;
+import android.net.VpnService;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -22,6 +24,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.service.NetKnightService;
+import com.pencilbox.netknight.utils.MyLog;
 
 public class MainTabbed extends AppCompatActivity {
     PopupWindow popupWindow;
@@ -139,6 +143,60 @@ public class MainTabbed extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+
+    private final int REQ_START_VPN = 100;
+
+    /**
+     * 开启vpnservice
+     */
+    protected void startVpnService(){
+
+
+        Intent intent = VpnService.prepare(this);
+        if(intent!=null){
+            startActivityForResult(intent,REQ_START_VPN);
+
+        }else{
+
+            onActivityResult(REQ_START_VPN,RESULT_OK,null);
+        }
+
+    }
+
+    /**
+     * 停止vpnService
+     */
+    protected void stopVpnService(){
+
+            NetKnightService.isCalledByUser = true;
+            NetKnightService.isRunning = false;
+
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode != RESULT_OK){
+            return;
+        }
+        switch (requestCode){
+            case REQ_START_VPN:
+                MyLog.logd(this,"start Vpn Service");
+
+                Intent intent = new Intent(this, NetKnightService.class);
+                startService(intent);
+
+                break;
+            default:
+                break;
+
+        }
+
     }
 
 }

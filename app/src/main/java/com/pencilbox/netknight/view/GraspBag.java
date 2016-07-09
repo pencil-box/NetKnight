@@ -101,48 +101,7 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
 
 
 
-    private final int REQ_START_VPN = 100;
 
-    /**
-     * 开启vpnservice
-     */
-    private void startVpnService(){
-
-
-       Intent intent = VpnService.prepare(this);
-        if(intent!=null){
-            startActivityForResult(intent,REQ_START_VPN);
-
-        }else{
-
-            onActivityResult(REQ_START_VPN,RESULT_OK,null);
-        }
-
-    }
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode != RESULT_OK){
-            return;
-        }
-        switch (requestCode){
-            case REQ_START_VPN:
-                MyLog.logd(this,"start Vpn Service");
-
-                Intent intent = new Intent(this, NetKnightService.class);
-                startService(intent);
-
-                break;
-            default:
-                break;
-
-        }
-
-    }
 
     private void initmPopupWindowViewleft() {
         View customView = getLayoutInflater().inflate(R.layout.graspleft_top,

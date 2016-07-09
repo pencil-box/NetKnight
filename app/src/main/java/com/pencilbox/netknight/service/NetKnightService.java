@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.view.View;
 
 import com.pencilbox.netknight.net.ByteBufferPool;
@@ -48,13 +51,22 @@ public class NetKnightService extends VpnService implements Runnable {
     private Selector mChannelSelector;
 
 
-    private volatile boolean isRunning = false;
+    public static volatile boolean isRunning = false;
+    public static volatile boolean isCalledByUser = false;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         MyLog.logd(this, "onCreate");
 
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        MyLog.logd(this,"onStartCommand");
         Builder builder = new Builder();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            try {
@@ -97,16 +109,10 @@ public class NetKnightService extends VpnService implements Runnable {
         mNetOutput.start();
         mNetInput.start();
         new Thread(this).start();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-//        MyLog.logd(this,"onStartCommand");
-
 
         return super.onStartCommand(intent, flags, startId);
     }
+
 
 
     @Override
@@ -133,6 +139,15 @@ public class NetKnightService extends VpnService implements Runnable {
 
 
                 if(!isRunning){
+                    Log.d("NetKnight","isRunning is false");
+                    if(isCalledByUser){
+
+//                        mHandler.sendEmptyMessage(MSG_STOP_VPN_SERVICE);
+
+                        close();
+                        Log.d("NetKnight","stopSelf");
+                    }
+
                     break;
                 }
 
@@ -242,6 +257,7 @@ public class NetKnightService extends VpnService implements Runnable {
         ByteBufferPool.clear();
     }
 
+    //TODO 应该广播给activity调整那个item键的呢
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -249,6 +265,8 @@ public class NetKnightService extends VpnService implements Runnable {
 
         MyLog.logd(this, "onDestroy");
     }
+
+
 
 
 }
