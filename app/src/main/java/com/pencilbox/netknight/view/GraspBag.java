@@ -37,9 +37,6 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
 
     private Button mCaptureBtn;
     private Button mStopBtn;
-    private TextView mLogTv;
-
-   private Button mNetConnect;
 
 
     @Override
@@ -62,12 +59,9 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         mCaptureBtn = (Button) findViewById(R.id.btn_capture);
 
         mStopBtn = (Button) findViewById(R.id.btn_stop_capture);
-        mLogTv = (TextView) findViewById(R.id.tv_packet);
-
-        mNetConnect = (Button) findViewById(R.id.btn_connect_server_by_http);
 
 
-        mNetConnect.setOnClickListener(this);
+
         mCaptureBtn.setOnClickListener(this);
         mStopBtn.setOnClickListener(this);
 

@@ -1,6 +1,5 @@
 package com.pencilbox.netknight.net;
 
-import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.util.Log;
 
@@ -65,26 +64,19 @@ public class NetOutput extends Thread {
     public void run() {
 
         Log.d(TAG, "start~");
-        Log.d(TAG, Thread.currentThread().getName() + " runing");
         Packet currentPacket ;
         while (true) {
-
-
-
-
 
             try {
 
                 //阻塞等到有数据就处理
                 currentPacket = mInputQueue.poll();
-//                Thread.sleep(20000);
                 Thread.sleep(15);
 
                 if(currentPacket==null){
                     continue;
                 }
             } catch (InterruptedException e) {
-//                e.printStackTrace();
                 Log.d(TAG, "Stop");
 
                 if (mQuit)
@@ -93,7 +85,6 @@ public class NetOutput extends Thread {
             }
 
 
-//            int payLoadSize = currentPacket.getPayloadSize();
 
             //实际要传的数据哟
             ByteBuffer payloadBuffer = currentPacket.backingBuffer;
@@ -192,16 +183,6 @@ public class NetOutput extends Thread {
 
             //标识已经被改变咯
             tcb.myAcknowledgementNum = currentPacket.tcpHeader.sequenceNumber + 1;
-//        tcb.theirAcknowledgementNum = currentPacket.tcpHeader.acknowledgementNumber;
-
-//        if (tcb.waitingForNetworkData)
-//        {
-//            tcb.status = TCBStatus.CLOSE_WAIT;
-//            referencePacket.updateTCPBuffer(responseBuffer, (byte) TCPHeader.ACK,
-//                    tcb.mySequenceNum, tcb.myAcknowledgementNum, 0);
-//        }
-//        else
-//        {
 
             tcb.tcbStatus = TCB.TCB_STATUS_LAST_ACK;
             currentPacket.updateTCPBuffer(responseBuffer, (byte) (Packet.TCPHeader.FIN | Packet.TCPHeader.ACK),
@@ -213,8 +194,6 @@ public class NetOutput extends Thread {
         }
         TCBCachePool.closeTCB(ipAndPort);
 
-//        }
-//    }
 
      mOutputQueue.offer(responseBuffer);
 
@@ -228,7 +207,6 @@ public class NetOutput extends Thread {
     private void transData(String ipAndPort,TCB tcb, Packet currentPacket, ByteBuffer dataBuffer, ByteBuffer responseBuffer) {
 
         //1.发送ACK码 2.传递真实数据
-//        Packet responsePacket = tcb.referencePacket;
 
         int payloadSize = dataBuffer.limit() - dataBuffer.position();
 
@@ -254,16 +232,6 @@ public class NetOutput extends Thread {
 
             MyLog.logd(this, "传递的payloadSize为:" + payloadSize);
 
-
-            //修改tcb的状态
-//        if(tcb.tcbStatus==TCB.TCB_STATUS_SYN_RECEIVED) {
-
-
-//        }else if(tcb.tcbStatus==TCB.TCB_STATUS_LAST_ACK){
-//
-//        }
-
-
             //发送完数据咯,那么就执行真正的数据访问
 
             SelectionKey outKey = tcb.selectionKey;
@@ -272,16 +240,9 @@ public class NetOutput extends Thread {
                 return;
             }
 
-//        if(tcb.tcbStatus == TCB.TCB_STATUS_SYN_RECEIVED) {
-//
-//            MyLog.logd(this,"tcb的状态为 SYN Received");
-//            return;
-//        }
             //监听读的状态咯
             if (tcb.tcbStatus == TCB.TCB_STATUS_SYN_RECEIVED) {
                 tcb.tcbStatus = TCB.TCB_STATUS_ESTABLISHED;
-//        mChannelSelector.wakeup();
-//        outKey.interestOps(SelectionKey.OP_READ);
 
             } else if (tcb.tcbStatus == TCB.TCB_STATUS_ESTABLISHED) {
 
@@ -319,8 +280,6 @@ public class NetOutput extends Thread {
 
             currentPacket.swapSourceAndDestination();
 
-//        tcb.mySequenceNum = tcb.mySequenceNum + payloadSize;
-//        tcb.theirSequenceNum = currentPacket.tcpHeader.sequenceNumber;
             tcb.myAcknowledgementNum = currentPacket.tcpHeader.sequenceNumber + payloadSize;
             currentPacket.updateTCPBuffer(responseBuffer, (byte) Packet.TCPHeader.ACK, tcb.mySequenceNum, tcb.myAcknowledgementNum, 0);
 
@@ -343,24 +302,12 @@ public class NetOutput extends Thread {
 
         //TODO 找到对应的uid咯
 
+        boolean isPass =  filterPacket(referencePacket);
+        if(!isPass){
+            //TODO 主动断开连接,拒绝访问咯
 
-        int uid =  NetUtils.readProcFile(referencePacket.tcpHeader.sourcePort);
-        MyLog.logd(this,"uid为:"+uid);
-
-        if(uid<10000){
-
-            Log.e(TAG,"连接失败");
-//            sendRST();
-
-            return ;
+            return;
         }
-
-
-        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
-
-        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
-
-
 
 
         referencePacket.swapSourceAndDestination();
@@ -422,5 +369,35 @@ public class NetOutput extends Thread {
 
         mOutputQueue.offer(responseBuffer);
 
+    }
+
+    /**
+     * 过滤相关的包
+     * ip,domain name
+     * uid
+     */
+
+    private boolean filterPacket(Packet transPacket) {
+
+
+        int uid =  NetUtils.readProcFile(transPacket.tcpHeader.sourcePort);
+        MyLog.logd(this,"uid为:"+uid);
+
+        if(uid<10000){
+
+            Log.e(TAG,"连接失败");
+//            sendRST();
+            return false;
+        }
+
+        //TODO
+
+
+
+        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
+
+        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
+
+        return true;
     }
 }

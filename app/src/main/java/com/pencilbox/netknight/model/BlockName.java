@@ -11,7 +11,7 @@ public class BlockName extends DataSupport{
     //域名信息
     private String cName;
     private String ip;
-    private String id;
+    private long id;
 
     public String getcName() {
         return cName;
@@ -29,11 +29,11 @@ public class BlockName extends DataSupport{
         this.ip = ip;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 }
