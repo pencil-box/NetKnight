@@ -1,32 +1,35 @@
 package com.pencilbox.netknight.view;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 
+import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.presentor.ListAdapter;
 
-public class MainTabbed extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainTabbed extends AppCompatActivity implements AddressInputDialog.DataInputListener,
+        IpInputDialog.DataIpInputListnener {
+
     PopupWindow popupWindow;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private ListView listViewaddress, listViewip;
+    private List<String> listaddress, listip;
+    private ListAdapter address_adapter, ip_adapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -49,6 +52,9 @@ public class MainTabbed extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        listaddress = new ArrayList<String>();
+        listip = new ArrayList<String>();
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -66,6 +72,7 @@ public class MainTabbed extends AppCompatActivity {
 
 */
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,6 +94,29 @@ public class MainTabbed extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDataInputListener(String start, String end) {
+
+        listViewaddress = (ListView) this.findViewById(R.id.list_address);
+        listaddress.add(start);
+        listaddress.add(end);
+
+
+        address_adapter = new ListAdapter(this, listaddress);
+        listViewaddress.setAdapter(address_adapter);
+    }
+
+    @Override
+    public void onDataIpInputListener(String ipstart, String ipend) {
+        listViewip = (ListView) this.findViewById(R.id.list_ip);
+        listip.add(ipstart);
+        listip.add(ipend);
+        ip_adapter = new ListAdapter(this, listip);
+        listViewip.setAdapter(ip_adapter);
+
+
     }
 
 

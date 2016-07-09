@@ -3,19 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="新增IP"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:textColor="#fff"
-        android:background="#815a82b3"
-        />
-</LinearLayout>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#815a82b3"
+            android:text="              新增IP                "
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="30sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -63,7 +65,13 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#d3b6d4" />
-
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/ip_sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:text="确定" />
+
 </LinearLayout>
