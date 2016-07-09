@@ -24,7 +24,6 @@ public class AppInfoAdapter extends BaseAdapter {
     LayoutInflater inflater = null;
 
 
-    private PackageManager mPackageManager;
 
     public void addAll(List<App> appLists){
         list_appinfo.addAll(appLists);
@@ -35,14 +34,8 @@ public class AppInfoAdapter extends BaseAdapter {
     }
 
 
-//    public AppInfoAdapter(Context context, List<AppInfo> apps) {
-
-//        list_appinfo = apps;
-//    }
 
     public int getCount() {
-        // TODO Auto-generated method stub
-//        System.out.println("size" + list_appinfo.size());
         return list_appinfo.size();
     }
 
@@ -51,12 +44,10 @@ public class AppInfoAdapter extends BaseAdapter {
     }
 
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     public View getView(int position, View convertview, ViewGroup arg2) {
-        System.out.println("getView at " + position);
         View view = null;
         ViewHolder holder = null;
         if (convertview == null || convertview.getTag() == null) {
@@ -73,10 +64,6 @@ public class AppInfoAdapter extends BaseAdapter {
         holder.tvAppLabel.setText(appInfo.getName());
         holder.tvPkgName.setText(appInfo.getPkgname());
 
-//        AppInfo appInfo = (AppInfo) getItem(position);
-//        holder.appIcon.setImageDrawable(appInfo.getAppIcon());
-//        holder.tvAppLabel.setText(appInfo.getAppLabel());
-//        holder.tvPkgName.setText(appInfo.getPkgName());
         return view;
     }
 

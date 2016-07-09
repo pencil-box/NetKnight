@@ -19,7 +19,7 @@ public class Traffic extends DataSupport{
     private long mobileSize;
 
     //与App关联,appId
-    private String appId;
+    private long appId;
 
     //记录的时间,
     // The value is the number of milliseconds since Jan. 1, 1970, midnight GMT.
@@ -50,11 +50,11 @@ public class Traffic extends DataSupport{
         this.mobileSize = mobileSize;
     }
 
-    public String getAppId() {
+    public long getAppId() {
         return appId;
     }
 
-    public void setAppId(String appId) {
+    public void setAppId(long appId) {
         this.appId = appId;
     }
 

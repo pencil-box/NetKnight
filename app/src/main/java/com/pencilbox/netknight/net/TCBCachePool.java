@@ -4,6 +4,7 @@ package com.pencilbox.netknight.net;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.pencilbox.netknight.model.Traffic;
 import com.pencilbox.netknight.utils.MyLog;
 
 import java.io.IOException;
@@ -65,6 +66,9 @@ public class TCBCachePool  {
 
 
 
+
+        saveTrafficInfo(mPool.get(ipAndPort));
+
         mPool.remove(ipAndPort);
 
 //        try {
@@ -77,6 +81,8 @@ public class TCBCachePool  {
 
     }
 
+
+
     /**
      * 移除所有,包括相关的channel
      */
@@ -86,6 +92,7 @@ public class TCBCachePool  {
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             TCB val = (TCB) entry.getValue();
+            saveTrafficInfo(val);
             try {
                 val.selectionKey.channel().close();
             } catch (IOException e) {
@@ -96,4 +103,21 @@ public class TCBCachePool  {
 
         mPool.clear();
     }
+
+
+    private static void saveTrafficInfo(TCB tcb){
+
+        Traffic traffic = new Traffic();
+        traffic.setAppId(tcb.getAppId());
+        traffic.setMobileSize(tcb.getMobileBytes());
+        traffic.setWifiSize(tcb.getWifiBytes());
+        traffic.setRecordTime(System.currentTimeMillis());
+        if(traffic.save()){
+            Log.d(TAG,"保存流量成功");
+        }else{
+            Log.e(TAG,"保存流量失败");
+        }
+
+    }
+
 }

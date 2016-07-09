@@ -71,12 +71,15 @@ public class AppUtils {
             packageName = packageList.get(i).packageName;
             if(!isSystem(packageName,context)){
 
-//                installedApp.add(packageList.get(i));
-                System.out.println(packageList.get(i).applicationInfo.loadLabel(pm)+" "+packageList.get(i).packageName+"&&Uid is"+packageList.get(i).applicationInfo.uid);
+                if(packageName.equals(context.getPackageName())){
+                    //自身应用信息不加进去
+                    continue;
+                }
+
 
 
                 App app = new App();
-                app.setUid(packageList.get(i).applicationInfo.uid+"");
+                app.setUid(packageList.get(i).applicationInfo.uid);
 
 
                 app.setName((String) packageList.get(i).applicationInfo.loadLabel(pm));
@@ -85,6 +88,7 @@ public class AppUtils {
                 app.setMobileDataType(Constants.ACCESS_TYPE_REMIND);
                 app.setWifiType(Constants.ACCESS_TYPE_REMIND);
 
+                app.setAccessVpn(true);
                 if(app.save()){
                     Log.d("AppUtils","save success");
                 }else{

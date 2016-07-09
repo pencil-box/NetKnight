@@ -10,12 +10,18 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.View;
 
+import com.pencilbox.netknight.NetKnightApp;
+import com.pencilbox.netknight.model.App;
+import com.pencilbox.netknight.net.AppNetStateMap;
 import com.pencilbox.netknight.net.ByteBufferPool;
 import com.pencilbox.netknight.net.NetInput;
 import com.pencilbox.netknight.net.NetOutput;
 import com.pencilbox.netknight.net.Packet;
 import com.pencilbox.netknight.net.TCBCachePool;
+import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
+
+import org.litepal.crud.DataSupport;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,6 +29,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Selector;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -63,10 +70,9 @@ public class NetKnightService extends VpnService implements Runnable {
 
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    //建立vpn
+    private void setupVpn(){
 
-        MyLog.logd(this,"onStartCommand");
         Builder builder = new Builder();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            try {
@@ -76,11 +82,44 @@ public class NetKnightService extends VpnService implements Runnable {
 //                e.printStackTrace();
 //            }
 //        }
-
-
+        //获取应用信息,并设置相应的包才动it
+        List<App> appList = AppUtils.queryAppInfo(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //只拦截需要拦截的应用
+            for (int i = 0; i < appList.size(); i++) {
+                App app = appList.get(i);
+                if (app.isAccessVpn()) {
+                    try {
+                        builder = builder.addAllowedApplication(app.getPkgname());
+
+                        //存储到全局map里面
+                        AppNetStateMap.putWifi(app.getId(),app.getWifiType());
+                        AppNetStateMap.putMobile(app.getId(),app.getMobileDataType());
+
+
+
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
             mInterface = builder.setSession("NetKnight").setBlocking(false).addAddress(VPN_ADDRESS,32).addRoute("0.0.0.0",0).establish();
+        }else{
+            Log.e("NetKnightService","当前版本的android 不支持vpnservice");
         }
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        MyLog.logd(this,"onStartCommand");
+
+        setupVpn();
+
+
+
         try {
             mChannelSelector = Selector.open();
         } catch (IOException e) {

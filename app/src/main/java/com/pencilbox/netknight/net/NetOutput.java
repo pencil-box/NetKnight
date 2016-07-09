@@ -4,9 +4,12 @@ import android.net.VpnService;
 import android.util.Log;
 
 import com.pencilbox.netknight.NetKnightApp;
+import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
+
+import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -15,6 +18,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 
@@ -266,6 +270,9 @@ public class NetOutput extends Thread {
                         outChannel.write(dataBuffer);
                     }
 
+                    //记录发送数据
+                    tcb.calculateTransBytes(payloadSize);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     MyLog.logd(this, "write data error");
@@ -302,18 +309,24 @@ public class NetOutput extends Thread {
 
         //TODO 找到对应的uid咯
 
-        boolean isPass =  filterPacket(referencePacket);
-        if(!isPass){
+        long passAppId =  filterPacket(referencePacket);
+        if(passAppId == -1){
             //TODO 主动断开连接,拒绝访问咯
 
             return;
         }
 
 
+
+
         referencePacket.swapSourceAndDestination();
 
         TCB tcb = new TCB(ipAndPort, new Random().nextInt(Short.MAX_VALUE), referencePacket.tcpHeader.sequenceNumber,
                 referencePacket.tcpHeader.sequenceNumber + 1, referencePacket.tcpHeader.acknowledgementNumber, referencePacket);
+
+        //设置appId,方便记录流量包
+        tcb.setAppId(passAppId);
+
 
         //存储起来先orz
         TCBCachePool.putTCB(ipAndPort, tcb);
@@ -324,6 +337,8 @@ public class NetOutput extends Thread {
             //保护本应用建立的通道,防止死循环
             mVpnService.protect(socketChannel.socket());
             socketChannel.connect(new InetSocketAddress(desAddress, desPort));
+
+
 
             //非阻塞状态连接需要判断是否连接成功
             if (socketChannel.finishConnect()) {
@@ -372,12 +387,22 @@ public class NetOutput extends Thread {
     }
 
     /**
-     * 过滤相关的包
+     * 过滤相关的包,返回的为appId,如果为-1,则说明禁止访问
      * ip,domain name
      * uid
      */
 
-    private boolean filterPacket(Packet transPacket) {
+    private long filterPacket(Packet transPacket) {
+
+        //TODO 根据域名拦截
+
+
+
+
+
+        //TODO 根据ip段拦截
+
+
 
 
         int uid =  NetUtils.readProcFile(transPacket.tcpHeader.sourcePort);
@@ -387,17 +412,28 @@ public class NetOutput extends Thread {
 
             Log.e(TAG,"连接失败");
 //            sendRST();
-            return false;
+            return -1;
         }
-
-        //TODO
-
+        //过滤暂且没做呢
 
 
-        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
+        //TODO 通过UID查找appId
 
-        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
+        List<App> appList =  DataSupport.where("uid = ?",String.valueOf(uid)).find(App.class);
 
-        return true;
+        if(appList.size()!=1){
+           return -1;
+        }
+        Log.d(TAG,"app id 号为:"+appList.get(0).getId());
+
+
+
+
+
+//        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
+
+//        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
+
+        return appList.get(0).getId();
     }
 }

@@ -20,7 +20,9 @@
         <version value="1" ></version>
     -->
     <!--modify app table:add pkgname,ignore column icon-->
-    <version value="3" ></version>
+    <!--version 4:modify traffic table:change appId string to long-->
+    <!--version 5:modify app table: add isAccessVpn boolean,change uid string to int-->
+    <version value="5" ></version>
 
     <!--
         Define your models in the list with mapping tag, LitePal will
@@ -35,7 +37,6 @@
     <list>
 
         <mapping class="com.pencilbox.netknight.model.App"></mapping>
-        <mapping class="com.pencilbox.netknight.model.AppInfo"></mapping>
         <mapping class="com.pencilbox.netknight.model.AppIp"></mapping>
         <mapping class="com.pencilbox.netknight.model.Bag"></mapping>
         <mapping class="com.pencilbox.netknight.model.BlockIp"></mapping>

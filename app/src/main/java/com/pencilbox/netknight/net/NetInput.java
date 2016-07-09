@@ -212,7 +212,7 @@ public class NetInput  extends   Thread{
                 return;
             }
 
-
+            tcb.calculateTransBytes(readBytes);
 
 
             MyLog.logd(this,"responseBuffer:Before Limit:"+responseBuffer.limit()+" position:"+responseBuffer.position());
