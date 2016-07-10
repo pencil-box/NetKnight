@@ -52,7 +52,6 @@
 
 
     </RelativeLayout>
-    >>>>>>> 79efc1106cfa39a8b8fe2a38cc51aa39b35cea5c
 
     <RelativeLayout
         android:id="@+id/app_midlle"
