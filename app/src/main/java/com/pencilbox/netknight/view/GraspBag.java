@@ -1,40 +1,22 @@
 package com.pencilbox.netknight.view;
 
 import android.content.Intent;
-import android.net.VpnService;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.receiver.NetChangeReceiver;
-import com.pencilbox.netknight.service.NetKnightService;
-import com.pencilbox.netknight.utils.AppUtils;
-import com.pencilbox.netknight.utils.EncodeUtils;
-import com.pencilbox.netknight.utils.MyLog;
-import com.pencilbox.netknight.utils.NetUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.Buffer;
 
 
 public class GraspBag extends AppCompatActivity implements View.OnClickListener {
     private ImageButton btn_graspleft;
     private PopupWindow popupWindow;
-
     private Button mCaptureBtn;
     private Button mStopBtn;
 

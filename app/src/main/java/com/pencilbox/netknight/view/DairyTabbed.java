@@ -26,7 +26,7 @@ import com.pencilbox.netknight.presentor.IDairyPresenter;
 
 import java.util.ArrayList;
 
-public class DairyTabbed extends AppCompatActivity implements View.OnClickListener , IDairyView{
+public class DairyTabbed extends AppCompatActivity implements View.OnClickListener, IDairyView {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private PopupWindow popupWindow;
@@ -199,10 +199,12 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new NetCellular();
+                    return new NetAppUse();
                 case 1:
-                    return new NetWifi();
+                    return new NetCellular();
                 case 2:
+                    return new NetWifi();
+                case 3:
                     return new NetCellularWifi();
             }
             return null;
@@ -211,17 +213,19 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "移动网络";
+                    return "应用流量";
                 case 1:
-                    return "WIFI网络";
+                    return "移动网络";
                 case 2:
+                    return "WIFI网络";
+                case 3:
                     return "移动+WIFI网络";
             }
             return null;

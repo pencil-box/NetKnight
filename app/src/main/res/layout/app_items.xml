@@ -2,28 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/app_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp">
 
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
         <TextView
             android:id="@+id/app_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/app_icon"
             android:text="AppLabel : " />
 
         <TextView
             android:id="@+id/tvAppLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dip"
+            android:layout_marginLeft="3dp"
             android:layout_toRightOf="@id/app_label"
             android:text="Label"
             android:textColor="#3191e6"></TextView>
@@ -33,19 +36,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/app_label"
+            android:layout_toRightOf="@id/app_icon"
             android:text="包名 : "></TextView>
 
         <TextView
             android:id="@+id/tvPkgName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/app_label"
             android:layout_below="@id/tvAppLabel"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/app_label"
             android:textColor="#3191e6"></TextView>
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
 
+        <TextView
+            android:id="@+id/app_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="45dp"
+            android:text="应用权限:"
+            android:textAlignment="center" />
 
+        <Spinner
+            android:id="@+id/wifi_spinner"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@+id/app_text">
+
+        </Spinner>
+
+        <Spinner
+            android:id="@+id/celluar_spinner"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/wifi_spinner"></Spinner>
+    </RelativeLayout>
 
 </LinearLayout>
