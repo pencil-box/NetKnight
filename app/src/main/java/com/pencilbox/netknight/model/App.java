@@ -18,19 +18,22 @@ public class App extends DataSupport{
     //pkgname的信息
     private String pkgname;
 
+    //是否通过vpn拦截应用
+    private boolean isAccessVpn;
+
 
     //存储的时app icon的drawable信息
     @Column(ignore=true)
     private Drawable icon;
 
     //uid  userId每一个app对应的唯一uid
-    private String uid;
+    private int uid;
 
-    public String getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
@@ -86,5 +89,13 @@ public class App extends DataSupport{
 
     public void setPkgname(String pkgname) {
         this.pkgname = pkgname;
+    }
+
+    public boolean isAccessVpn() {
+        return isAccessVpn;
+    }
+
+    public void setAccessVpn(boolean accessVpn) {
+        isAccessVpn = accessVpn;
     }
 }

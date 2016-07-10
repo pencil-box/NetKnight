@@ -33,9 +33,14 @@ public class TCB
 {
     public String ipAndPort;
 
+    //initTCB的时候通过uid获取appId,方便存储流量信息咯
+    private long appId;
+
     //记录发送的数据咯
     private int sendMobileBytes =0;
     private int sendWifiBytes =0;
+
+
 
     //最后再存储相应的信息咯
     public int getMobileBytes(){
@@ -45,7 +50,12 @@ public class TCB
         return sendWifiBytes;
     }
 
-    public void caculateTransBytes(int payloadSize){
+    /**
+     * 这里主要是记录应用层传输的数据
+     * 忽略握手和Fin的影响
+     * @param payloadSize
+     */
+    public void calculateTransBytes(int payloadSize){
 
         if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_WIFI){
             sendWifiBytes+=payloadSize;
@@ -102,7 +112,11 @@ public class TCB
     }
 
 
+    public long getAppId() {
+        return appId;
+    }
 
-
-
+    public void setAppId(long appId) {
+        this.appId = appId;
+    }
 }

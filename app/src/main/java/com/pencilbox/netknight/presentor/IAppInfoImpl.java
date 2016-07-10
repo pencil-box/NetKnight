@@ -1,6 +1,9 @@
 package com.pencilbox.netknight.presentor;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 
 import com.pencilbox.netknight.NetKnightApp;
 import com.pencilbox.netknight.model.App;
@@ -21,6 +24,25 @@ public class IAppInfoImpl implements IAppInfoPresenter {
     public IAppInfoView mIAppInfoView;
 
 
+    private final int MSG_GET_APP_LIST = 0;
+    private Handler mHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+            switch (msg.what ){
+                case MSG_GET_APP_LIST:
+
+                    mIAppInfoView.onLoadAppInfoList(mAppInfoAdapter);
+
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+    };
+
 
     public IAppInfoImpl(Context context,IAppInfoView iAppInfoView){
 
@@ -33,12 +55,25 @@ public class IAppInfoImpl implements IAppInfoPresenter {
     @Override
     public void loadAppList() {
 
-        //加载信息咯
-        List<App> appList = AppUtils.queryAppInfo(NetKnightApp.getContext());
 
-        mAppInfoAdapter.addAll(appList);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-        mIAppInfoView.onLoadAppInfoList(mAppInfoAdapter);
+
+                //加载信息咯
+                List<App> appList = AppUtils.queryAppInfo(NetKnightApp.getContext());
+
+                mAppInfoAdapter.addAll(appList);
+
+                mHandler.sendEmptyMessage(MSG_GET_APP_LIST);
+
+            }
+        }).start();
+
+
+
+//        mIAppInfoView.onLoadAppInfoList(mAppInfoAdapter);
 
     }
 
