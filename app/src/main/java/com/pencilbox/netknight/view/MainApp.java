@@ -53,25 +53,24 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
 
-                if(getActivity() instanceof  MainTabbed){
+                if (getActivity() instanceof MainTabbed) {
 
-                    if(isChecked){
+                    if (isChecked) {
 
 
-                        ((MainTabbed)getActivity()).startVpnService();
+                        ((MainTabbed) getActivity()).startVpnService();
 
-                    }else{
+                    } else {
 
-                        ((MainTabbed)getActivity()).stopVpnService();
+                        ((MainTabbed) getActivity()).stopVpnService();
 
                     }
 
 
-                }else{
+                } else {
 
-                    Log.e("MainApp","--onCheckedChanged-- activity is not MainTabbed");
+                    Log.e("MainApp", "--onCheckedChanged-- activity is not MainTabbed");
                 }
-
 
 
             }
@@ -79,7 +78,7 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
         //设置firewall的状态咯
         mFireWallSwitch.setChecked(NetKnightService.isRunning);
 
-
+/*
         //TODO 这个inflate是闹哪样?
         View view1 = inflater.inflate(R.layout.app_items, null);
 
@@ -106,7 +105,7 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
             }
         });
 
-
+*/
         view.findViewById(R.id.btn_topleft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
