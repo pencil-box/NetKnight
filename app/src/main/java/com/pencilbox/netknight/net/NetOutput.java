@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.pencilbox.netknight.NetKnightApp;
 import com.pencilbox.netknight.model.App;
+import com.pencilbox.netknight.model.BlockIp;
+import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
@@ -18,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -68,7 +71,7 @@ public class NetOutput extends Thread {
     public void run() {
 
         Log.d(TAG, "start~");
-        Packet currentPacket ;
+        Packet currentPacket;
         while (true) {
 
             try {
@@ -77,7 +80,7 @@ public class NetOutput extends Thread {
                 currentPacket = mInputQueue.poll();
                 Thread.sleep(15);
 
-                if(currentPacket==null){
+                if (currentPacket == null) {
                     continue;
                 }
             } catch (InterruptedException e) {
@@ -87,7 +90,6 @@ public class NetOutput extends Thread {
                     return;
                 continue;
             }
-
 
 
             //实际要传的数据哟
@@ -111,23 +113,23 @@ public class NetOutput extends Thread {
             if (tcb == null) {
 
                 initTCB(ipAndPort, currentPacket, desAddress, desPort, responseBuffer);
-            }else if (currentPacket.tcpHeader.isSYN()) {
+            } else if (currentPacket.tcpHeader.isSYN()) {
                 Log.d(TAG, "重复的SYN");
 
-                dealDuplicatedSYN(tcb,ipAndPort,currentPacket,responseBuffer);
+                dealDuplicatedSYN(tcb, ipAndPort, currentPacket, responseBuffer);
 
-            }else if (currentPacket.tcpHeader.isFIN()) {
+            } else if (currentPacket.tcpHeader.isFIN()) {
                 Log.d(TAG, "---FIN---");
 
                 //结束这条连接咯
-                finishConnect(tcb,ipAndPort,currentPacket,responseBuffer);
+                finishConnect(tcb, ipAndPort, currentPacket, responseBuffer);
 
                 continue;
-            }else if (currentPacket.tcpHeader.isACK()) {
+            } else if (currentPacket.tcpHeader.isACK()) {
                 Log.d(TAG, "---ACK---");
 
                 //传递数据咯,一般数据是带ACK的
-                transData(ipAndPort,tcb, currentPacket, payloadBuffer, responseBuffer);
+                transData(ipAndPort, tcb, currentPacket, payloadBuffer, responseBuffer);
 
 
             }
@@ -145,9 +147,8 @@ public class NetOutput extends Thread {
 
 
     //连接重置咯,即断开之前的连接
-    private void sendRST(TCB tcb,String ipAndPort, int prevPayloadSize, ByteBuffer buffer)
-    {
-        Log.d(TAG,"sendRST");
+    private void sendRST(TCB tcb, String ipAndPort, int prevPayloadSize, ByteBuffer buffer) {
+        Log.d(TAG, "sendRST");
         tcb.referencePacket.updateTCPBuffer(buffer, (byte) Packet.TCPHeader.RST, 0, tcb.myAcknowledgementNum + prevPayloadSize, 0);
         mOutputQueue.offer(buffer);
         TCBCachePool.closeTCB(ipAndPort);
@@ -155,6 +156,7 @@ public class NetOutput extends Thread {
 
     /**
      * 处理冗余的SYN
+     *
      * @param tcb
      * @param ipAndPort
      * @param currentPacket
@@ -162,26 +164,27 @@ public class NetOutput extends Thread {
      */
     private void dealDuplicatedSYN(TCB tcb, String ipAndPort, Packet currentPacket, ByteBuffer responseBuffer) {
 
-        synchronized (tcb){
-            if(tcb.tcbStatus == TCB.TCB_STATUS_SYN_SENT){
+        synchronized (tcb) {
+            if (tcb.tcbStatus == TCB.TCB_STATUS_SYN_SENT) {
 
                 //如果是SYN发送的状态,即还在与远程服务器建立连接ing..
-                tcb.myAcknowledgementNum = currentPacket.tcpHeader.sequenceNumber+1;
+                tcb.myAcknowledgementNum = currentPacket.tcpHeader.sequenceNumber + 1;
                 return;
             }
         }
 
-        sendRST(tcb,ipAndPort,1,responseBuffer);
+        sendRST(tcb, ipAndPort, 1, responseBuffer);
 
     }
 
     /**
      * 关闭连接咯
+     *
      * @param ipAndPort
      * @param currentPacket
      * @param responseBuffer
      */
-    private void finishConnect(TCB tcb,String ipAndPort, Packet currentPacket, ByteBuffer responseBuffer) {
+    private void finishConnect(TCB tcb, String ipAndPort, Packet currentPacket, ByteBuffer responseBuffer) {
 
         synchronized (tcb) {
 
@@ -199,7 +202,7 @@ public class NetOutput extends Thread {
         TCBCachePool.closeTCB(ipAndPort);
 
 
-     mOutputQueue.offer(responseBuffer);
+        mOutputQueue.offer(responseBuffer);
 
     }
 
@@ -208,7 +211,7 @@ public class NetOutput extends Thread {
      *
      * @param tcb
      */
-    private void transData(String ipAndPort,TCB tcb, Packet currentPacket, ByteBuffer dataBuffer, ByteBuffer responseBuffer) {
+    private void transData(String ipAndPort, TCB tcb, Packet currentPacket, ByteBuffer dataBuffer, ByteBuffer responseBuffer) {
 
         //1.发送ACK码 2.传递真实数据
 
@@ -277,7 +280,7 @@ public class NetOutput extends Thread {
                     e.printStackTrace();
                     MyLog.logd(this, "write data error");
                     //失败就告知连接中断
-                    sendRST(tcb,ipAndPort,payloadSize,responseBuffer);
+                    sendRST(tcb, ipAndPort, payloadSize, responseBuffer);
 
                 }
 
@@ -309,14 +312,12 @@ public class NetOutput extends Thread {
 
         //TODO 找到对应的uid咯
 
-        long passAppId =  filterPacket(referencePacket);
-        if(passAppId == -1){
+        long passAppId = filterPacket(referencePacket);
+        if (passAppId == -1) {
             //TODO 主动断开连接,拒绝访问咯
 
             return;
         }
-
-
 
 
         referencePacket.swapSourceAndDestination();
@@ -339,7 +340,6 @@ public class NetOutput extends Thread {
             socketChannel.connect(new InetSocketAddress(desAddress, desPort));
 
 
-
             //非阻塞状态连接需要判断是否连接成功
             if (socketChannel.finishConnect()) {
                 //连接成功,即已经实现握手了,此时虚拟网卡这边也要进行握手
@@ -353,7 +353,7 @@ public class NetOutput extends Thread {
                 tcb.mySequenceNum++;
                 //TODO 不管it
                 mChannelSelector.wakeup();
-                tcb.selectionKey = socketChannel.register(mChannelSelector,SelectionKey.OP_READ,ipAndPort);
+                tcb.selectionKey = socketChannel.register(mChannelSelector, SelectionKey.OP_READ, ipAndPort);
 
 
             } else {
@@ -394,23 +394,33 @@ public class NetOutput extends Thread {
 
     private long filterPacket(Packet transPacket) {
 
+
         //TODO 根据域名拦截
 
+        if (BlockingPool.isBlockName) {
 
+            if (filterByDomain(transPacket.ip4Header.destinationAddress.getHostName())) {
+                Log.e(TAG, "数据包因为domainName段被拦截了");
+                return -1;
+            }
 
+        }
 
 
         //TODO 根据ip段拦截
 
+        if (filterByIp(transPacket.ip4Header.destinationAddress.getHostAddress())) {
+            Log.e(TAG, "数据包因为IP段被拦截了");
+            return -1;
+        }
 
 
+        int uid = NetUtils.readProcFile(transPacket.tcpHeader.sourcePort);
+        MyLog.logd(this, "uid为:" + uid);
 
-        int uid =  NetUtils.readProcFile(transPacket.tcpHeader.sourcePort);
-        MyLog.logd(this,"uid为:"+uid);
+        if (uid < 10000) {
 
-        if(uid<10000){
-
-            Log.e(TAG,"连接失败");
+            Log.e(TAG, "连接失败");
 //            sendRST();
             return -1;
         }
@@ -419,15 +429,12 @@ public class NetOutput extends Thread {
 
         //TODO 通过UID查找appId
 
-        List<App> appList =  DataSupport.where("uid = ?",String.valueOf(uid)).find(App.class);
+        List<App> appList = DataSupport.where("uid = ?", String.valueOf(uid)).find(App.class);
 
-        if(appList.size()!=1){
-           return -1;
+        if (appList.size() != 1) {
+            return -1;
         }
-        Log.d(TAG,"app id 号为:"+appList.get(0).getId());
-
-
-
+        Log.d(TAG, "app id 号为:" + appList.get(0).getId());
 
 
 //        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
@@ -435,5 +442,105 @@ public class NetOutput extends Thread {
 //        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
 
         return appList.get(0).getId();
+    }
+
+
+    /**
+     * 域名信息
+     * @param domainName
+     * @return
+     * true 拦截成功
+     */
+    private boolean filterByDomain(String domainName) {
+
+        Log.d(TAG,"--------filterByDomain---------");
+        Log.d(TAG,"DomainName:" + domainName);
+
+        ArrayList<BlockName> blockNames = BlockingPool.getNameList();
+        for(int i=0;i<blockNames.size();i++){
+
+            if(blockNames.get(i).getcName().startsWith(domainName)){
+
+                return true;
+            }
+
+        }
+
+
+        return false;
+    }
+
+    /**
+     * 过滤Ip信息
+     * 遍历阻断Ip信息,并查看是否在集合内
+     *
+     * @param hostAddress xx.xx.xx.xx的结构
+     * @return
+     * true为已经过滤掉
+     * false为不用被过滤
+     */
+    private boolean filterByIp(String hostAddress) {
+        String[] ip = hostAddress.split(".");
+
+        Log.d(TAG, "------filterByIp---------");
+        Log.d(TAG, "hostAddress:" + hostAddress);
+
+        ArrayList<BlockIp> blockIps = BlockingPool.getIpList();
+
+        for (int i = 0; i < blockIps.size(); i++) {
+            BlockIp blockIp = blockIps.get(i);
+
+            String[] beginIp = blockIp.getOriginIp().split(".");
+            String[] endIp = blockIp.getEndIp().split(".");
+
+
+            if (matchBlockIp(ip, beginIp, endIp)) {
+
+
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+    /**
+     * 看是否匹配,匹配返回true
+     *
+     * @param ip
+     * @param beginIp
+     * @param endIp
+     * @return
+     */
+    private boolean matchBlockIp(String[] ip, String[] beginIp, String[] endIp) {
+
+        int diffIndex = findDiffIndex(beginIp, endIp);
+
+        for (int i = 0; i < diffIndex; i++) {
+
+            if (!ip[i].equals(beginIp[i])) {
+                return false;
+            }
+
+        }
+
+        if (Integer.parseInt(ip[diffIndex]) > Integer.parseInt(beginIp[diffIndex])
+                && Integer.parseInt(ip[diffIndex]) < Integer.parseInt(endIp[diffIndex])) {
+            return true;
+        }
+        return false;
+    }
+
+    //查找第几个不同的位,方便高位匹配
+    private int findDiffIndex(String[] beginIp, String[] endIp) {
+
+        for (int i = 0; i < 3; i++) {
+            if (!beginIp[i].equals(endIp[i])) {
+                return i;
+            }
+        }
+        return 3;
     }
 }
