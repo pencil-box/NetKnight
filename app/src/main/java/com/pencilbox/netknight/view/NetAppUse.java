@@ -45,6 +45,16 @@ public class NetAppUse extends Fragment implements IAppUseInfoView {
     }
 
     @Override
+    public void onLoadAppInfoUseWifi(long wifiSize) {
+
+    }
+
+    @Override
+    public void onLoadAppInfoUseCelluar(long mobileSize) {
+
+    }
+
+    @Override
     public void onListRefresh() {
 
     }
