@@ -3,10 +3,12 @@ package com.pencilbox.netknight.net;
 import android.net.VpnService;
 import android.util.Log;
 
+import com.pencilbox.netknight.Constants;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.pcap.PCapFilter;
+import com.pencilbox.netknight.receiver.NetChangeReceiver;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
 
@@ -41,18 +43,22 @@ public class NetOutput extends Thread {
     private BlockingQueue<Packet> mInputQueue;
     private BlockingQueue<ByteBuffer> mOutputQueue;
 
+
+    private BlockingQueue<App> mAppCacheQueue;
+
     //这个是用来监视多个channel状态,即实际的网络访问信息
     private Selector mChannelSelector;
 
 
     private VpnService mVpnService;
 
-    public NetOutput(BlockingQueue<Packet> inputQueue, BlockingQueue<ByteBuffer> outputQueue, VpnService vpnService, Selector selector) {
+    public NetOutput(BlockingQueue<Packet> inputQueue, BlockingQueue<ByteBuffer> outputQueue, VpnService vpnService, Selector selector,BlockingQueue<App> appCacheQueue) {
         mOutputQueue = outputQueue;
         mInputQueue = inputQueue;
 
         mVpnService = vpnService;
         mChannelSelector = selector;
+        mAppCacheQueue = appCacheQueue;
     }
 
 
@@ -325,6 +331,9 @@ public class NetOutput extends Thread {
         }
 
 
+
+
+
 //        //TODO 抓包咯,这样很不妥呀,还要根据相关信息构建包orz
         ByteBuffer sourceBuffer = ByteBufferPool.acquire();
         referencePacket.updateTCPBuffer(sourceBuffer, (byte) Packet.TCPHeader.SYN,referencePacket.tcpHeader.sequenceNumber,
@@ -456,11 +465,92 @@ public class NetOutput extends Thread {
         Log.d(TAG, "app id 号为:" + appList.get(0).getId());
 
 
+        //TODO 根据类型信息进行拦截
+
+
+        boolean isPass = filterByAppSetting(appList.get(0));
+        if(!isPass){
+            return -1;
+        }
+
+
 //        String name =   AppUtils.getPackageNameByUid(NetKnightApp.getContext(),uid);
 
 //        Log.e(TAG,"包名为:"+name+" &&Uid:" +uid);
 
         return appList.get(0).getId();
+    }
+
+
+    /**
+     * 根据app的设置信息进行拦截
+     * @param app
+     * @return
+     */
+    private boolean filterByAppSetting(App app) {
+
+        if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_MOBILE){
+
+            switch (app.getMobileDataType()){
+
+                case Constants.ACCESS_TYPE_ALLOW:
+
+
+
+                    return true;
+                case Constants.ACCESS_TYPE_DISALLOW:
+
+                    return false;
+                case Constants.ACCESS_TYPE_DISALLOW_BACK:
+
+                    //TODO 如何判断手机待机呢
+                    break;
+                case Constants.ACCESS_TYPE_REMIND:
+
+                    //通知有网络访问信息咯
+
+                    mAppCacheQueue.offer(app);
+
+                    return false;
+                default:
+                    break;
+
+            }
+
+
+        }
+        if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_WIFI){
+
+            switch (app.getWifiType()){
+
+                case Constants.ACCESS_TYPE_ALLOW:
+
+
+
+                    return true;
+                case Constants.ACCESS_TYPE_DISALLOW:
+
+                    return false;
+                case Constants.ACCESS_TYPE_DISALLOW_BACK:
+
+                    //TODO 如何判断手机待机呢
+                    break;
+                case Constants.ACCESS_TYPE_REMIND:
+
+                    //通知有网络访问信息咯
+                    mAppCacheQueue.offer(app);
+
+                    return false;
+                default:
+                    break;
+
+            }
+
+
+        }
+
+
+        return false;
     }
 
 

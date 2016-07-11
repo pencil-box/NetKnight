@@ -118,6 +118,9 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
      */
     private boolean startCapture() {
 
+
+
+
         if (NetKnightService.isRunning) {
             Toast.makeText(this, "正在进行抓包", Toast.LENGTH_SHORT).show();
 
@@ -129,7 +132,6 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
             Toast.makeText(this, "请开启vpn服务", Toast.LENGTH_SHORT).show();
             return false;
         }
-
 
     }
 
