@@ -13,15 +13,27 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.presentor.BlockingIpImpl;
 import com.pencilbox.netknight.presentor.IBlockingIpPresenter;
+import com.pencilbox.netknight.presentor.ListAdapter;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainIp extends Fragment implements IBlockingIpView {
     private PopupWindow popupWindow;
+    private ListView listView;
+    private List<String> listIp;
+    private ListAdapter listAdapter;
 
 
     private IBlockingIpPresenter mBlockingIpPresenter;
@@ -49,7 +61,17 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
             }
         });
-
+        /**
+         * 将数据库中的已有记录加载进listview
+         */
+        listView = (ListView) view.findViewById(R.id.list_ip);
+        listIp = new ArrayList<String>();
+        for (int i=1;i<= DataSupport.count(BlockIp.class);i++){
+            listIp.add(DataSupport.find(BlockIp.class,i).getOriginIp());
+            listIp.add(DataSupport.find(BlockIp.class,i).getEndIp());
+        }
+        listAdapter = new ListAdapter(this.getContext(),listIp);
+        listView.setAdapter(listAdapter);
 
         mBlockingIpPresenter = new BlockingIpImpl(this);
         return view;
@@ -105,7 +127,6 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
     @Override
     public void onLoadBlockingList(BaseAdapter adapter) {
-
 
     }
 

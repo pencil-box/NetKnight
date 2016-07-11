@@ -220,7 +220,6 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     @Override
     public void onListRefresh() {
 
-
     }
 
     @Override
