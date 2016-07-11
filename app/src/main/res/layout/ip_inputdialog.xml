@@ -38,7 +38,8 @@
             android:id="@+id/edit_ipstartin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#d3b6d4" />
+            android:background="#d3b6d4"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,7 +65,8 @@
             android:id="@+id/edit_ipstartend"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#d3b6d4" />
+            android:background="#d3b6d4"
+            android:inputType="number" />
     </LinearLayout>
 
     <Button

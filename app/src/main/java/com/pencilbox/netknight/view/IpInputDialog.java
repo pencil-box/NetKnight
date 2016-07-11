@@ -5,8 +5,10 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
 
@@ -35,13 +37,19 @@ public class IpInputDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                DataIpInputListnener listener = (DataIpInputListnener) getActivity();
-                listener.onDataIpInputListener(ip_start.getText().toString(),
-                        ip_end.getText().toString());
-                IpInputDialog.this.dismiss();
+                if (ip_start.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
+                } else if (ip_end.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
+                } else {
+                    DataIpInputListnener listener = (DataIpInputListnener) getActivity();
+                    listener.onDataIpInputListener(ip_start.getText().toString(),
+                            ip_end.getText().toString());
+                    IpInputDialog.this.dismiss();
+                }
             }
         });
-
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         return view;
     }
 

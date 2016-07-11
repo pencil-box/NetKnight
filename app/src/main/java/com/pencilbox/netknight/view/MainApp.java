@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.pencilbox.netknight.R;
@@ -23,16 +20,11 @@ import com.pencilbox.netknight.presentor.IAppInfoImpl;
 import com.pencilbox.netknight.presentor.IAppInfoPresenter;
 import com.pencilbox.netknight.service.NetKnightService;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainApp extends Fragment implements View.OnClickListener, IAppInfoView {
     private PopupWindow popupWindow;
     private ListView app_listView = null;
-    private List<String> data_appchoose = null;
-    private Spinner app_choose;
-    private ArrayAdapter<String> appchoose_adapter;
 
 
     private Switch mFireWallSwitch;
@@ -42,69 +34,33 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_main, container, false);
-
-
         app_listView = (ListView) view.findViewById(R.id.app_listview);
-
 
         mFireWallSwitch = (Switch) view.findViewById(R.id.switch_vpnsevice);
         mFireWallSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (getActivity() instanceof MainTabbed) {
 
+                    if (isChecked) {
 
-                if(getActivity() instanceof  MainTabbed){
+                        ((MainTabbed) getActivity()).startVpnService();
 
-                    if(isChecked){
+                    } else {
 
-
-                        ((MainTabbed)getActivity()).startVpnService();
-
-                    }else{
-
-                        ((MainTabbed)getActivity()).stopVpnService();
+                        ((MainTabbed) getActivity()).stopVpnService();
 
                     }
 
+                } else {
 
-                }else{
-
-                    Log.e("MainApp","--onCheckedChanged-- activity is not MainTabbed");
+                    Log.e("MainApp", "--onCheckedChanged-- activity is not MainTabbed");
                 }
-
-
 
             }
         });
         //设置firewall的状态咯
         mFireWallSwitch.setChecked(NetKnightService.isRunning);
-
-
-        //TODO 这个inflate是闹哪样?
-        View view1 = inflater.inflate(R.layout.app_items, null);
-
-        app_choose = (Spinner) view1.findViewById(R.id.app_choose);
-        data_appchoose = new ArrayList<String>();
-        data_appchoose.add("允许联网");
-        data_appchoose.add("禁止联网");
-        data_appchoose.add("联网时提示");
-        data_appchoose.add("禁止后台偷跑");
-        appchoose_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, data_appchoose);
-        //设置样式
-        appchoose_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //加载适配器
-        app_choose.setAdapter(appchoose_adapter);
-        app_choose.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         view.findViewById(R.id.btn_topleft).setOnClickListener(new View.OnClickListener() {
@@ -140,10 +96,10 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
 
         mIAppInfoPresenter = new IAppInfoImpl(getActivity(), this);
         mIAppInfoPresenter.loadAppList();
-
         return view;
 
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

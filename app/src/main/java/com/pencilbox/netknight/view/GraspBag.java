@@ -20,9 +20,9 @@ import com.pencilbox.netknight.service.NetKnightService;
 
 
 public class GraspBag extends AppCompatActivity implements View.OnClickListener, IGraspBagView {
+
     private ImageButton btn_graspleft;
     private PopupWindow popupWindow;
-
     private Button mCaptureBtn;
 
 
