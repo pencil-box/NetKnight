@@ -7,18 +7,29 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 
+import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.model.BlockIp;
+import com.pencilbox.netknight.model.BlockName;
+import com.pencilbox.netknight.presentor.ListAdapter;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-
-
-
-public class MainAddress extends Fragment {
+public class MainAddress extends Fragment implements IBlockingIpView{
     private PopupWindow popupWindow;
+    private ListView listView;
+    private List<String> listAddress;
+    private ListAdapter listAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.address_main, container, false);
@@ -45,6 +56,18 @@ public class MainAddress extends Fragment {
 
             }
         });
+        /**
+         * 将数据库中的已有记录加载进listview
+         */
+        listView = (ListView) view.findViewById(R.id.list_address);
+        listAddress = new ArrayList<String>();
+        for (int i = 1; i<= DataSupport.count(BlockName.class); i++){
+            listAddress.add(DataSupport.find(BlockName.class,i).getcName());
+            listAddress.add(DataSupport.find(BlockName.class,i).getIp());
+        }
+        listAdapter = new ListAdapter(this.getContext(),listAddress);
+        listView.setAdapter(listAdapter);
+
         return view;
     }
 
@@ -116,4 +139,18 @@ public class MainAddress extends Fragment {
     }
 
 
+    @Override
+    public void onLoadBlockingList(BaseAdapter adapter) {
+
+    }
+
+    @Override
+    public void onListRefresh() {
+
+    }
+
+    @Override
+    public void onOptionFailed(int optionId, String msg) {
+
+    }
 }
