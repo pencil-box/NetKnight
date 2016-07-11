@@ -6,8 +6,8 @@
 
     <LinearLayout
         android:id="@+id/netuselinear"
-        android:layout_width="wrap_content"
-        android:layout_height="65dp"
+        android:layout_width="65dp"
+        android:layout_height="100dp"
         android:orientation="vertical">
 
         <ImageView
@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/netuseAppLabel"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:text="Label"
             android:textColor="#3191e6"
             android:textSize="15dp"></TextView>
@@ -27,7 +27,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="100dp"
         android:layout_toRightOf="@+id/netuselinear"
         android:orientation="vertical">
 
