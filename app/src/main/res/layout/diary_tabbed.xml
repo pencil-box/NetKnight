@@ -8,24 +8,17 @@
     android:fitsSystemWindows="true"
     tools:context="com.pencilbox.netknight.view.DairyTabbed">
 
-    <!--   <android.support.design.widget.AppBarLayout
-           android:id="@+id/dariy_appbar"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:theme="@style/AppTheme.AppBarOverlay">
-           </android.support.design.widget.AppBarLayout>
-
-           -->
 
     <android.support.design.widget.TabLayout
         android:id="@+id/dariy_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:tabTextColor="#FFFFFF"
+        android:background="#815a82b3"
         app:tabIndicatorColor="#FFFFFF"
         app:tabSelectedTextColor="#ffffff"
-        android:background="#815a82b3" />````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+        app:tabTextColor="#FFFFFF" />
+    ````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
 
     <LinearLayout
         android:id="@+id/diary_top"
@@ -50,12 +43,6 @@
             android:textAlignment="center"
             android:textSize="26sp" />
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </Spinner>
-
 
     </LinearLayout>
 
@@ -66,13 +53,5 @@
         android:layout_above="@+id/dariy_tabs"
         android:layout_below="@+id/diary_top"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-  <!--  <android.support.design.widget.FloatingActionButton
-        android:id="@+id/diary_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/dariy_container"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_dialog_email" />
--->
+    
 </RelativeLayout>
