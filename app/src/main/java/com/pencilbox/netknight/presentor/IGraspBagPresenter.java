@@ -7,10 +7,11 @@ package com.pencilbox.netknight.presentor;
 public interface IGraspBagPresenter {
 
     //开始抓包
-    void startGraspingBag(long id);
+    //position 为-1时,表示抓取所有包
+    void startGraspingBag(int position);
 
     //停止抓包
-    void stopGraspingBag(long id);
+    void stopGraspingBag();
 
     //加载抓包数据
     void loadGraspGagData();

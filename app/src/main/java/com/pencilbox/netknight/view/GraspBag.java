@@ -1,43 +1,34 @@
 package com.pencilbox.netknight.view;
 
 import android.content.Intent;
-import android.net.VpnService;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.receiver.NetChangeReceiver;
+import com.pencilbox.netknight.presentor.IGraspBagImpl;
+import com.pencilbox.netknight.presentor.IGraspBagPresenter;
 import com.pencilbox.netknight.service.NetKnightService;
-import com.pencilbox.netknight.utils.AppUtils;
-import com.pencilbox.netknight.utils.EncodeUtils;
-import com.pencilbox.netknight.utils.MyLog;
-import com.pencilbox.netknight.utils.NetUtils;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.Buffer;
 
 
-public class GraspBag extends AppCompatActivity implements View.OnClickListener {
+public class GraspBag extends AppCompatActivity implements View.OnClickListener, IGraspBagView {
     private ImageButton btn_graspleft;
     private PopupWindow popupWindow;
 
     private Button mCaptureBtn;
-    private Button mStopBtn;
 
+
+    private IGraspBagPresenter mGraspPresenter;
+
+    private boolean isGrasp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +36,7 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         //getSupportActionBar().hide();
         setContentView(R.layout.grasp_bag);
         init();
+        mGraspPresenter = new IGraspBagImpl(this);
     }
 
     private void init() {
@@ -54,16 +46,11 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         btn_graspleft.setOnClickListener(this);
 
 
-
-
         mCaptureBtn = (Button) findViewById(R.id.btn_capture);
-
-        mStopBtn = (Button) findViewById(R.id.btn_stop_capture);
 
 
 
         mCaptureBtn.setOnClickListener(this);
-        mStopBtn.setOnClickListener(this);
 
     }
 
@@ -92,6 +79,23 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
                 startActivity(intent1);
                 this.finish();
                 break;
+
+            case R.id.btn_capture:
+
+                if (isGrasp) {
+                    isGrasp = false;
+                    mCaptureBtn.setText("开始抓包");
+                    stopCapture();
+
+                } else {
+                    if (startCapture()) {
+                        isGrasp = true;
+                        mCaptureBtn.setText("停止抓包");
+                    }
+                }
+
+                break;
+
             default:
                 break;
         }
@@ -99,8 +103,35 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
     }
 
 
+    /**
+     * 停止抓包
+     */
+    private void stopCapture() {
+
+        //读写应该放在子线程中操作...
+        mGraspPresenter.stopGraspingBag();
+
+    }
+
+    /**
+     * 开始抓包咯
+     */
+    private boolean startCapture() {
+
+        if (NetKnightService.isRunning) {
+            Toast.makeText(this, "正在进行抓包", Toast.LENGTH_SHORT).show();
+
+            //传参应该为appId
+//            PCapFilter.startCapPacket(0);
+            mGraspPresenter.startGraspingBag(-1);
+            return true;
+        } else {
+            Toast.makeText(this, "请开启vpn服务", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
 
+    }
 
 
     private void initmPopupWindowViewleft() {
@@ -146,5 +177,33 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onGraspFininished(String savePath) {
+
+        if (TextUtils.isEmpty(savePath)) {
+            Toast.makeText(this, "抓包失败orz", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast.makeText(this, "抓包成功,保存路径为:" + savePath, Toast.LENGTH_LONG).show();
+
+
+    }
+
+
+    @Override
+    public void onLoadApp(BaseAdapter baseAdapter) {
+
+    }
+
+    @Override
+    public void onOptionFailed(int typeId, String msg) {
+
+    }
+
+    @Override
+    public void onDataShowRefresh() {
+
+    }
 }
 

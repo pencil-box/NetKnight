@@ -17,7 +17,9 @@ import com.pencilbox.netknight.net.ByteBufferPool;
 import com.pencilbox.netknight.net.NetInput;
 import com.pencilbox.netknight.net.NetOutput;
 import com.pencilbox.netknight.net.Packet;
+import com.pencilbox.netknight.net.TCB;
 import com.pencilbox.netknight.net.TCBCachePool;
+import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
 
@@ -26,6 +28,7 @@ import org.litepal.crud.DataSupport;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Selector;
@@ -89,6 +92,8 @@ public class NetKnightService extends VpnService implements Runnable {
             for (int i = 0; i < appList.size(); i++) {
                 App app = appList.get(i);
                 if (app.isAccessVpn()) {
+                    Log.d("NetKnightService","拦截应用:"+app.getName());
+
                     try {
                         builder = builder.addAllowedApplication(app.getPkgname());
 
@@ -212,6 +217,38 @@ public class NetKnightService extends VpnService implements Runnable {
 
                     if (packet2net.isTCP()) {
                         //目前支持TCP
+
+                        InetAddress desAddress = packet2net.ip4Header.destinationAddress;
+
+                        int sourcePort = packet2net.tcpHeader.sourcePort;
+                        int desPort = packet2net.tcpHeader.destinationPort;
+
+                        String ipAndPort = desAddress.getHostAddress() + ":" + sourcePort + ":" + desPort;
+
+                        //实现抓包功能咯
+                        TCB tcb = TCBCachePool.getTCB(ipAndPort);
+
+
+
+                        if(tcb !=null){
+
+                            //方便包过滤使
+                            //注意position 和 limit的位置,执行new Packet操作, position是到tcp头的位置的
+                            int curPostion = buffer2Net.position();
+                            int curLimit = buffer2Net.limit();
+
+                            buffer2Net.position(buffer2Net.limit());
+                            buffer2Net.limit(buffer2Net.capacity());
+
+                            PCapFilter.filterPacket(buffer2Net,tcb.getAppId());
+
+                            buffer2Net.position(curPostion);
+                            buffer2Net.limit(curLimit);
+                        }
+
+
+
+
                         mInputQueue.offer(packet2net);
                         isDataSend = true;
                     }else{

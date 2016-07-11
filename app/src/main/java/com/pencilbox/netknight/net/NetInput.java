@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
+import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.EncodeUtils;
 import com.pencilbox.netknight.utils.MyLog;
 
@@ -206,6 +207,8 @@ public class NetInput  extends   Thread{
 
 
                 tcb.mySequenceNum++;
+
+                PCapFilter.filterPacket(responseBuffer,tcb.getAppId());
                 mOutputQueue.offer(responseBuffer);
 
                 MyLog.logd(this, "数据读取完毕");
@@ -236,6 +239,7 @@ public class NetInput  extends   Thread{
             responseBuffer.position(Packet.IP4_HEADER_SIZE + Packet.TCP_HEADER_SIZE + readBytes);
 
         }
+        PCapFilter.filterPacket(responseBuffer,tcb.getAppId());
         mOutputQueue.offer(responseBuffer);
 
     }
@@ -271,6 +275,8 @@ public class NetInput  extends   Thread{
 
         tcb.tcbStatus  = TCB.TCB_STATUS_SYN_RECEIVED;
         tcb.mySequenceNum++;
+
+        PCapFilter.filterPacket(responseBuffer,tcb.getAppId());
 
         mOutputQueue.offer(responseBuffer);
 

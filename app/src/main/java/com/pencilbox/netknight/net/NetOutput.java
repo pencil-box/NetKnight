@@ -3,11 +3,10 @@ package com.pencilbox.netknight.net;
 import android.net.VpnService;
 import android.util.Log;
 
-import com.pencilbox.netknight.NetKnightApp;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
-import com.pencilbox.netknight.utils.AppUtils;
+import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
 
@@ -130,8 +129,6 @@ public class NetOutput extends Thread {
 
                 //传递数据咯,一般数据是带ACK的
                 transData(ipAndPort, tcb, currentPacket, payloadBuffer, responseBuffer);
-
-
             }
 
             //复用传进来的ByteBuffer
@@ -150,6 +147,10 @@ public class NetOutput extends Thread {
     private void sendRST(TCB tcb, String ipAndPort, int prevPayloadSize, ByteBuffer buffer) {
         Log.d(TAG, "sendRST");
         tcb.referencePacket.updateTCPBuffer(buffer, (byte) Packet.TCPHeader.RST, 0, tcb.myAcknowledgementNum + prevPayloadSize, 0);
+
+
+        PCapFilter.filterPacket(buffer, tcb.getAppId());
+
         mOutputQueue.offer(buffer);
         TCBCachePool.closeTCB(ipAndPort);
     }
@@ -196,6 +197,8 @@ public class NetOutput extends Thread {
                     tcb.mySequenceNum, tcb.myAcknowledgementNum, 0);
             tcb.mySequenceNum++;
             // FIN counts as a byte
+
+            PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
 
 
         }
@@ -296,6 +299,8 @@ public class NetOutput extends Thread {
             MyLog.logd(this, "transData responseBuffer limit:" + responseBuffer.limit() + " position:" + responseBuffer.position());
 
         }
+
+        PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
         //ack码
         mOutputQueue.offer(responseBuffer);
 
@@ -320,6 +325,17 @@ public class NetOutput extends Thread {
         }
 
 
+//        //TODO 抓包咯,这样很不妥呀,还要根据相关信息构建包orz
+        ByteBuffer sourceBuffer = ByteBufferPool.acquire();
+        referencePacket.updateTCPBuffer(sourceBuffer, (byte) Packet.TCPHeader.SYN,referencePacket.tcpHeader.sequenceNumber,
+                referencePacket.tcpHeader.acknowledgementNumber,0);
+
+        PCapFilter.filterPacket(sourceBuffer,passAppId);
+        ByteBufferPool.release(sourceBuffer);
+
+
+
+
         referencePacket.swapSourceAndDestination();
 
         TCB tcb = new TCB(ipAndPort, new Random().nextInt(Short.MAX_VALUE), referencePacket.tcpHeader.sequenceNumber,
@@ -331,6 +347,8 @@ public class NetOutput extends Thread {
 
         //存储起来先orz
         TCBCachePool.putTCB(ipAndPort, tcb);
+
+
 
         try {
             SocketChannel socketChannel = SocketChannel.open();
@@ -382,6 +400,7 @@ public class NetOutput extends Thread {
             throw new RuntimeException(e);
         }
 
+        PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
         mOutputQueue.offer(responseBuffer);
 
     }
@@ -408,12 +427,12 @@ public class NetOutput extends Thread {
 
 
         //TODO 根据ip段拦截
-
-        if (filterByIp(transPacket.ip4Header.destinationAddress.getHostAddress())) {
-            Log.e(TAG, "数据包因为IP段被拦截了");
-            return -1;
+        if (BlockingPool.isBlockIp) {
+            if (filterByIp(transPacket.ip4Header.destinationAddress.getHostAddress())) {
+                Log.e(TAG, "数据包因为IP段被拦截了");
+                return -1;
+            }
         }
-
 
         int uid = NetUtils.readProcFile(transPacket.tcpHeader.sourcePort);
         MyLog.logd(this, "uid为:" + uid);
@@ -447,19 +466,19 @@ public class NetOutput extends Thread {
 
     /**
      * 域名信息
+     *
      * @param domainName
-     * @return
-     * true 拦截成功
+     * @return true 拦截成功
      */
     private boolean filterByDomain(String domainName) {
 
-        Log.d(TAG,"--------filterByDomain---------");
-        Log.d(TAG,"DomainName:" + domainName);
+        Log.d(TAG, "--------filterByDomain---------");
+        Log.d(TAG, "DomainName:" + domainName);
 
         ArrayList<BlockName> blockNames = BlockingPool.getNameList();
-        for(int i=0;i<blockNames.size();i++){
+        for (int i = 0; i < blockNames.size(); i++) {
 
-            if(blockNames.get(i).getcName().startsWith(domainName)){
+            if (blockNames.get(i).getcName().startsWith(domainName)) {
 
                 return true;
             }
@@ -475,8 +494,7 @@ public class NetOutput extends Thread {
      * 遍历阻断Ip信息,并查看是否在集合内
      *
      * @param hostAddress xx.xx.xx.xx的结构
-     * @return
-     * true为已经过滤掉
+     * @return true为已经过滤掉
      * false为不用被过滤
      */
     private boolean filterByIp(String hostAddress) {
