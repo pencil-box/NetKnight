@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:inputType="textWebEmailAddress"
-            android:text="起始:"
+            android:text="域名:"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="终止:"
+            android:text="  IP  :"
             android:textSize="20sp">
 
         </TextView>
