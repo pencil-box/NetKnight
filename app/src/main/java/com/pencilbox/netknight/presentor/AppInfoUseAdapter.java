@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -70,14 +71,16 @@ public class AppInfoUseAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView appnetuse_icon;
-        TextView netuseAppLabel;
-        SeekBar wifi_seekbar, celluar_seekbar;
+        TextView netuseAppLabel,text_wifiuse,text_celluaruse;
+        ProgressBar wifi_progressbar, celluar_progresskbar;
 
         public ViewHolder(View view) {
             this.appnetuse_icon = (ImageView) view.findViewById(R.id.appnetuse_icon);
             this.netuseAppLabel = (TextView) view.findViewById(R.id.netuseAppLabel);
-            this.wifi_seekbar = (SeekBar) view.findViewById(R.id.wifi_seekbar);
-            this.celluar_seekbar = (SeekBar) view.findViewById(R.id.celluar_seekbar);
+            this.text_wifiuse = (TextView) view.findViewById(R.id.text_wifiuse);
+            this.text_celluaruse= (TextView) view.findViewById(R.id.text_netuse);
+            this.wifi_progressbar = (ProgressBar) view.findViewById(R.id.wifi_progressbar);
+            this.celluar_progresskbar = (ProgressBar) view.findViewById(R.id.celluar_progressbar);
 
         }
     }

@@ -80,7 +80,6 @@ public class AppInfoAdapter extends BaseAdapter {
         holder.appIcon.setImageDrawable(appInfo.getIcon());
         holder.tvAppLabel.setText(appInfo.getName());
         holder.tvPkgName.setText(appInfo.getPkgname());
-
         return view;
     }
 
