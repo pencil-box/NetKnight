@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="45dp"
+            android:layout_marginLeft="43dp"
             android:text="应用权限:"
             android:textAlignment="center" />
 

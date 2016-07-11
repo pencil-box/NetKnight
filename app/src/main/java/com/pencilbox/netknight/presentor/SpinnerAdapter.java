@@ -67,9 +67,9 @@ public class SpinnerAdapter extends BaseAdapter {
             Log.d("CheckList", "alsdjflaskdjf");
             //holder.spinner_value.setTextColor(Color.RED);
         } else if ("禁止联网".equals(value)) {
-           // holder.spinner_value.setTextColor(Color.GREEN);
+            // holder.spinner_value.setTextColor(Color.GREEN);
         } else if ("联网时提示".equals(value)) {
-           // holder.spinner_value.setTextColor(Color.BLACK);
+            // holder.spinner_value.setTextColor(Color.BLACK);
         } else {
             //holder.spinner_value.setTextColor(Color.BLUE);
         }

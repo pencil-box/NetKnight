@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#8daec1c9"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
@@ -14,12 +15,12 @@
         <TextView
             android:id="@+id/left_item"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:text="NO:1"
             android:textAlignment="center"
-            android:textColor="#0a0909"
-            android:textSize="20dp" />
+            android:textColor="#ffff"
+            android:textSize="15dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -32,11 +33,11 @@
         <TextView
             android:id="@+id/rigth_item"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
             android:text="NO:2"
             android:textAlignment="center"
-            android:textColor="#0a0909"
-            android:textSize="20dp" />
+            android:textColor="#fff"
+            android:textSize="15dp" />
     </LinearLayout>
 </LinearLayout>
