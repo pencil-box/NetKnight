@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:inputType="textWebEmailAddress"
             android:text="起始:"
             android:textSize="20sp" />
     </LinearLayout>
@@ -65,18 +66,21 @@
             android:id="@+id/edit_adstartend"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#d3b6d4" />
+            android:background="#d3b6d4"
+            android:inputType="textWebEmailAddress" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/ad_sure"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff"
-            android:text="确定"/>
+            android:text="确定" />
     </LinearLayout>
 
 </LinearLayout>

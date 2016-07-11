@@ -10,14 +10,19 @@ public interface IAppUseInfoView {
     //初始化数据的回调
     void onLoadAppInfoUseList(BaseAdapter adapter);
 
+    void onLoadAppInfoUseWifi(long wifiSize);
+
+    void onLoadAppInfoUseCelluar(long mobileSize);
+
     //添加,删除,修改后的,list回调,数据的更新在adapter里操作就可以
     void onListRefresh();
 
     /**
      * 错误信息回调
+     *
      * @param optionId
      * @param msg
      */
-    void onOptionFailed(int optionId,String msg);
+    void onOptionFailed(int optionId, String msg);
 
 }
