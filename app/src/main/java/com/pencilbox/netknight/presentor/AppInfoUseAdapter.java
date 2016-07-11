@@ -10,19 +10,30 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.model.App;
 
+import org.litepal.crud.DataSupport;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by wu on 16/7/11.
+ * Modified by su on 16/7/12
  */
 
 public class AppInfoUseAdapter extends BaseAdapter {
     private List<App> list_appinfo = new ArrayList<>();
     LayoutInflater inflater = null;
+
+    /**
+     * 获取移动数据+WIFI总用量
+     */
+    long wifiTotal = DataSupport.sum("Traffic","wifiSize",Long.TYPE);
+    long mobileTotal = DataSupport.sum("Traffic","mobileSize",Long.TYPE);
 
     public void addAll(List<App> appLists) {
         list_appinfo.addAll(appLists);
@@ -64,6 +75,39 @@ public class AppInfoUseAdapter extends BaseAdapter {
         App appInfo = (App) getItem(position);
         holder.appnetuse_icon.setImageDrawable(appInfo.getIcon());
         holder.netuseAppLabel.setText(appInfo.getName());
+
+        /**
+         * 设置progressBar显示比例
+         */
+        holder.celluar_progresskbar.setMax((int)(mobileTotal));
+        holder.wifi_progressbar.setMax((int)(wifiTotal));
+
+        /**
+         * 获取当前应用移动+WIFI使用量
+         */
+        long mobileSize = DataSupport.where("appId = ?",String.valueOf(appInfo.getId())).sum("Traffic","mobileSize",Long.TYPE);
+        long wifiSize = DataSupport.where("appId = ?",String.valueOf(appInfo.getId())).sum("Traffic","wifiSize",Long.TYPE);
+
+        holder.celluar_progresskbar.setProgress((int)(mobileSize));
+        holder.wifi_progressbar.setProgress((int)(wifiSize));
+
+        /**
+         * 将结果格式化为百分比
+         */
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+        //TODO: 当WIFI或mobile用量为空时，进行判断
+        String p_mobile = df.format(mobileSize * 100.00 / mobileTotal) + "%";
+        String p_wifi = df.format(wifiSize * 100.00 / wifiTotal) + "%";
+
+        /**
+         * 显示数据实际用量
+         */
+        holder.text_celluaruse.setText(mobileSize/1024 + "KB " + p_mobile);
+        holder.text_wifiuse.setText(wifiSize/1024 + "KB " + p_wifi);
+
+
 
         return view;
 
