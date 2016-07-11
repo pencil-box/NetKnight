@@ -79,9 +79,12 @@ public class AppInfoAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.app_items, null);
 
 
+
             holder = new ViewHolder(view);
-            holder.wifi_spinner = (Spinner) view.findViewById(R.id.wifi_spinner);
-            holder.celluar_spinner = (Spinner) view.findViewById(R.id.celluar_spinner);
+//            holder.wifi_spinner = (Spinner) view.findViewById(R.id.wifi_spinner);
+//            holder.celluar_spinner = (Spinner) view.findViewById(R.id.celluar_spinner);
+
+
 
             //我咋监听到是哪一个信息呢
             SpinnerAdapter adapter = new SpinnerAdapter(mContext);
@@ -113,6 +116,17 @@ public class AppInfoAdapter extends BaseAdapter {
 
         holder.celluar_spinner.setSelection(mMobileSelectedMap.get(appInfo.getId()));
         holder.wifi_spinner.setSelection(mWiflSelectedMap.get(appInfo.getId()));
+
+
+        if(appInfo.isAccessVpn()){
+            holder.wifi_spinner.setVisibility(View.VISIBLE);
+           holder.celluar_spinner.setVisibility(View.VISIBLE);
+            holder.tv_vpn_through.setVisibility(View.GONE);
+        }else{
+            holder.tv_vpn_through.setVisibility(View.VISIBLE);
+            holder.wifi_spinner.setVisibility(View.GONE);
+            holder.celluar_spinner.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -174,8 +188,10 @@ public class AppInfoAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView appIcon;
-        TextView tvAppLabel, tvPkgName;
+        TextView tvAppLabel, tvPkgName,tv_vpn_through;
         Spinner wifi_spinner,celluar_spinner;
+
+
 
         public ViewHolder(View view) {
             this.appIcon = (ImageView) view.findViewById(R.id.app_icon);
@@ -183,7 +199,7 @@ public class AppInfoAdapter extends BaseAdapter {
             this.tvPkgName = (TextView) view.findViewById(R.id.tvPkgName);
             this.wifi_spinner = (Spinner) view.findViewById(R.id.wifi_spinner);
             this.celluar_spinner= (Spinner) view.findViewById(R.id.celluar_spinner);
-
+            this.tv_vpn_through = (TextView) view.findViewById(R.id.tv_vpn_through);
         }
     }
 }
