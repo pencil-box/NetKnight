@@ -71,12 +71,14 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
                 Intent intent = new Intent();
                 intent.setClass(this, MainTabbed.class);
                 startActivity(intent);
+                popupWindow.dismiss();
                 this.finish();
                 break;
             case R.id.graspbtn_dariy:
                 Intent intent1 = new Intent();
                 intent1.setClass(this, DairyTabbed.class);
                 startActivity(intent1);
+                popupWindow.dismiss();
                 this.finish();
                 break;
 

@@ -120,7 +120,7 @@ public class DairyImpl implements IDairyPresenter {
          */
         LineDataSet dataSet = new LineDataSet(yValue, "WIFI流量/KB");
         dataSet.setLineWidth(1.75f);
-        dataSet.setColor(Color.GRAY);
+        dataSet.setColor(Color.YELLOW);
         /**
          * 构建一个类型为LineDataSet的ArrayList 用来存放所有 y的LineDataSet   他是构建最终加入LineChart数据集所需要的参数
          */
@@ -229,7 +229,7 @@ public class DairyImpl implements IDairyPresenter {
          */
         LineDataSet dataSet = new LineDataSet(yValue, "移动流量/KB");
         dataSet.setLineWidth(1.75f);
-        dataSet.setColor(Color.GRAY);
+        dataSet.setColor(Color.YELLOW);
         /**
          * 构建一个类型为LineDataSet的ArrayList 用来存放所有 y的LineDataSet   他是构建最终加入LineChart数据集所需要的参数
          */
@@ -372,7 +372,7 @@ public class DairyImpl implements IDairyPresenter {
          */
         LineDataSet dataSet = new LineDataSet(yValue, "WIFI+移动流量/KB");
         dataSet.setLineWidth(1.75f);
-        dataSet.setColor(Color.GRAY);
+        dataSet.setColor(Color.YELLOW);
         /**
          * 构建一个类型为LineDataSet的ArrayList 用来存放所有 y的LineDataSet   他是构建最终加入LineChart数据集所需要的参数
          */

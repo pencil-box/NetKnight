@@ -7,7 +7,7 @@
         android:id="@+id/btn_appsort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按应用名称排序"
         />
@@ -15,7 +15,7 @@
         android:id="@+id/btn_netusesort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按移动网络用量排序"
         />
@@ -23,21 +23,21 @@
         android:id="@+id/btn_netlimitsort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按移动网络权限排序"/>
     <Button
         android:id="@+id/btn_wifisort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按WIFI流量排序"/>
     <Button
         android:id="@+id/btn_wifilimitsort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按WIFI权限排序"/>
 

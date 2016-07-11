@@ -7,7 +7,7 @@
         android:id="@+id/btn_dariy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="流量日志"
         />
@@ -15,7 +15,7 @@
         android:id="@+id/btn_bag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3a9ed7"
+        android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="网络抓包"/>
 </LinearLayout>
