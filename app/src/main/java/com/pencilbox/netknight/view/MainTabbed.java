@@ -47,11 +47,6 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tabbed);
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -63,7 +58,6 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
 
@@ -91,14 +85,12 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
 
     @Override
     public void onDataInputListener(String start, String end) {
-
         listViewaddress = (ListView) this.findViewById(R.id.list_address);
         listaddress.add(start);
         listaddress.add(end);
-
-
         address_adapter = new ListAdapter(this, listaddress);
         listViewaddress.setAdapter(address_adapter);
+
     }
 
     @Override

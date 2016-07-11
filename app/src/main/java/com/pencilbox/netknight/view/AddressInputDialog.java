@@ -8,9 +8,11 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.presentor.ListAdapter;
@@ -41,14 +43,19 @@ public class AddressInputDialog extends DialogFragment {
         ad_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DataInputListener listener = (DataInputListener) getActivity();
-                listener.onDataInputListener(address_start.getText().toString(),
-                        address_end.getText().toString());
-                AddressInputDialog.this.dismiss();
+                if (address_start.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
+                } else if (address_end.getText().toString().isEmpty()) {
+                    Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
+                } else {
+                    DataInputListener listener = (DataInputListener) getActivity();
+                    listener.onDataInputListener(address_start.getText().toString(),
+                            address_end.getText().toString());
+                    AddressInputDialog.this.dismiss();
+                }
             }
         });
-
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         return view;
     }
 
