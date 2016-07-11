@@ -489,7 +489,11 @@ public class NetOutput extends Thread {
      */
     private boolean filterByAppSetting(App app) {
 
+
+
         if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_MOBILE){
+
+
 
             switch (app.getMobileDataType()){
 

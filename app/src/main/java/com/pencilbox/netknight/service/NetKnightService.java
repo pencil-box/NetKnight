@@ -104,12 +104,6 @@ public class NetKnightService extends VpnService implements Runnable {
                     try {
                         builder = builder.addAllowedApplication(app.getPkgname());
 
-                        //存储到全局map里面
-//                        AppNetStateMap.putWifi(app.getId(),app.getWifiType());
-//                        AppNetStateMap.putMobile(app.getId(),app.getMobileDataType());
-
-
-
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
                     }

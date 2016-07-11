@@ -12,7 +12,6 @@ import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.view.MainTabbed;
 
-import org.litepal.crud.DataSupport;
 
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
@@ -104,8 +103,6 @@ public class NetNotifyThread extends  Thread{
 
 
         }
-
-
 
 
     }
