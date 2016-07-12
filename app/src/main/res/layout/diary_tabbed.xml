@@ -25,7 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="#fff">
+        android:background="#fff"
+        android:paddingTop="8dp">
 
         <ImageButton
             android:id="@+id/btn_diarytopleft"
@@ -37,13 +38,14 @@
 
         <TextView
             android:layout_toRightOf="@+id/btn_diarytopleft"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="#fff"
             android:text="流量日记"
             android:textAlignment="center"
-            android:textSize="26sp" />
+            android:textSize="26sp"
+           />
 
 
     </RelativeLayout>

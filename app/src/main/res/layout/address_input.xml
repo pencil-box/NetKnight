@@ -28,7 +28,10 @@
             android:layout_gravity="center"
             android:inputType="textWebEmailAddress"
             android:text="域名:"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="20dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#d3b6d4"
-            android:scrollIndicators="bottom" />
+            android:scrollIndicators="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,7 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="  IP  :"
-            android:textSize="20sp">
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="20dp">
 
         </TextView>
 
@@ -67,20 +75,31 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#d3b6d4"
-            android:inputType="textWebEmailAddress" />
+            android:inputType="textWebEmailAddress"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
 
         <Button
             android:id="@+id/ad_sure"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:layout_height="match_parent"
             android:background="#fff"
-            android:text="确定" />
+            android:text="确定"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="22dp"
+            android:layout_marginBottom="6dp"/>
     </LinearLayout>
 
 </LinearLayout>

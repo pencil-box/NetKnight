@@ -10,7 +10,7 @@
         android:background="@drawable/shape"
         android:text="防火墙"
         android:textColor="#fff"
-        />
+        android:textSize="22sp"/>
 
     <Button
         android:id="@+id/netbtn_bag"
@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape"
         android:textColor="#fff"
-        android:text="网络抓包"/>
+        android:text="网络抓包"
+        android:textSize="22sp"/>
 
 </LinearLayout>

@@ -11,7 +11,8 @@
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#fff">
+        android:background="#fff"
+        android:paddingTop="8dp">
 
 
         <ImageButton
@@ -22,7 +23,6 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@mipmap/unfold_more" />
-
 
         <TextView
             android:id="@+id/textView"
@@ -60,6 +60,7 @@
 
     <RelativeLayout
         android:id="@+id/app_midlle"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/topPanel">
@@ -96,9 +97,12 @@
 
         <ListView
             android:id="@+id/app_listview"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:gravity="center"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"/>
 
     </LinearLayout>
 </RelativeLayout>
