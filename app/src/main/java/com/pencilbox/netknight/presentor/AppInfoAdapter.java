@@ -30,6 +30,10 @@ public class AppInfoAdapter extends BaseAdapter {
     private Map<Long,Integer> mWiflSelectedMap;
     private Map<Long,Integer> mMobileSelectedMap;
 
+    public List<App> getDatas(){
+        return list_appinfo;
+    }
+
 
     private Context mContext;
 
