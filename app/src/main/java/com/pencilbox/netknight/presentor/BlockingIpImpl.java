@@ -69,6 +69,11 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
     }
 
     @Override
+    public void deleteBlockingIp(long blockingIpId) {
+
+    }
+
+    @Override
     public void deleteBlockingIp(int position) {
 
        BlockIp blockIp = listAdapter.getItem(position);
