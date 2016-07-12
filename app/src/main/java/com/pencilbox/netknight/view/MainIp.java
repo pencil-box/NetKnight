@@ -1,12 +1,17 @@
 package com.pencilbox.netknight.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.VpnService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -19,12 +24,6 @@ import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.net.BlockingPool;
 import com.pencilbox.netknight.presentor.BlockingIpImpl;
 import com.pencilbox.netknight.presentor.IBlockingIpPresenter;
-import com.pencilbox.netknight.presentor.ListAdapter;
-
-import org.litepal.crud.DataSupport;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainIp extends Fragment implements IBlockingIpView {
     private PopupWindow popupWindow;
@@ -64,7 +63,26 @@ public class MainIp extends Fragment implements IBlockingIpView {
 //        }
 //        listAdapter = new ListAdapter(this.getContext(),listIp);
 //        listView.setAdapter(listAdapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
+                Log.d("MainIp","点击了"+position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("确定删除么").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Log.d("MainIp","删除咯");
+
+                        mBlockingIpPresenter.deleteBlockingIp(position);
+
+                    }
+                }).create().show();
+
+                return false;
+            }
+        });
 
 
 
@@ -81,7 +99,7 @@ public class MainIp extends Fragment implements IBlockingIpView {
                     BlockingPool.isBlockIp = true;
                 }else{
                     BlockingPool.closeIp();
-                    BlockingPool.isBlockName = false;
+                    BlockingPool.isBlockIp = false;
                 }
             }
         });

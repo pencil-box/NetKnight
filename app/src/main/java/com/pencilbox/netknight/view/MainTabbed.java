@@ -86,15 +86,15 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
         /**
          * 更新域名 listview显示内容
          */
-        listViewaddress = (ListView) this.findViewById(R.id.list_address);
-        for (int i=1;i<=DataSupport.count(BlockName.class);i++){
-            listaddress.add(DataSupport.find(BlockName.class,i).getcName());
-            listaddress.add(DataSupport.find(BlockName.class,i).getIp());
-        }
-//        listaddress.add(start);
-//        listaddress.add(end);
-        address_adapter = new ListAdapter(this, listaddress);
-        listViewaddress.setAdapter(address_adapter);
+//        listViewaddress = (ListView) this.findViewById(R.id.list_address);
+//        for (int i=1;i<=DataSupport.count(BlockName.class);i++){
+//            listaddress.add(DataSupport.find(BlockName.class,i).getcName());
+//            listaddress.add(DataSupport.find(BlockName.class,i).getIp());
+//        }
+////        listaddress.add(start);
+////        listaddress.add(end);
+//        address_adapter = new ListAdapter(this, listaddress);
+//        listViewaddress.setAdapter(address_adapter);
 
     }
 //

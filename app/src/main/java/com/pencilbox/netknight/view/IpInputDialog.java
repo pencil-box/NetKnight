@@ -6,15 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.BlockIp;
-import com.pencilbox.netknight.presentor.BlockingIpImpl;
 import com.pencilbox.netknight.presentor.IBlockingIpPresenter;
 import com.pencilbox.netknight.utils.IPCheckUtils;
 

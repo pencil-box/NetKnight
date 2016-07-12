@@ -59,14 +59,14 @@ public class MainAddress extends Fragment implements IBlockingIpView{
         /**
          * 将数据库中的已有记录加载进listview
          */
-        listView = (ListView) view.findViewById(R.id.list_address);
-        listAddress = new ArrayList<String>();
-        for (int i = 1; i<= DataSupport.count(BlockName.class); i++){
-            listAddress.add(DataSupport.find(BlockName.class,i).getcName());
-            listAddress.add(DataSupport.find(BlockName.class,i).getIp());
-        }
-        listAdapter = new ListAdapter(this.getContext(),listAddress);
-        listView.setAdapter(listAdapter);
+//        listView = (ListView) view.findViewById(R.id.list_address);
+//        listAddress = new ArrayList<String>();
+//        for (int i = 1; i<= DataSupport.count(BlockName.class); i++){
+//            listAddress.add(DataSupport.find(BlockName.class,i).getcName());
+//            listAddress.add(DataSupport.find(BlockName.class,i).getIp());
+//        }
+//        listAdapter = new ListAdapter(this.getContext(),listAddress);
+//        listView.setAdapter(listAdapter);
 
         return view;
     }

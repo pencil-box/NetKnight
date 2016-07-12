@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.model.BlockIp;
+import com.pencilbox.netknight.net.BlockingPool;
 import com.pencilbox.netknight.view.IBlockingIpView;
 
 import org.litepal.crud.DataSupport;
@@ -22,7 +23,7 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
     private IBlockingIpView mBlockingIpView;
 
     private ListAdapter listAdapter;
-    private ArrayList<String> listIp;
+    private ArrayList<BlockIp> listIp;
 
     private Context mContext;
 
@@ -52,9 +53,7 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
         }
 
 
-        listIp.add(originIp);
-        listIp.add(endIp);
-
+        listIp.add(blockIp);
         listAdapter.notifyDataSetChanged();
 
         Log.d("BlockingImpl","添加数据成功!");
@@ -70,7 +69,13 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
     }
 
     @Override
-    public void deleteBlockingIp(long blockingIpId) {
+    public void deleteBlockingIp(int position) {
+
+       BlockIp blockIp = listAdapter.getItem(position);
+       blockIp.delete();
+
+        listIp.remove(position);
+        listAdapter.notifyDataSetChanged();
 
     }
 
@@ -78,14 +83,9 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
     public void loadBlockingIpList() {
 
 
-        listIp = new ArrayList<String>();
-        List<BlockIp> ipList= DataSupport.findAll(BlockIp.class);
+//        listIp = new ArrayList<BlockIp>();
+         listIp= (ArrayList<BlockIp>) DataSupport.findAll(BlockIp.class);
 
-
-        for (int i = 0; i<ipList.size(); i++){
-            listIp.add(ipList.get(i).getOriginIp());
-            listIp.add(ipList.get(i).getEndIp());
-        }
         listAdapter = new ListAdapter(mContext,listIp);
 
         mBlockingIpView.onLoadBlockingList(listAdapter);
