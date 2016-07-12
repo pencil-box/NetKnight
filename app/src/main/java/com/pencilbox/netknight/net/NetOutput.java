@@ -592,7 +592,7 @@ public class NetOutput extends Thread {
      * false为不用被过滤
      */
     private boolean filterByIp(String hostAddress) {
-        String[] ip = hostAddress.split(".");
+        String[] ip = hostAddress.split("\\.");
 
         Log.d(TAG, "------filterByIp---------");
         Log.d(TAG, "hostAddress:" + hostAddress);
@@ -602,8 +602,8 @@ public class NetOutput extends Thread {
         for (int i = 0; i < blockIps.size(); i++) {
             BlockIp blockIp = blockIps.get(i);
 
-            String[] beginIp = blockIp.getOriginIp().split(".");
-            String[] endIp = blockIp.getEndIp().split(".");
+            String[] beginIp = blockIp.getOriginIp().split("\\.");
+            String[] endIp = blockIp.getEndIp().split("\\.");
 
 
             if (matchBlockIp(ip, beginIp, endIp)) {
