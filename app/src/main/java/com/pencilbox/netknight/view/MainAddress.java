@@ -106,6 +106,7 @@ public class MainAddress extends Fragment implements IBlockingIpView{
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), DairyTabbed.class);
                 startActivity(intent);
+                popupWindow.dismiss();
                 getActivity().finish();
             }
         });
@@ -115,6 +116,7 @@ public class MainAddress extends Fragment implements IBlockingIpView{
                 Intent intent1 = new Intent();
                 intent1.setClass(getActivity(), GraspBag.class);
                 startActivity(intent1);
+                popupWindow.dismiss();
                 getActivity().finish();
 
             }
