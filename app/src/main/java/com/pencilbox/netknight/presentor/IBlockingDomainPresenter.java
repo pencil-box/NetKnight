@@ -5,11 +5,11 @@ package com.pencilbox.netknight.presentor;
  */
 public interface IBlockingDomainPresenter {
 
-    void addBlockingDomain(String domainName,String doIp);
+    void addBlockingDomain(String cName,String ip);
 
     void changeBlockingDomain(long doId,String domainName,String doIp);
 
-    void deleteBlockingDomain(long doId);
+    void deleteBlockingDomain(int id);
 
     void loadBlockingDomainList();
 }

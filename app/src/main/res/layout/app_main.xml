@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/topPanel"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#fff">
@@ -32,12 +32,13 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="防火墙"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:paddingRight="50dp"
             android:textSize="26sp" />
 
         <Switch
             android:id="@+id/switch_vpnsevice"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
+            android:paddingRight="20dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_topright"

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.presentor.IBlockingDomainImpl;
 import com.pencilbox.netknight.presentor.IBlockingDomainPresenter;
+import com.pencilbox.netknight.presentor.IBlockingIpPresenter;
 import com.pencilbox.netknight.presentor.ListAdapter;
 import com.pencilbox.netknight.utils.IPCheckUtils;
 
@@ -28,7 +29,7 @@ import java.util.List;
  * Created by wu on 16/7/8.
  */
 
-public class AddressInputDialog extends DialogFragment implements IBlockingIpView{
+public class AddressInputDialog extends DialogFragment {
     private EditText address_start;
     private EditText address_end;
     private Button ad_sure;
@@ -36,25 +37,16 @@ public class AddressInputDialog extends DialogFragment implements IBlockingIpVie
 
     private IBlockingDomainPresenter mIBlockingDomainPresenter;
 
-    @Override
-    public void onLoadBlockingList(BaseAdapter adapter) {
 
+    public void setPresenter(IBlockingDomainPresenter mIBlockingDomainPresenter){
+        this.mIBlockingDomainPresenter = mIBlockingDomainPresenter;
     }
 
-    @Override
-    public void onListRefresh() {
-
-    }
-
-    @Override
-    public void onOptionFailed(int optionId, String msg) {
-
-    }
-
+    /*
     public interface DataInputListener {
         void onDataInputListener(String start, String end);
     }
-
+*/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,7 +54,8 @@ public class AddressInputDialog extends DialogFragment implements IBlockingIpVie
         address_start = (EditText) view.findViewById(R.id.edit_adstartin);
         address_end = (EditText) view.findViewById(R.id.edit_adstartend);
         ad_sure = (Button) view.findViewById(R.id.ad_sure);
-        mIBlockingDomainPresenter = new IBlockingDomainImpl(this);
+
+        // mIBlockingDomainPresenter = new IBlockingDomainImpl(this);
         ad_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,9 +67,9 @@ public class AddressInputDialog extends DialogFragment implements IBlockingIpVie
                 } else if (ipCheckUtils.isIP(address_end.getText().toString())) {
                     mIBlockingDomainPresenter.addBlockingDomain(address_start.getText().toString(),
                             address_end.getText().toString());
-                    DataInputListener listener = (DataInputListener) getActivity();
-                    listener.onDataInputListener(address_start.getText().toString(),
-                            address_end.getText().toString());
+                   // DataInputListener listener = (DataInputListener) getActivity();
+                   // listener.onDataInputListener(address_start.getText().toString(),
+                     //       address_end.getText().toString());
                     AddressInputDialog.this.dismiss();
                 } else {
                     Toast.makeText(getActivity(),"请检查IP地址的有效性",Toast.LENGTH_LONG).show();

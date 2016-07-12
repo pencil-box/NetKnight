@@ -26,7 +26,7 @@ import org.litepal.crud.DataSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainTabbed extends AppCompatActivity implements AddressInputDialog.DataInputListener{
+public class MainTabbed extends AppCompatActivity {
 
     PopupWindow popupWindow;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -80,7 +80,7 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     @Override
     public void onDataInputListener(String start, String end) {
         /**
@@ -96,7 +96,7 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
 //        address_adapter = new ListAdapter(this, listaddress);
 //        listViewaddress.setAdapter(address_adapter);
 
-    }
+ //   }
 //
 //    @Override
 //    public void onDataIpInputListener(String ipstart, String ipend) {

@@ -1,21 +1,31 @@
 package com.pencilbox.netknight.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.Switch;
 
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
+import com.pencilbox.netknight.net.BlockingPool;
+import com.pencilbox.netknight.presentor.BlockingIpImpl;
+import com.pencilbox.netknight.presentor.IBlockingDomainImpl;
+import com.pencilbox.netknight.presentor.IBlockingDomainPresenter;
 import com.pencilbox.netknight.presentor.ListAdapter;
 
 import org.litepal.crud.DataSupport;
@@ -24,11 +34,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainAddress extends Fragment implements IBlockingIpView{
+public class MainAddress extends Fragment implements IBlockingAddressView {
     private PopupWindow popupWindow;
     private ListView listView;
-    private List<String> listAddress;
-    private ListAdapter listAdapter;
+    private Switch mBlockingSwitch;
+    private IBlockingDomainPresenter iBlockingDomainPresenter;
+    //private List<String> listAddress;
+    //private ListAdapter listAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,16 +58,58 @@ public class MainAddress extends Fragment implements IBlockingIpView{
 
             }
         });
+        listView = (ListView) view.findViewById(R.id.list_address);
 
         view.findViewById(R.id.btn_addressadd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddressInputDialog dialog = new AddressInputDialog();
+                dialog.setPresenter(iBlockingDomainPresenter);
                 dialog.show(getFragmentManager(), "Dialog");
 
 
             }
         });
+
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                Log.d("MainAddrress", "点击了" + position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("确定删除么").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Log.d("Mainaddress", "删除咯");
+
+                        iBlockingDomainPresenter.deleteBlockingDomain(position);
+
+                    }
+                }).create().show();
+
+                return false;
+            }
+        });
+
+        //设置默认的开关信息
+        mBlockingSwitch = (Switch) view.findViewById(R.id.btn_adswitch);
+        mBlockingSwitch.setChecked(BlockingPool.isBlockName);
+        mBlockingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    BlockingPool.initName();
+                    BlockingPool.isBlockName = true;
+                } else {
+                    BlockingPool.closeName();
+                    BlockingPool.isBlockName = false;
+                }
+            }
+        });
+        iBlockingDomainPresenter = new IBlockingDomainImpl(this, getActivity());
+        iBlockingDomainPresenter.loadBlockingDomainList();
         /**
          * 将数据库中的已有记录加载进listview
          */
@@ -142,7 +196,8 @@ public class MainAddress extends Fragment implements IBlockingIpView{
 
 
     @Override
-    public void onLoadBlockingList(BaseAdapter adapter) {
+    public void onLoadBlockingAddressList(BaseAdapter adapter) {
+        listView.setAdapter(adapter);
 
     }
 
