@@ -1,5 +1,7 @@
 package com.pencilbox.netknight.view;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -67,6 +69,7 @@ public class IpInputDialog extends DialogFragment {
             }
         });
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return view;
     }
 

@@ -10,7 +10,7 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="流量日志"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
     <Button
         android:id="@+id/btn_bag"
         android:layout_width="match_parent"
@@ -18,5 +18,5 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="网络抓包"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
 </LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dialog_shape"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,27 +12,25 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#815a82b3"
             android:text="              新增域名              "
             android:textAlignment="center"
-            android:textColor="#fff"
             android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:inputType="textWebEmailAddress"
-            android:text="域名:"
-            android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:paddingLeft="20dp"/>
+            android:inputType="textWebEmailAddress"
+            android:paddingLeft="20dp"
+            android:text="域名:"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,25 +41,26 @@
             android:id="@+id/edit_adstartin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#d3b6d4"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/shape"
             android:scrollIndicators="bottom"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:textColor="#fff" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="  IP  :"
-            android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:paddingLeft="20dp">
+            android:paddingLeft="20dp"
+            android:text="  IP  :"
+            android:textSize="20sp">
 
         </TextView>
 
@@ -74,32 +74,34 @@
             android:id="@+id/edit_adstartend"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#d3b6d4"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/shape"
             android:inputType="textWebEmailAddress"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:textColor="#fff" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:layout_marginBottom="10dp">
+        android:gravity="center">
 
         <Button
             android:id="@+id/ad_sure"
-            android:layout_width="150dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_shape"
+            android:gravity="center"
             android:text="确定"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="22dp"
-            android:layout_marginBottom="6dp"/>
+            android:textColor="#fff"
+            android:textSize="22dp" />
     </LinearLayout>
 
 </LinearLayout>

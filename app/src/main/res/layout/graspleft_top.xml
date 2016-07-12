@@ -11,7 +11,7 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="防火墙"
-        android:textSize="22sp"
+        android:textSize="15sp"
         />
 
     <Button
@@ -21,6 +21,6 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="流量日记"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
 
 </LinearLayout>

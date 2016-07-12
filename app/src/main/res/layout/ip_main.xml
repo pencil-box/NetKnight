@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="#fff"
-        android:paddingTop="8dp">
+        >
 
         <ImageButton
             android:id="@+id/btn_iptopleft"
@@ -91,12 +91,14 @@
 
         <ListView
             android:id="@+id/list_ip"
+            android:background="#53d2d1d1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:listSelector="@null"
             android:layout_marginRight="3dp"
             android:layout_marginLeft="3dp"
-            android:layout_marginTop="8dp">
+            android:paddingTop="8dp"
+            >
 
         </ListView>
     </LinearLayout>

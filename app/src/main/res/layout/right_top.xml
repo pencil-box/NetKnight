@@ -10,7 +10,7 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按应用名称排序"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
     <Button
         android:id="@+id/btn_netusesort"
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按移动网络权限排序"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
     <Button
         android:id="@+id/btn_wifisort"
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
         android:textColor="#fff"
         android:visibility="gone"
         android:text="按WIFI流量排序"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
     <Button
         android:id="@+id/btn_wifilimitsort"
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
         android:background="@drawable/shape"
         android:textColor="#fff"
         android:text="按WIFI权限排序"
-        android:textSize="22sp"/>
+        android:textSize="15sp"/>
 
 
 </LinearLayout>
