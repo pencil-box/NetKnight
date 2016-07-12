@@ -76,7 +76,7 @@
             android:layout_centerVertical="true"/>
 
         <Spinner
-            android:id="@+id/wifi_spinner"
+            android:id="@+id/celluar_spinner"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -86,12 +86,12 @@
         </Spinner>
 
         <Spinner
-            android:id="@+id/celluar_spinner"
+            android:id="@+id/wifi_spinner"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/wifi_spinner">
+            android:layout_toRightOf="@+id/celluar_spinner">
 
 
         </Spinner>

@@ -97,7 +97,7 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
             }
         });
 
-        view.findViewById(R.id.btn_topright).setOnClickListener(new View.OnClickListener() {
+         view.findViewById(R.id.btn_topright).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -110,6 +110,11 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
 
             }
         });
+
+
+
+
+
         /**
          * Listview off apps in cellphone
          */
@@ -201,14 +206,14 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
 
         /** 在这里可以实现自定义视图的功能 */
         Button btn_appsort = (Button) customView.findViewById(R.id.btn_appsort);
-        Button btn_netusesort = (Button) customView.findViewById(R.id.btn_netusesort);
+//        Button btn_netusesort = (Button) customView.findViewById(R.id.btn_netusesort);
         Button btn_netlimitsort = (Button) customView.findViewById(R.id.btn_netlimitsort);
-        Button btn_wifiusesort = (Button) customView.findViewById(R.id.btn_wifisort);
+//        Button btn_wifiusesort = (Button) customView.findViewById(R.id.btn_wifisort);
         Button btn_wifilimitsort = (Button) customView.findViewById(R.id.btn_wifilimitsort);
         btn_appsort.setOnClickListener(this);
-        btn_netusesort.setOnClickListener(this);
+//        btn_netusesort.setOnClickListener(this);
         btn_netlimitsort.setOnClickListener(this);
-        btn_wifiusesort.setOnClickListener(this);
+//        btn_wifiusesort.setOnClickListener(this);
         btn_wifilimitsort.setOnClickListener(this);
     }
 
@@ -217,6 +222,30 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     public void onClick(View v) {
         switch (v.getId()) {
 
+            case R.id.btn_appsort:
+                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_NAME);
+                break;
+//            case R.id.btn_netusesort:
+//                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_NET);
+//                break;
+            case R.id.btn_netlimitsort:
+                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_NET_PERMISSION);
+                break;
+//            case R.id.btn_wifisort:
+//                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_WIFI);
+//                break;
+            case R.id.btn_wifilimitsort:
+                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_WIFI_PERMISSION);
+                break;
+            default:
+                break;
+
+
+        }
+
+        if(popupWindow!=null){
+            popupWindow.dismiss();
+            popupWindow = null;
         }
     }
 
