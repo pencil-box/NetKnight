@@ -31,7 +31,6 @@
             android:gravity="center"
             android:text="防火墙"
             android:paddingRight="50dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="26sp" />
 
         <Switch
