@@ -59,7 +59,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:paddingLeft="20dp"
-            android:text="  IP  :"
+            android:text="IP:"
             android:textSize="20sp">
 
         </TextView>
