@@ -41,27 +41,56 @@
         android:layout_toRightOf="@+id/netuselinear"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="移动网络"
-            android:textSize="10dp" />
+            android:layout_height="wrap_content">
 
-        <SeekBar
-            android:id="@+id/celluar_seekbar"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="移动网络"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/text_netuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="用量+百分比" />
+
+        </RelativeLayout>
+
+
+        <ProgressBar
+            android:id="@+id/celluar_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="WIFI网络"
-            android:textSize="10dp" />
+            android:layout_height="wrap_content">
 
-        <SeekBar
-            android:id="@+id/wifi_seekbar"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="WIFI网络"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/text_wifiuse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="用量+百分比" />
+        </RelativeLayout>
+
+
+        <ProgressBar
+            android:id="@+id/wifi_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp" />

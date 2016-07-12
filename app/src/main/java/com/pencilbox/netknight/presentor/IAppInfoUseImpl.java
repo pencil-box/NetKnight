@@ -8,7 +8,6 @@ import android.os.Message;
 import com.pencilbox.netknight.NetKnightApp;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.utils.AppUtils;
-import com.pencilbox.netknight.view.IAppInfoView;
 import com.pencilbox.netknight.view.IAppUseInfoView;
 
 import java.util.List;

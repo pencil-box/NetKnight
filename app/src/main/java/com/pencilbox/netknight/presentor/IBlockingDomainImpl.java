@@ -1,6 +1,7 @@
 package com.pencilbox.netknight.presentor;
 
 
+import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.view.IBlockingIpView;
 
 /**
@@ -17,7 +18,11 @@ public class IBlockingDomainImpl implements IBlockingDomainPresenter {
 
     @Override
     public void addBlockingDomain(String domainName, String doIp) {
-
+        BlockName blockName = new BlockName();
+        blockName.setcName(domainName);
+        blockName.setIp(doIp);
+        blockName.save();
+        doName.onListRefresh();
     }
 
     @Override

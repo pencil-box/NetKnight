@@ -19,10 +19,14 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.model.BlockIp;
+import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.presentor.ListAdapter;
 import com.pencilbox.netknight.service.NetKnightService;
 import com.pencilbox.netknight.utils.MyLog;
 
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +89,16 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
 
     @Override
     public void onDataInputListener(String start, String end) {
+        /**
+         * 更新域名 listview显示内容
+         */
         listViewaddress = (ListView) this.findViewById(R.id.list_address);
-        listaddress.add(start);
-        listaddress.add(end);
+        for (int i=1;i<=DataSupport.count(BlockName.class);i++){
+            listaddress.add(DataSupport.find(BlockName.class,i).getcName());
+            listaddress.add(DataSupport.find(BlockName.class,i).getIp());
+        }
+//        listaddress.add(start);
+//        listaddress.add(end);
         address_adapter = new ListAdapter(this, listaddress);
         listViewaddress.setAdapter(address_adapter);
 
@@ -95,9 +106,16 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
 
     @Override
     public void onDataIpInputListener(String ipstart, String ipend) {
+        /**
+         * 更新IP listview显示内容
+         */
         listViewip = (ListView) this.findViewById(R.id.list_ip);
-        listip.add(ipstart);
-        listip.add(ipend);
+        for (int i=1;i<= DataSupport.count(BlockIp.class);i++){
+            listip.add(DataSupport.find(BlockIp.class,i).getOriginIp());
+            listip.add(DataSupport.find(BlockIp.class,i).getEndIp());
+        }
+//        listip.add(ipstart);
+//        listip.add(ipend);
         ip_adapter = new ListAdapter(this, listip);
         listViewip.setAdapter(ip_adapter);
 
