@@ -3,36 +3,30 @@ package com.pencilbox.netknight.view;
 
 import android.content.Intent;
 import android.net.VpnService;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.presentor.ListAdapter;
 import com.pencilbox.netknight.service.NetKnightService;
 import com.pencilbox.netknight.utils.MyLog;
-
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainTabbed extends AppCompatActivity implements AddressInputDialog.DataInputListener,
-        IpInputDialog.DataIpInputListnener {
+public class MainTabbed extends AppCompatActivity implements AddressInputDialog.DataInputListener{
 
     PopupWindow popupWindow;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -103,24 +97,24 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
         listViewaddress.setAdapter(address_adapter);
 
     }
-
-    @Override
-    public void onDataIpInputListener(String ipstart, String ipend) {
-        /**
-         * 更新IP listview显示内容
-         */
-        listViewip = (ListView) this.findViewById(R.id.list_ip);
-        for (int i=1;i<= DataSupport.count(BlockIp.class);i++){
-            listip.add(DataSupport.find(BlockIp.class,i).getOriginIp());
-            listip.add(DataSupport.find(BlockIp.class,i).getEndIp());
-        }
-//        listip.add(ipstart);
-//        listip.add(ipend);
-        ip_adapter = new ListAdapter(this, listip);
-        listViewip.setAdapter(ip_adapter);
-
-
-    }
+//
+//    @Override
+//    public void onDataIpInputListener(String ipstart, String ipend) {
+//        /**
+//         * 更新IP listview显示内容
+//         */
+//        listViewip = (ListView) this.findViewById(R.id.list_ip);
+//        for (int i=1;i<= DataSupport.count(BlockIp.class);i++){
+//            listip.add(DataSupport.find(BlockIp.class,i).getOriginIp());
+//            listip.add(DataSupport.find(BlockIp.class,i).getEndIp());
+//        }
+////        listip.add(ipstart);
+////        listip.add(ipend);
+//        ip_adapter = new ListAdapter(this, listip);
+//        listViewip.setAdapter(ip_adapter);
+//
+//
+//    }
 
 
     /**

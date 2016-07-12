@@ -23,7 +23,7 @@ import com.pencilbox.netknight.utils.IPCheckUtils;
  * Modified by su on 16/7/12
  */
 
-public class IpInputDialog extends DialogFragment implements IBlockingIpView{
+public class IpInputDialog extends DialogFragment {
     private EditText ip_start;
     private EditText ip_end;
     private Button ip_sure;
@@ -31,25 +31,16 @@ public class IpInputDialog extends DialogFragment implements IBlockingIpView{
 
     private IBlockingIpPresenter mIBlockingIpPresenter;
 
-    @Override
-    public void onLoadBlockingList(BaseAdapter adapter) {
 
+    public void setPresenter(IBlockingIpPresenter presenter){
+        mIBlockingIpPresenter = presenter;
     }
 
-    @Override
-    public void onListRefresh() {
-        Logger.d("On list fresh!");
-    }
 
-    @Override
-    public void onOptionFailed(int optionId, String msg) {
-
-    }
-
-    public interface DataIpInputListnener {
-        void onDataIpInputListener(String ipstart, String ipend);
-
-    }
+//    public interface DataIpInputListnener {
+//        void onDataIpInputListener(String ipstart, String ipend);
+//
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +49,9 @@ public class IpInputDialog extends DialogFragment implements IBlockingIpView{
         ip_start = (EditText) view.findViewById(R.id.edit_ipstartin);
         ip_end = (EditText) view.findViewById(R.id.edit_ipstartend);
         ip_sure = (Button) view.findViewById(R.id.ip_sure);
-        mIBlockingIpPresenter = new BlockingIpImpl(this);
+
+        //这里的数据orz
+//        mIBlockingIpPresenter = new BlockingIpImpl(this,getActivity());
         ip_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +62,8 @@ public class IpInputDialog extends DialogFragment implements IBlockingIpView{
                     Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
                 } else if (ipCheckUtils.isIP(ip_start.getText().toString()) && ipCheckUtils.isIP(ip_end.getText().toString())) {
                     mIBlockingIpPresenter.addBlockingIp(ip_start.getText().toString(),ip_end.getText().toString());
-                    DataIpInputListnener listener = (DataIpInputListnener) getActivity();
-                    listener.onDataIpInputListener(ip_start.getText().toString(), ip_end.getText().toString());
+//                    DataIpInputListnener listener = (DataIpInputListnener) getActivity();
+//                    listener.onDataIpInputListener(ip_start.getText().toString(), ip_end.getText().toString());
                     IpInputDialog.this.dismiss();
                 } else {
                     Toast.makeText(getActivity(),"请检查IP地址的有效性",Toast.LENGTH_LONG).show();

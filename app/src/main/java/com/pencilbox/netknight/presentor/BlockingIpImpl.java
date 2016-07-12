@@ -1,10 +1,17 @@
 package com.pencilbox.netknight.presentor;
 
+import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.view.IBlockingIpView;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pencil-box on 16/6/28.
@@ -14,10 +21,16 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
 
     private IBlockingIpView mBlockingIpView;
 
-    public BlockingIpImpl(IBlockingIpView blockingIpView){
+    private ListAdapter listAdapter;
+    private ArrayList<String> listIp;
+
+    private Context mContext;
+
+    public BlockingIpImpl(IBlockingIpView blockingIpView,Context context){
 
 
         mBlockingIpView = blockingIpView;
+        mContext = context;
     }
 
 
@@ -33,8 +46,20 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
         BlockIp blockIp = new BlockIp();
         blockIp.setOriginIp(originIp);
         blockIp.setEndIp(endIp);
-        blockIp.save();
-        Logger.d("Here!");
+        if(!blockIp.save()){
+            Log.e("BlockingIpImpl","blockingIp 保存失败");
+            return ;
+        }
+
+
+        listIp.add(originIp);
+        listIp.add(endIp);
+
+        listAdapter.notifyDataSetChanged();
+
+        Log.d("BlockingImpl","添加数据成功!");
+
+
         //执行完后,更新列表信息,这里持有adapter对象
         mBlockingIpView.onListRefresh();
     }
@@ -52,5 +77,17 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
     @Override
     public void loadBlockingIpList() {
 
+
+        listIp = new ArrayList<String>();
+        List<BlockIp> ipList= DataSupport.findAll(BlockIp.class);
+
+
+        for (int i = 0; i<ipList.size(); i++){
+            listIp.add(ipList.get(i).getOriginIp());
+            listIp.add(ipList.get(i).getEndIp());
+        }
+        listAdapter = new ListAdapter(mContext,listIp);
+
+        mBlockingIpView.onLoadBlockingList(listAdapter);
     }
 }
