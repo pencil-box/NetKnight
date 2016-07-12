@@ -12,7 +12,7 @@ public interface IBlockingIpPresenter {
 
      void changeBlockingIp(long blockingIpId,String originIp,String endIp);
 
-     void deleteBlockingIp(long blockingIpId);
+     void deleteBlockingIp(int position);
 
 
     //加载阻断Ip列表

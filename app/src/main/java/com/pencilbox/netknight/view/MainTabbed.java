@@ -139,8 +139,8 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
                     return new MainIp();
                 case 2:
                     return new MainAddress();
-                case 3:
-                    return new MainPrefer();
+//                case 3:
+//                    return new MainPrefer();
             }
             return null;
             //return PlaceholderFragment.newInstance(position + 1);
@@ -149,7 +149,7 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 3;
         }
 
         @Override
@@ -161,8 +161,8 @@ public class MainTabbed extends AppCompatActivity implements AddressInputDialog.
                     return "IP";
                 case 2:
                     return "域名";
-                case 3:
-                    return "偏好";
+//                case 3:
+//                    return "偏好";
             }
             return null;
         }
