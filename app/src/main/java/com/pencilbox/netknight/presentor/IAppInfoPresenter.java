@@ -31,5 +31,7 @@ public interface IAppInfoPresenter {
      */
      void orderAppList(int orderType);
 
+     //修改app是否经过vpn信息
+     void changeAppIsVpnAccess(int position);
 
 }

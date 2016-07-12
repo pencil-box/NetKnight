@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
 
 
     <RelativeLayout
@@ -63,6 +64,17 @@
             android:text="应用权限:"
             android:textAlignment="center" />
 
+
+        <TextView
+            android:id="@+id/tv_vpn_through"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="应用流量不经过vpnService"
+            android:layout_toRightOf="@+id/app_text"
+            android:layout_marginLeft="3dp"
+            android:layout_centerVertical="true"/>
+
         <Spinner
             android:id="@+id/wifi_spinner"
             android:layout_width="150dp"
@@ -79,7 +91,10 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/wifi_spinner"></Spinner>
+            android:layout_toRightOf="@+id/wifi_spinner">
+
+
+        </Spinner>
     </RelativeLayout>
 
 </LinearLayout>

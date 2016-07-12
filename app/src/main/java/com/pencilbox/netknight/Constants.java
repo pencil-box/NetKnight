@@ -7,10 +7,10 @@ package com.pencilbox.netknight;
 public class Constants {
 
 
-    public final static int ACCESS_TYPE_ALLOW = 1;
-    public final static int ACCESS_TYPE_DISALLOW = 2;
-    public final static int ACCESS_TYPE_DISALLOW_BACK = 3;
-    public final static int ACCESS_TYPE_REMIND = 4;
+    public final static int ACCESS_TYPE_ALLOW = 0;
+    public final static int ACCESS_TYPE_DISALLOW = 1;
+    public final static int ACCESS_TYPE_DISALLOW_BACK = 2;
+    public final static int ACCESS_TYPE_REMIND = 3;
 
 
     public final static int OPTION_ADD = 1;

@@ -76,8 +76,6 @@ public class AppUtils {
                     continue;
                 }
 
-
-
                 App app = new App();
                 app.setUid(packageList.get(i).applicationInfo.uid);
 

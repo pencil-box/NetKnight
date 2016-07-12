@@ -19,7 +19,7 @@ import com.pencilbox.netknight.R;
 public class SpinnerAdapter extends BaseAdapter {
     private Context mContext;
     private String[] values;
-    LayoutInflater inflater = null;
+//    LayoutInflater inflater = null;
 
     public SpinnerAdapter(Context mContext) {
         this.mContext = mContext;
@@ -61,18 +61,19 @@ public class SpinnerAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        String value = values[position];
-        holder.spinner_value.setText(value);
-        if ("允许联网".equals(value.trim())) {
-            Log.d("CheckList", "alsdjflaskdjf");
-            //holder.spinner_value.setTextColor(Color.RED);
-        } else if ("禁止联网".equals(value)) {
-            // holder.spinner_value.setTextColor(Color.GREEN);
-        } else if ("联网时提示".equals(value)) {
-            // holder.spinner_value.setTextColor(Color.BLACK);
-        } else {
-            //holder.spinner_value.setTextColor(Color.BLUE);
-        }
+//        holder.spinner_value.setText("Hello");
+//        String value = values[position];
+        holder.spinner_value.setText(values[position]);
+//        if ("允许联网".equals(value.trim())) {
+////            Log.d("CheckList", "alsdjflaskdjf");
+//            //holder.spinner_value.setTextColor(Color.RED);
+//        } else if ("禁止联网".equals(value)) {
+//            // holder.spinner_value.setTextColor(Color.GREEN);
+//        } else if ("联网时提示".equals(value)) {
+//            // holder.spinner_value.setTextColor(Color.BLACK);
+//        } else {
+//            //holder.spinner_value.setTextColor(Color.BLUE);
+//        }
         return convertView;
     }
 }

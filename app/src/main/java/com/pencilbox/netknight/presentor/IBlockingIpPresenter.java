@@ -1,6 +1,5 @@
 package com.pencilbox.netknight.presentor;
 
-import android.widget.BaseAdapter;
 
 /**
  * Created by pencil-box on 16/6/28.

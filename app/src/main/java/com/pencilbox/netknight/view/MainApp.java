@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.presentor.IAppInfoImpl;
@@ -24,7 +26,7 @@ import com.pencilbox.netknight.service.NetKnightService;
 
 public class MainApp extends Fragment implements View.OnClickListener, IAppInfoView {
     private PopupWindow popupWindow;
-    private ListView app_listView = null;
+    private ListView app_listView ;
 
 
     private Switch mFireWallSwitch;
@@ -35,6 +37,24 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_main, container, false);
         app_listView = (ListView) view.findViewById(R.id.app_listview);
+
+        app_listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.d("MainApp","onItemLongClick :"+position);
+
+                if(NetKnightService.isRunning){
+                    Toast.makeText(getActivity(),"请关闭VpnService再重试",Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
+                mIAppInfoPresenter.changeAppIsVpnAccess(position);
+
+                return false;
+            }
+        });
+
 
         mFireWallSwitch = (Switch) view.findViewById(R.id.switch_vpnsevice);
         mFireWallSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -220,7 +240,8 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     }
 
     @Override
-    public void onListRefresh() {
+    public void onListRefresh(String msg) {
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
 
     }
 

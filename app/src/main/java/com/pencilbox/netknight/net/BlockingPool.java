@@ -32,6 +32,23 @@ public class BlockingPool {
     }
 
 
+    public static void initIp(){
+        sBlockingIpList = DataSupport.findAll(BlockIp.class);
+    }
+
+    public static void initName(){
+        sBlockingNameList = DataSupport.findAll(BlockName.class);
+    }
+
+
+    public static void closeIp(){
+        sBlockingIpList = null;
+    }
+    public static void closeName(){
+        sBlockingNameList = null;
+    }
+
+
 
     public static ArrayList<BlockIp> getIpList(){
 

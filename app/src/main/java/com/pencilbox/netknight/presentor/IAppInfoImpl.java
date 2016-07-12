@@ -89,4 +89,22 @@ public class IAppInfoImpl implements IAppInfoPresenter {
     public void orderAppList(int orderType) {
 
     }
+
+    @Override
+    public void changeAppIsVpnAccess(int position) {
+        App app =   mAppInfoAdapter.getItem(position);
+
+        app.setAccessVpn(!app.isAccessVpn());
+        app.save();
+
+        mAppInfoAdapter.notifyDataSetChanged();
+        String msg;
+        if(app.isAccessVpn()){
+
+            msg = "成功设置该应用通过vpn";
+        }else{
+            msg = "成功设置该应用不通过vpn";
+        }
+        mIAppInfoView.onListRefresh(msg);
+    }
 }

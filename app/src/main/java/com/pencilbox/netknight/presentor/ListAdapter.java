@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pencilbox.netknight.R;
+import com.pencilbox.netknight.model.BlockIp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,28 +19,29 @@ import java.util.List;
  * Created by wu on 16/7/5.
  */
 
-public class ListAdapter extends BaseAdapter implements View.OnClickListener {
-    private List<String> datas = new ArrayList<String>();
+public class ListAdapter extends BaseAdapter {
+//    private List<String> datas = new ArrayList<String>();
+    private List<BlockIp> datas = new ArrayList<BlockIp>();
     private Context context;
 
-    public ListAdapter(Context context, List<String> datas) {
+    public ListAdapter(Context context, List<BlockIp> datas) {
         this.datas = datas;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return datas.size() % 2 == 0 ? datas.size() / 2 : datas.size() / 2 + 1;
+        return datas.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public BlockIp getItem(int position) {
+        return datas.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return datas.get(position).getId();
     }
 
     @Override
@@ -51,50 +53,43 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
             convertView = inflater.inflate(R.layout.list_item, null);
             hodler.textView1 = (TextView) convertView.findViewById(R.id.left_item);
             hodler.textView2 = (TextView) convertView.findViewById(R.id.rigth_item);
-            hodler.layout1 = (LinearLayout) convertView.findViewById(R.id.item_layout1);
-            hodler.layout2 = (LinearLayout) convertView.findViewById(R.id.item_layout2);
 
             convertView.setTag(hodler);
         } else {
             hodler = (ViewHodler) convertView.getTag();
         }
 
-        String item1 = "";
-        String item2 = "";
 
-        if (position * 2 + 1 < datas.size()) {
-            item1 = datas.get(position * 2);
-            item2 = datas.get(position * 2 + 1);
-        } else if (position * 2 + 1 == datas.size()) {
-            item1 = datas.get(position * 2);
-            item2 = "";
-        }
+        hodler.textView1.setText(datas.get(position).getOriginIp());
+        hodler.textView2.setText(datas.get(position).getEndIp());
 
-        if (item1 != null) {
-            hodler.textView1.setText(item1);
-            hodler.layout1.setOnClickListener(this);
-            hodler.layout1.setTag(item1);
-        }
-
-        if (item2 != null) {
-            hodler.textView2.setText(item2);
-            hodler.layout2.setOnClickListener(this);
-            hodler.layout2.setTag(item2);
-        }
+//        String item1 = "";
+//        String item2 = "";
+//
+//        if (position * 2 + 1 < datas.size()) {
+//            item1 = datas.get(position * 2);
+//            item2 = datas.get(position * 2 + 1);
+//        } else if (position * 2 + 1 == datas.size()) {
+//            item1 = datas.get(position * 2);
+//            item2 = "";
+//        }
+//
+//        if (item1 != null) {
+//            hodler.textView1.setText(item1);
+////            hodler.layout1.setTag(item1);
+//        }
+//
+//        if (item2 != null) {
+//            hodler.textView2.setText(item2);
+////            hodler.layout2.setTag(item2);
+//        }
 
 
         return convertView;
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
-
     private class ViewHodler {
         TextView textView1;
         TextView textView2;
-        LinearLayout layout1;
-        LinearLayout layout2;
     }
 }

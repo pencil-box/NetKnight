@@ -3,8 +3,8 @@
     <string-array name="checklist_values">
         <item>允许联网</item>
         <item>禁止联网</item>
-        <item>联网时提示</item>
         <item>禁止后台偷跑</item>
+        <item>联网时提示</item>
     </string-array>
 
 

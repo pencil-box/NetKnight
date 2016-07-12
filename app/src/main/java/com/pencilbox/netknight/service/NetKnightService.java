@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
-import android.view.View;
 
-import com.pencilbox.netknight.NetKnightApp;
 import com.pencilbox.netknight.model.App;
-import com.pencilbox.netknight.net.AppNetStateMap;
 import com.pencilbox.netknight.net.ByteBufferPool;
 import com.pencilbox.netknight.net.NetInput;
+import com.pencilbox.netknight.net.NetNotifyThread;
 import com.pencilbox.netknight.net.NetOutput;
 import com.pencilbox.netknight.net.Packet;
 import com.pencilbox.netknight.net.TCB;
@@ -22,8 +18,6 @@ import com.pencilbox.netknight.net.TCBCachePool;
 import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
-
-import org.litepal.crud.DataSupport;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -41,6 +35,13 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class NetKnightService extends VpnService implements Runnable {
 
+
+
+
+
+
+
+
     //VPN转发的IP地址咯
     public static String  VPN_ADDRESS = "10.1.10.1";
 
@@ -53,6 +54,11 @@ public class NetKnightService extends VpnService implements Runnable {
 
     //即将发送至应用的数据包
     private LinkedBlockingQueue<ByteBuffer> mOutputQueue;
+
+    //缓存的appInfo队列,请求被拦截的队列
+    private LinkedBlockingQueue<App> mCacheAppInfo;
+    //网络访问通知线程
+    private NetNotifyThread mNetNotify;
 
     //网络输入输出
     private NetInput mNetInput;
@@ -76,7 +82,7 @@ public class NetKnightService extends VpnService implements Runnable {
     //建立vpn
     private void setupVpn(){
 
-        Builder builder = new Builder();
+
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            try {
 //                mInterface = builder.setSession("NetKnight").setBlocking(false)
@@ -88,6 +94,7 @@ public class NetKnightService extends VpnService implements Runnable {
         //获取应用信息,并设置相应的包才动it
         List<App> appList = AppUtils.queryAppInfo(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Builder builder = new Builder();
             //只拦截需要拦截的应用
             for (int i = 0; i < appList.size(); i++) {
                 App app = appList.get(i);
@@ -96,12 +103,6 @@ public class NetKnightService extends VpnService implements Runnable {
 
                     try {
                         builder = builder.addAllowedApplication(app.getPkgname());
-
-                        //存储到全局map里面
-                        AppNetStateMap.putWifi(app.getId(),app.getWifiType());
-                        AppNetStateMap.putMobile(app.getId(),app.getMobileDataType());
-
-
 
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();
@@ -133,13 +134,22 @@ public class NetKnightService extends VpnService implements Runnable {
 
 
 
+        mCacheAppInfo = new LinkedBlockingQueue<>();
+        mNetNotify = new NetNotifyThread(this,mCacheAppInfo);
+
+
 
         mInputQueue = new LinkedBlockingQueue<>();
         mOutputQueue = new LinkedBlockingQueue<>();
 
+
+
         mNetInput = new NetInput(mOutputQueue, mChannelSelector);
         //这个传参要不要等init好再传呢
-        mNetOutput = new NetOutput(mInputQueue, mOutputQueue, this, mChannelSelector);
+        mNetOutput = new NetOutput(mInputQueue, mOutputQueue, this, mChannelSelector,mCacheAppInfo);
+
+
+
 
 
         //还是直接start呢?
@@ -149,7 +159,7 @@ public class NetKnightService extends VpnService implements Runnable {
 //        executorService.execute(this);
 
 //        MyLog.logd(this,fd.toString());
-
+        mNetNotify.start();
         mNetOutput.start();
         mNetInput.start();
         new Thread(this).start();
@@ -314,7 +324,7 @@ public class NetKnightService extends VpnService implements Runnable {
         isRunning = false;
         mNetInput.quit();
         mNetOutput.quit();
-
+        mNetNotify.quit();
 
 
         try {
@@ -330,6 +340,7 @@ public class NetKnightService extends VpnService implements Runnable {
 
         mInputQueue = null;
         mOutputQueue = null;
+        mCacheAppInfo = null;
         ByteBufferPool.clear();
     }
 
@@ -341,6 +352,10 @@ public class NetKnightService extends VpnService implements Runnable {
 
         MyLog.logd(this, "onDestroy");
     }
+
+
+
+
 
 
 
