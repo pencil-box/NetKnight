@@ -1,9 +1,9 @@
 package com.pencilbox.netknight.presentor;
 
 import android.graphics.Color;
-import android.widget.BaseAdapter;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -46,7 +46,9 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 设置描述文字
          */
-        lineChart.setDescription("WIFI流量/KB");
+        Description desc = new Description();
+        desc.setText("WIFI流量/KB");
+        lineChart.setDescription(desc);
         /**
          * 获取今日日期
          */
@@ -59,62 +61,62 @@ public class DairyImpl implements IDairyPresenter {
          */
         ArrayList<String> xValues = new ArrayList<>();
         for (int i = 6; i >= 0; i--) {
-            xValues.add((month+1) + "/" + (day-i));
+            xValues.add((month + 1) + "/" + (day - i));
         }
         /**
          * 生成Y轴数据
          */
         Calendar pre = Calendar.getInstance();
         Calendar next = Calendar.getInstance();
-        pre.set(year,month,day-6,0,0);
-        next.set(year,month,day-5,0,0);
+        pre.set(year, month, day - 6, 0, 0);
+        next.set(year, month, day - 5, 0, 0);
 
         ArrayList<Entry> yValue = new ArrayList<>();
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,0));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 0));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,1));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 1));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,2));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 2));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,3));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 3));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,4));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 4));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,5));
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 5));
         /**
          * 插入当日流量数据
          */
         yValue.add(new Entry(DataSupport.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024,6));
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 6));
         /**
          * 构建一个LineDataSet 代表一组Y轴数据
          */
@@ -132,7 +134,7 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 构建一个LineData  将dataSets放入
          */
-        LineData lineData = new LineData(xValues, dataSets);
+        LineData lineData = new LineData(dataSets);
         /**
          * 将数据插入
          */
@@ -155,7 +157,9 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 设置描述文字
          */
-        lineChart.setDescription("移动流量/KB");
+        Description desc = new Description();
+        desc.setText("移动流量/KB");
+        lineChart.setDescription(desc);
         /**
          * 获取今日日期
          */
@@ -168,62 +172,62 @@ public class DairyImpl implements IDairyPresenter {
          */
         ArrayList<String> xValues = new ArrayList<>();
         for (int i = 6; i >= 0; i--) {
-            xValues.add((month+1) + "/" + (day-i));
+            xValues.add((month + 1) + "/" + (day - i));
         }
         /**
          * 生成Y轴数据
          */
         Calendar pre = Calendar.getInstance();
         Calendar next = Calendar.getInstance();
-        pre.set(year,month,day-6,0,0);
-        next.set(year,month,day-5,0,0);
+        pre.set(year, month, day - 6, 0, 0);
+        next.set(year, month, day - 5, 0, 0);
 
         ArrayList<Entry> yValue = new ArrayList<>();
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,0));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 0));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,1));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 1));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,2));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 2));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,3));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 3));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,4));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 4));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,5));
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 5));
         /**
          * 插入当日流量数据
          */
         yValue.add(new Entry(DataSupport.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024,6));
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 6));
         /**
          * 构建一个LineDataSet 代表一组Y轴数据
          */
@@ -241,7 +245,7 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 构建一个LineData  将dataSets放入
          */
-        LineData lineData = new LineData(xValues, dataSets);
+        LineData lineData = new LineData(dataSets);
         /**
          * 将数据插入
          */
@@ -264,7 +268,9 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 设置描述文字
          */
-        lineChart.setDescription("WIFI+移动流量/KB");
+        Description desc = new Description();
+        desc.setText("WIFI+移动流量/KB");
+        lineChart.setDescription(desc);
         /**
          * 获取今日日期
          */
@@ -277,96 +283,96 @@ public class DairyImpl implements IDairyPresenter {
          */
         ArrayList<String> xValues = new ArrayList<>();
         for (int i = 6; i >= 0; i--) {
-            xValues.add((month+1) + "/" + (day-i));
+            xValues.add((month + 1) + "/" + (day - i));
         }
         /**
          * 生成Y轴数据
          */
         Calendar pre = Calendar.getInstance();
         Calendar next = Calendar.getInstance();
-        pre.set(year,month,day-6,0,0);
-        next.set(year,month,day-5,0,0);
+        pre.set(year, month, day - 6, 0, 0);
+        next.set(year, month, day - 5, 0, 0);
 
         ArrayList<Entry> yValue = new ArrayList<>();
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ? and recordTime < ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,0));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 0));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ? and recordTime < ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,1));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 1));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ? and recordTime < ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,2));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 2));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ? and recordTime < ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,3));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 3));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ? and recordTime < ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,4));
-        pre.add(Calendar.HOUR,24);
-        next.add(Calendar.HOUR,24);
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 4));
+        pre.add(Calendar.HOUR, 24);
+        next.add(Calendar.HOUR, 24);
 
         yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ? and recordTime < ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,5));
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 5));
         /**
          * 插入当日流量数据
          */
         yValue.add(new Entry(DataSupport.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","mobileSize",Long.TYPE)/1024
-                +DataSupport.where("recordTime >= ?",
+                .sum("Traffic", "mobileSize", Long.TYPE) / 1024
+                + DataSupport.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
-                .sum("Traffic","wifiSize",Long.TYPE)/1024
-                ,6));
+                .sum("Traffic", "wifiSize", Long.TYPE) / 1024
+                , 6));
         /**
          * 构建一个LineDataSet 代表一组Y轴数据
          */
@@ -384,7 +390,7 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 构建一个LineData  将dataSets放入
          */
-        LineData lineData = new LineData(xValues, dataSets);
+        LineData lineData = new LineData(dataSets);
         /**
          * 将数据插入
          */
