@@ -52,7 +52,7 @@ public class NetOutput extends Thread {
 
     private VpnService mVpnService;
 
-    public NetOutput(BlockingQueue<Packet> inputQueue, BlockingQueue<ByteBuffer> outputQueue, VpnService vpnService, Selector selector,BlockingQueue<App> appCacheQueue) {
+    public NetOutput(BlockingQueue<Packet> inputQueue, BlockingQueue<ByteBuffer> outputQueue, VpnService vpnService, Selector selector, BlockingQueue<App> appCacheQueue) {
         mOutputQueue = outputQueue;
         mInputQueue = inputQueue;
 
@@ -330,19 +330,13 @@ public class NetOutput extends Thread {
             return;
         }
 
-
-
-
-
 //        //TODO 抓包咯,这样很不妥呀,还要根据相关信息构建包orz
         ByteBuffer sourceBuffer = ByteBufferPool.acquire();
-        referencePacket.updateTCPBuffer(sourceBuffer, (byte) Packet.TCPHeader.SYN,referencePacket.tcpHeader.sequenceNumber,
-                referencePacket.tcpHeader.acknowledgementNumber,0);
+        referencePacket.updateTCPBuffer(sourceBuffer, (byte) Packet.TCPHeader.SYN, referencePacket.tcpHeader.sequenceNumber,
+                referencePacket.tcpHeader.acknowledgementNumber, 0);
 
-        PCapFilter.filterPacket(sourceBuffer,passAppId);
+        PCapFilter.filterPacket(sourceBuffer, passAppId);
         ByteBufferPool.release(sourceBuffer);
-
-
 
 
         referencePacket.swapSourceAndDestination();
@@ -356,8 +350,6 @@ public class NetOutput extends Thread {
 
         //存储起来先orz
         TCBCachePool.putTCB(ipAndPort, tcb);
-
-
 
         try {
             SocketChannel socketChannel = SocketChannel.open();
@@ -469,7 +461,7 @@ public class NetOutput extends Thread {
 
 
         boolean isPass = filterByAppSetting(appList.get(0));
-        if(!isPass){
+        if (!isPass) {
             return -1;
         }
 
@@ -484,21 +476,19 @@ public class NetOutput extends Thread {
 
     /**
      * 根据app的设置信息进行拦截
+     *
      * @param app
      * @return
      */
     private boolean filterByAppSetting(App app) {
 
 
-
-        if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_MOBILE){
-
+        if (NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_MOBILE) {
 
 
-            switch (app.getMobileDataType()){
+            switch (app.getMobileDataType()) {
 
                 case Constants.ACCESS_TYPE_ALLOW:
-
 
 
                     return true;
@@ -523,12 +513,11 @@ public class NetOutput extends Thread {
 
 
         }
-        if(NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_WIFI){
+        if (NetChangeReceiver.sNetState == NetChangeReceiver.NET_STATE_WIFI) {
 
-            switch (app.getWifiType()){
+            switch (app.getWifiType()) {
 
                 case Constants.ACCESS_TYPE_ALLOW:
-
 
 
                     return true;
@@ -638,11 +627,8 @@ public class NetOutput extends Thread {
 
         }
 
-        if (Integer.parseInt(ip[diffIndex]) > Integer.parseInt(beginIp[diffIndex])
-                && Integer.parseInt(ip[diffIndex]) < Integer.parseInt(endIp[diffIndex])) {
-            return true;
-        }
-        return false;
+        return Integer.parseInt(ip[diffIndex]) > Integer.parseInt(beginIp[diffIndex])
+                && Integer.parseInt(ip[diffIndex]) < Integer.parseInt(endIp[diffIndex]);
     }
 
     //查找第几个不同的位,方便高位匹配
