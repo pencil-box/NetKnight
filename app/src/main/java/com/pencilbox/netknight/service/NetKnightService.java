@@ -10,7 +10,6 @@ import android.util.Log;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.net.ByteBufferPool;
 import com.pencilbox.netknight.net.NetInput;
-import com.pencilbox.netknight.net.NetNotifyThread;
 import com.pencilbox.netknight.net.NetOutput;
 import com.pencilbox.netknight.net.Packet;
 import com.pencilbox.netknight.net.TCB;
@@ -57,8 +56,6 @@ public class NetKnightService extends VpnService implements Runnable {
 
     //缓存的appInfo队列,请求被拦截的队列
     private LinkedBlockingQueue<App> mCacheAppInfo;
-    //网络访问通知线程
-    private NetNotifyThread mNetNotify;
 
     //网络输入输出
     private NetInput mNetInput;
@@ -110,7 +107,11 @@ public class NetKnightService extends VpnService implements Runnable {
                 }
 
             }
-            mInterface = builder.setSession("NetKnight").setBlocking(false).addAddress(VPN_ADDRESS,32).addRoute("0.0.0.0",0).establish();
+            mInterface = builder.setSession("NetKnight")
+                    .setBlocking(false)
+                    .addAddress(VPN_ADDRESS, 32)
+                    .addRoute("0.0.0.0", 0)
+                    .establish();
         }else{
             Log.e("NetKnightService","当前版本的android 不支持vpnservice");
         }
@@ -135,10 +136,6 @@ public class NetKnightService extends VpnService implements Runnable {
 
 
         mCacheAppInfo = new LinkedBlockingQueue<>();
-        mNetNotify = new NetNotifyThread(this,mCacheAppInfo);
-
-
-
         mInputQueue = new LinkedBlockingQueue<>();
         mOutputQueue = new LinkedBlockingQueue<>();
 
@@ -159,7 +156,6 @@ public class NetKnightService extends VpnService implements Runnable {
 //        executorService.execute(this);
 
 //        MyLog.logd(this,fd.toString());
-        mNetNotify.start();
         mNetOutput.start();
         mNetInput.start();
         new Thread(this).start();
@@ -324,8 +320,6 @@ public class NetKnightService extends VpnService implements Runnable {
         isRunning = false;
         mNetInput.quit();
         mNetOutput.quit();
-        mNetNotify.quit();
-
 
         try {
             mChannelSelector.close();
