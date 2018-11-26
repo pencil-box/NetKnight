@@ -1,12 +1,12 @@
 package com.pencilbox.netknight.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by pencil-box on 16/6/27.
  * 记录的IP信息
  */
-public class AppIp extends DataSupport{
+public class AppIp extends LitePalSupport {
 
     private long id;
     private String ip;

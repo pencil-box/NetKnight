@@ -7,8 +7,6 @@ import com.pencilbox.netknight.model.PcapFile;
 import com.pencilbox.netknight.service.NetKnightService;
 import com.pencilbox.netknight.utils.SDCardUtils;
 
-import org.litepal.crud.DataSupport;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -68,7 +66,7 @@ public class PCapFilter {
                 writeFile = new File(filePath);
             }else{
 
-                App app = DataSupport.find(App.class,mCapAppId);
+                App app = org.litepal.LitePal.find(App.class, mCapAppId);
                 filePath = dirName + app.getName() +"_"+time+".pcap";
                 writeFile = new File(filePath);
             }

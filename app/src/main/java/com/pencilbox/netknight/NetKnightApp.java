@@ -1,6 +1,5 @@
 package com.pencilbox.netknight;
 
-import android.app.Application;
 import android.content.Context;
 
 import org.litepal.LitePalApplication;
@@ -10,23 +9,13 @@ import org.litepal.LitePalApplication;
  */
 public class NetKnightApp extends LitePalApplication {
 
-
-    private static Context mContext;
-
-
+    public static Context getContext() {
+        return LitePalApplication.getContext();
+    }
 
     @Override
     public void onCreate() {
-        initialize(this);
+        // LitePal.initialize(this); by extends LitePalApplication
         super.onCreate();
-        mContext = this;
-
-
     }
-
-    public static Context getContext(){
-        return mContext;
-    }
-
-
 }

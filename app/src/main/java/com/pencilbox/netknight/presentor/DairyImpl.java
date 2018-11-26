@@ -11,8 +11,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.pencilbox.netknight.view.IDairyView;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -72,49 +70,49 @@ public class DairyImpl implements IDairyPresenter {
         next.set(year, month, day - 5, 0, 0);
 
         ArrayList<Entry> yValue = new ArrayList<>();
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 0));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 1));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 2));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 3));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 4));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 5));
         /**
          * 插入当日流量数据
          */
-        yValue.add(new Entry(DataSupport.where("recordTime >= ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024, 6));
         /**
@@ -183,49 +181,49 @@ public class DairyImpl implements IDairyPresenter {
         next.set(year, month, day - 5, 0, 0);
 
         ArrayList<Entry> yValue = new ArrayList<>();
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 0));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 1));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 2));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 3));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 4));
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 5));
         /**
          * 插入当日流量数据
          */
-        yValue.add(new Entry(DataSupport.where("recordTime >= ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024, 6));
         /**
@@ -294,11 +292,11 @@ public class DairyImpl implements IDairyPresenter {
         next.set(year, month, day - 5, 0, 0);
 
         ArrayList<Entry> yValue = new ArrayList<>();
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ? and recordTime < ?",
+                + org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
@@ -306,11 +304,11 @@ public class DairyImpl implements IDairyPresenter {
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ? and recordTime < ?",
+                + org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
@@ -318,11 +316,11 @@ public class DairyImpl implements IDairyPresenter {
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ? and recordTime < ?",
+                + org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
@@ -330,11 +328,11 @@ public class DairyImpl implements IDairyPresenter {
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ? and recordTime < ?",
+                + org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
@@ -342,11 +340,11 @@ public class DairyImpl implements IDairyPresenter {
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ? and recordTime < ?",
+                + org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
@@ -354,11 +352,11 @@ public class DairyImpl implements IDairyPresenter {
         pre.add(Calendar.HOUR, 24);
         next.add(Calendar.HOUR, 24);
 
-        yValue.add(new Entry(DataSupport.where("recordTime >= ? and recordTime < ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ? and recordTime < ?",
+                + org.litepal.LitePal.where("recordTime >= ? and recordTime < ?",
                 String.valueOf(pre.getTimeInMillis()),
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
@@ -366,10 +364,10 @@ public class DairyImpl implements IDairyPresenter {
         /**
          * 插入当日流量数据
          */
-        yValue.add(new Entry(DataSupport.where("recordTime >= ?",
+        yValue.add(new Entry(org.litepal.LitePal.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "mobileSize", Long.TYPE) / 1024
-                + DataSupport.where("recordTime >= ?",
+                + org.litepal.LitePal.where("recordTime >= ?",
                 String.valueOf(next.getTimeInMillis()))
                 .sum("Traffic", "wifiSize", Long.TYPE) / 1024
                 , 6));

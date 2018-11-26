@@ -16,12 +16,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.presentor.ListAdapter;
 import com.pencilbox.netknight.service.NetKnightService;
 import com.pencilbox.netknight.utils.MyLog;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +45,13 @@ public class MainTabbed extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         listaddress = new ArrayList<String>();
         listip = new ArrayList<String>();
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -87,9 +84,9 @@ public class MainTabbed extends AppCompatActivity {
          * 更新域名 listview显示内容
          */
 //        listViewaddress = (ListView) this.findViewById(R.id.list_address);
-//        for (int i=1;i<=DataSupport.count(BlockName.class);i++){
-//            listaddress.add(DataSupport.find(BlockName.class,i).getcName());
-//            listaddress.add(DataSupport.find(BlockName.class,i).getIp());
+//        for (int i=1;i<=org.litepal.LitePal.count(BlockName.class);i++){
+//            listaddress.add(org.litepal.LitePal.find(BlockName.class,i).getcName());
+//            listaddress.add(org.litepal.LitePal.find(BlockName.class,i).getIp());
 //        }
 ////        listaddress.add(start);
 ////        listaddress.add(end);
@@ -104,9 +101,9 @@ public class MainTabbed extends AppCompatActivity {
 //         * 更新IP listview显示内容
 //         */
 //        listViewip = (ListView) this.findViewById(R.id.list_ip);
-//        for (int i=1;i<= DataSupport.count(BlockIp.class);i++){
-//            listip.add(DataSupport.find(BlockIp.class,i).getOriginIp());
-//            listip.add(DataSupport.find(BlockIp.class,i).getEndIp());
+//        for (int i=1;i<= org.litepal.LitePal.count(BlockIp.class);i++){
+//            listip.add(org.litepal.LitePal.find(BlockIp.class,i).getOriginIp());
+//            listip.add(org.litepal.LitePal.find(BlockIp.class,i).getEndIp());
 //        }
 ////        listip.add(ipstart);
 ////        listip.add(ipend);

@@ -12,8 +12,6 @@ import com.pencilbox.netknight.receiver.NetChangeReceiver;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
 
-import org.litepal.crud.DataSupport;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -449,7 +447,7 @@ public class NetOutput extends Thread {
 
         //TODO 通过UID查找appId
 
-        List<App> appList = DataSupport.where("uid = ?", String.valueOf(uid)).find(App.class);
+        List<App> appList = org.litepal.LitePal.where("uid = ?", String.valueOf(uid)).find(App.class);
 
         if (appList.size() != 1) {
             return -1;

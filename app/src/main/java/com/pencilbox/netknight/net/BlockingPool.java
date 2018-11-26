@@ -1,11 +1,7 @@
 package com.pencilbox.netknight.net;
 
-import android.provider.ContactsContract;
-
 import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +29,11 @@ public class BlockingPool {
 
 
     public static void initIp(){
-        sBlockingIpList = DataSupport.findAll(BlockIp.class);
+        sBlockingIpList = org.litepal.LitePal.findAll(BlockIp.class);
     }
 
     public static void initName(){
-        sBlockingNameList = DataSupport.findAll(BlockName.class);
+        sBlockingNameList = org.litepal.LitePal.findAll(BlockName.class);
     }
 
 
@@ -53,7 +49,7 @@ public class BlockingPool {
     public static ArrayList<BlockIp> getIpList(){
 
         if(sBlockingIpList==null){
-            sBlockingIpList = DataSupport.findAll(BlockIp.class);
+            sBlockingIpList = org.litepal.LitePal.findAll(BlockIp.class);
         }
 
 
@@ -62,7 +58,7 @@ public class BlockingPool {
 
     public static ArrayList<BlockName> getNameList(){
         if(sBlockingNameList==null){
-            sBlockingNameList = DataSupport.findAll(BlockName.class);
+            sBlockingNameList = org.litepal.LitePal.findAll(BlockName.class);
 
         }
 

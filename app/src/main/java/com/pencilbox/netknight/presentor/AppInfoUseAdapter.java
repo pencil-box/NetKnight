@@ -7,14 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.model.App;
-
-import org.litepal.crud.DataSupport;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -32,8 +28,8 @@ public class AppInfoUseAdapter extends BaseAdapter {
     /**
      * 获取移动数据+WIFI总用量
      */
-    long wifiTotal = DataSupport.sum("Traffic","wifiSize",Long.TYPE);
-    long mobileTotal = DataSupport.sum("Traffic","mobileSize",Long.TYPE);
+    long wifiTotal = org.litepal.LitePal.sum("Traffic", "wifiSize", Long.TYPE);
+    long mobileTotal = org.litepal.LitePal.sum("Traffic", "mobileSize", Long.TYPE);
 
     public void addAll(List<App> appLists) {
         list_appinfo.addAll(appLists);
@@ -85,8 +81,8 @@ public class AppInfoUseAdapter extends BaseAdapter {
         /**
          * 获取当前应用移动+WIFI使用量
          */
-        long mobileSize = DataSupport.where("appId = ?",String.valueOf(appInfo.getId())).sum("Traffic","mobileSize",Long.TYPE);
-        long wifiSize = DataSupport.where("appId = ?",String.valueOf(appInfo.getId())).sum("Traffic","wifiSize",Long.TYPE);
+        long mobileSize = org.litepal.LitePal.where("appId = ?", String.valueOf(appInfo.getId())).sum("Traffic", "mobileSize", Long.TYPE);
+        long wifiSize = org.litepal.LitePal.where("appId = ?", String.valueOf(appInfo.getId())).sum("Traffic", "wifiSize", Long.TYPE);
 
         holder.celluar_progresskbar.setProgress((int)(mobileSize));
         holder.wifi_progressbar.setProgress((int)(wifiSize));
@@ -119,12 +115,12 @@ public class AppInfoUseAdapter extends BaseAdapter {
         ProgressBar wifi_progressbar, celluar_progresskbar;
 
         public ViewHolder(View view) {
-            this.appnetuse_icon = (ImageView) view.findViewById(R.id.appnetuse_icon);
-            this.netuseAppLabel = (TextView) view.findViewById(R.id.netuseAppLabel);
-            this.text_wifiuse = (TextView) view.findViewById(R.id.text_wifiuse);
-            this.text_celluaruse= (TextView) view.findViewById(R.id.text_netuse);
-            this.wifi_progressbar = (ProgressBar) view.findViewById(R.id.wifi_progressbar);
-            this.celluar_progresskbar = (ProgressBar) view.findViewById(R.id.celluar_progressbar);
+            this.appnetuse_icon = view.findViewById(R.id.appnetuse_icon);
+            this.netuseAppLabel = view.findViewById(R.id.netuseAppLabel);
+            this.text_wifiuse = view.findViewById(R.id.text_wifiuse);
+            this.text_celluaruse = view.findViewById(R.id.text_netuse);
+            this.wifi_progressbar = view.findViewById(R.id.wifi_progressbar);
+            this.celluar_progresskbar = view.findViewById(R.id.celluar_progressbar);
 
         }
     }

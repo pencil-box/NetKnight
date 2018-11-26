@@ -2,17 +2,11 @@ package com.pencilbox.netknight.presentor;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.pencilbox.netknight.model.BlockIp;
-import com.pencilbox.netknight.net.BlockingPool;
 import com.pencilbox.netknight.view.IBlockingIpView;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pencil-box on 16/6/28.
@@ -85,7 +79,7 @@ public class BlockingIpImpl  implements IBlockingIpPresenter{
 
 
 //        listIp = new ArrayList<BlockIp>();
-         listIp= (ArrayList<BlockIp>) DataSupport.findAll(BlockIp.class);
+        listIp = (ArrayList<BlockIp>) org.litepal.LitePal.findAll(BlockIp.class);
 
         listAdapter = new ListAdapter(mContext,listIp);
 

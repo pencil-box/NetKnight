@@ -4,12 +4,8 @@ package com.pencilbox.netknight.presentor;
 import android.content.Context;
 import android.util.Log;
 
-import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.view.IBlockingAddressView;
-import com.pencilbox.netknight.view.IBlockingIpView;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 
@@ -68,7 +64,7 @@ public class IBlockingDomainImpl implements IBlockingDomainPresenter {
 
     @Override
     public void loadBlockingDomainList() {
-        listaddress = (ArrayList<BlockName>) DataSupport.findAll(BlockName.class);
+        listaddress = (ArrayList<BlockName>) org.litepal.LitePal.findAll(BlockName.class);
         addressListAdapter = new AddressListAdapter(mContext, listaddress);
         iBlockingAddressView.onLoadBlockingAddressList(addressListAdapter);
     }

@@ -3,8 +3,8 @@ package com.pencilbox.netknight.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,25 +13,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Switch;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.BlockIp;
-import com.pencilbox.netknight.model.BlockName;
 import com.pencilbox.netknight.net.BlockingPool;
-import com.pencilbox.netknight.presentor.BlockingIpImpl;
 import com.pencilbox.netknight.presentor.IBlockingDomainImpl;
 import com.pencilbox.netknight.presentor.IBlockingDomainPresenter;
-import com.pencilbox.netknight.presentor.ListAdapter;
-
-import org.litepal.crud.DataSupport;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainAddress extends Fragment implements IBlockingAddressView {
@@ -58,7 +48,7 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
 
             }
         });
-        listView = (ListView) view.findViewById(R.id.list_address);
+        listView = view.findViewById(R.id.list_address);
 
         view.findViewById(R.id.btn_addressadd).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +84,7 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
         });
 
         //设置默认的开关信息
-        mBlockingSwitch = (Switch) view.findViewById(R.id.btn_adswitch);
+        mBlockingSwitch = view.findViewById(R.id.btn_adswitch);
         mBlockingSwitch.setChecked(BlockingPool.isBlockName);
         mBlockingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,9 +105,9 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
          */
 //        listView = (ListView) view.findViewById(R.id.list_address);
 //        listAddress = new ArrayList<String>();
-//        for (int i = 1; i<= DataSupport.count(BlockName.class); i++){
-//            listAddress.add(DataSupport.find(BlockName.class,i).getcName());
-//            listAddress.add(DataSupport.find(BlockName.class,i).getIp());
+//        for (int i = 1; i<= org.litepal.LitePal.count(BlockName.class); i++){
+//            listAddress.add(org.litepal.LitePal.find(BlockName.class,i).getcName());
+//            listAddress.add(org.litepal.LitePal.find(BlockName.class,i).getIp());
 //        }
 //        listAdapter = new ListAdapter(this.getContext(),listAddress);
 //        listView.setAdapter(listAdapter);
@@ -152,8 +142,8 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
         });
 
 
-        Button btn_dariy = (Button) customView.findViewById(R.id.btn_dariy);
-        Button btn_bag = (Button) customView.findViewById(R.id.btn_bag);
+        Button btn_dariy = customView.findViewById(R.id.btn_dariy);
+        Button btn_bag = customView.findViewById(R.id.btn_bag);
         btn_dariy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -3,7 +3,6 @@ package com.pencilbox.netknight.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.VpnService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.PopupWindow;
 import android.widget.Switch;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.net.BlockingPool;
 import com.pencilbox.netknight.presentor.BlockingIpImpl;
 import com.pencilbox.netknight.presentor.IBlockingIpPresenter;
@@ -55,11 +53,11 @@ public class MainIp extends Fragment implements IBlockingIpView {
         /**
          * 将数据库中的已有记录加载进listview
          */
-        listView = (ListView) view.findViewById(R.id.list_ip);
+        listView = view.findViewById(R.id.list_ip);
 //        listIp = new ArrayList<String>();
-//        for (int i=1;i<= DataSupport.count(BlockIp.class);i++){
-//            listIp.add(DataSupport.find(BlockIp.class,i).getOriginIp());
-//            listIp.add(DataSupport.find(BlockIp.class,i).getEndIp());
+//        for (int i=1;i<= org.litepal.LitePal.count(BlockIp.class);i++){
+//            listIp.add(org.litepal.LitePal.find(BlockIp.class,i).getOriginIp());
+//            listIp.add(org.litepal.LitePal.find(BlockIp.class,i).getEndIp());
 //        }
 //        listAdapter = new ListAdapter(this.getContext(),listIp);
 //        listView.setAdapter(listAdapter);
@@ -88,7 +86,7 @@ public class MainIp extends Fragment implements IBlockingIpView {
 
 
         //设置默认的开关信息
-        mBlockingSwitch = (Switch) view.findViewById(R.id.btn_ipswitch);
+        mBlockingSwitch = view.findViewById(R.id.btn_ipswitch);
         mBlockingSwitch.setChecked(BlockingPool.isBlockIp);
 
         mBlockingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -145,8 +143,8 @@ public class MainIp extends Fragment implements IBlockingIpView {
         });
 
         /** 在这里可以实现自定义视图的功能 */
-        Button btn_dariy = (Button) customView.findViewById(R.id.btn_dariy);
-        Button btn_bag = (Button) customView.findViewById(R.id.btn_bag);
+        Button btn_dariy = customView.findViewById(R.id.btn_dariy);
+        Button btn_bag = customView.findViewById(R.id.btn_bag);
         btn_dariy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

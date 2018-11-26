@@ -1,12 +1,12 @@
 package com.pencilbox.netknight.model;
 
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by AbelSu on 16/6/29.
  * 抓取流量包的实体类
  */
-public class Bag extends DataSupport{
+public class Bag extends LitePalSupport {
 
     private long id;//记录索引
     private long appId;//应用包名

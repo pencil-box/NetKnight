@@ -9,8 +9,6 @@ import android.util.Log;
 import com.pencilbox.netknight.Constants;
 import com.pencilbox.netknight.model.App;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.List;
 
 /**
@@ -26,13 +24,13 @@ public class AppUtils {
      */
     public static List<App> queryAppInfo(Context context){
 
-        List<App> appList = DataSupport.findAll(App.class);
+        List<App> appList = org.litepal.LitePal.findAll(App.class);
 
 
         if(appList == null||appList.size()==0){
             Log.d("AppUtils","执行初始化数据咯");
             initAppInfo(context);
-            appList = DataSupport.findAll(App.class);
+            appList = org.litepal.LitePal.findAll(App.class);
 
         }
 
