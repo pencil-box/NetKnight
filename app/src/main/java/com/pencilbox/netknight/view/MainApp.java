@@ -1,6 +1,8 @@
 package com.pencilbox.netknight.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,18 +23,16 @@ import com.pencilbox.netknight.presentor.IAppInfoImpl;
 import com.pencilbox.netknight.presentor.IAppInfoPresenter;
 import com.pencilbox.netknight.service.NetKnightService;
 
+import java.util.Objects;
+
 
 public class MainApp extends Fragment implements View.OnClickListener, IAppInfoView {
     private PopupWindow popupWindow;
     private ListView app_listView;
-
-
-    private Switch mFireWallSwitch;
-
     private IAppInfoPresenter mIAppInfoPresenter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_main, container, false);
         app_listView = view.findViewById(R.id.app_listview);
 
@@ -54,7 +54,7 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
         });
 
 
-        mFireWallSwitch = view.findViewById(R.id.switch_vpnsevice);
+        Switch mFireWallSwitch = view.findViewById(R.id.switch_vpnsevice);
         mFireWallSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -109,7 +109,8 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     }
 
     private void initmPopupWindowViewright() {
-        View customView = getActivity().getLayoutInflater().inflate(R.layout.right_top,
+        @SuppressLint("InflateParams")
+        View customView = Objects.requireNonNull(getActivity()).getLayoutInflater().inflate(R.layout.right_top,
                 null, false);
         // 创建PopupWindow实例,200,150分别是宽度和高度
         popupWindow = new PopupWindow(customView, 500, 800);
@@ -119,6 +120,7 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
         // 自定义view添加触摸事件
         customView.setOnTouchListener(new View.OnTouchListener() {
 
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (popupWindow != null && popupWindow.isShowing()) {
@@ -131,7 +133,7 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
         });
 
 
-        /** 在这里可以实现自定义视图的功能 */
+        /* 在这里可以实现自定义视图的功能 */
         Button btn_appsort = customView.findViewById(R.id.btn_appsort);
 //        Button btn_netusesort = (Button) customView.findViewById(R.id.btn_netusesort);
         Button btn_netlimitsort = customView.findViewById(R.id.btn_netlimitsort);
@@ -148,26 +150,17 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.btn_appsort:
                 mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_NAME);
                 break;
-//            case R.id.btn_netusesort:
-//                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_NET);
-//                break;
             case R.id.btn_netlimitsort:
                 mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_NET_PERMISSION);
                 break;
-//            case R.id.btn_wifisort:
-//                mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_WIFI);
-//                break;
             case R.id.btn_wifilimitsort:
                 mIAppInfoPresenter.orderAppList(IAppInfoPresenter.ORDER_BY_WIFI_PERMISSION);
                 break;
             default:
                 break;
-
-
         }
 
         if (popupWindow != null) {
@@ -176,33 +169,15 @@ public class MainApp extends Fragment implements View.OnClickListener, IAppInfoV
         }
     }
 
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//        //启动应用么?
-//        Intent intent = listAppInfo.get(position).getIntent();
-//        //startActivity(intent);
-//
-//    }
-
-
     @Override
     public void onLoadAppInfoList(BaseAdapter adapter) {
         Log.d("MainApp", "加载数据咯");
         app_listView.setAdapter(adapter);
-
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onListRefresh(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onOptionFailed(int optionId, String msg) {
-
     }
 }

@@ -3,6 +3,7 @@ package com.pencilbox.netknight.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,15 +20,15 @@ import com.pencilbox.netknight.net.BlockingPool;
 import com.pencilbox.netknight.presentor.IBlockingDomainImpl;
 import com.pencilbox.netknight.presentor.IBlockingDomainPresenter;
 
+import java.util.Objects;
+
 
 public class MainAddress extends Fragment implements IBlockingAddressView {
     private ListView listView;
     private IBlockingDomainPresenter iBlockingDomainPresenter;
-    //private List<String> listAddress;
-    //private ListAdapter listAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.address_main, container, false);
         listView = view.findViewById(R.id.list_address);
 
@@ -36,7 +37,7 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
             public void onClick(View v) {
                 AddressInputDialog dialog = new AddressInputDialog();
                 dialog.setPresenter(iBlockingDomainPresenter);
-                dialog.show(getFragmentManager(), "Dialog");
+                dialog.show(Objects.requireNonNull(getFragmentManager()), "Dialog");
             }
         });
 
@@ -78,55 +79,25 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
         });
         iBlockingDomainPresenter = new IBlockingDomainImpl(this, getActivity());
         iBlockingDomainPresenter.loadBlockingDomainList();
-        /**
-         * 将数据库中的已有记录加载进listview
-         */
-//        listView = (ListView) view.findViewById(R.id.list_address);
-//        listAddress = new ArrayList<String>();
-//        for (int i = 1; i<= org.litepal.LitePal.count(BlockName.class); i++){
-//            listAddress.add(org.litepal.LitePal.find(BlockName.class,i).getcName());
-//            listAddress.add(org.litepal.LitePal.find(BlockName.class,i).getIp());
-//        }
-//        listAdapter = new ListAdapter(this.getContext(),listAddress);
-//        listView.setAdapter(listAdapter);
 
         return view;
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
-    /*
-        @Override
-        public void onDataInputListener(String start, String end) {
-            listaddress = new ArrayList<String>();
-            address_adapter = new ListAdapter(getActivity(), listaddress);
-            listaddress.add(start);
-            listaddress.add(end);
-            listViewaddress.setAdapter(address_adapter);
-        }
-    */
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
-
     @Override
     public void onLoadBlockingAddressList(BaseAdapter adapter) {
         listView.setAdapter(adapter);
-
     }
 
     @Override
     public void onListRefresh() {
-
-    }
-
-    @Override
-    public void onOptionFailed(int optionId, String msg) {
-
     }
 }
