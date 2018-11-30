@@ -8,7 +8,7 @@
         For example:
         <dbname value="demo" ></dbname>
     -->
-    <dbname value="NetKnight" ></dbname>
+    <dbname value="NetKnight" />
 
     <!--
         Define the version of your database. Each time you want
@@ -22,7 +22,7 @@
     <!--modify app table:add pkgname,ignore column icon-->
     <!--version 4:modify traffic table:change appId string to long-->
     <!--version 5:modify app table: add isAccessVpn boolean,change uid string to int-->
-    <version value="5" ></version>
+    <version value="5" />
 
     <!--
         Define your models in the list with mapping tag, LitePal will
@@ -36,10 +36,9 @@
     -->
     <list>
 
-        <mapping class="com.pencilbox.netknight.model.App"></mapping>
-        <mapping class="com.pencilbox.netknight.model.BlockIp"></mapping>
-        <mapping class="com.pencilbox.netknight.model.BlockName"></mapping>
-        <mapping class="com.pencilbox.netknight.model.Traffic"></mapping>
+        <mapping class="com.pencilbox.netknight.model.App" />
+        <mapping class="com.pencilbox.netknight.model.BlockIp" />
+        <mapping class="com.pencilbox.netknight.model.BlockName" />
     </list>
 
     <!--
@@ -52,6 +51,6 @@
         For example:
         <storage value="external"></storage>
     -->
-    <storage value="external"></storage>
+    <storage value="external" />
 
 </litepal>
