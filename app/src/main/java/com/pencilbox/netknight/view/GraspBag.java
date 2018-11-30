@@ -3,11 +3,9 @@ package com.pencilbox.netknight.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
@@ -17,11 +15,11 @@ import com.pencilbox.netknight.R;
 import com.pencilbox.netknight.service.NetKnightService;
 
 
-public class GraspBag extends AppCompatActivity implements View.OnClickListener, IGraspBagView {
+public class GraspBag extends AppCompatActivity implements View.OnClickListener {
 
     private PopupWindow popupWindow;
     private Button mCaptureBtn;
-    
+
     private boolean isGrasp = false;
 
     @Override
@@ -157,32 +155,6 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onGraspFininished(String savePath) {
-        if (TextUtils.isEmpty(savePath)) {
-            Toast.makeText(this, "抓包失败orz", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Toast.makeText(this, "抓包成功,保存路径为:" + savePath, Toast.LENGTH_LONG).show();
-    }
-
-
-    @Override
-    public void onLoadApp(BaseAdapter baseAdapter) {
-
-    }
-
-    @Override
-    public void onOptionFailed(int typeId, String msg) {
-
-    }
-
-    @Override
-    public void onDataShowRefresh() {
-
     }
 }
 
