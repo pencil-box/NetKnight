@@ -6,81 +6,50 @@ import com.pencilbox.netknight.model.BlockName;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by pencil-box on 16/7/10.
  * 管理阻塞ip以及域名信息
  */
 public class BlockingPool {
 
+    private static final List<BlockIp> sBlockingIpList = new ArrayList<>();
+    private static final List<BlockName> sBlockingNameList = new ArrayList<>();
     //默认不阻断信息
     public static volatile boolean isBlockIp = false;
     public static volatile boolean isBlockName = false;
 
-
-    private static List<BlockIp>  sBlockingIpList;
-
-    private static List<BlockName> sBlockingNameList;
-
-    static{
-        sBlockingIpList = new ArrayList<>();
-        sBlockingNameList = new ArrayList<>();
-
+    public static void initIp() {
+        sBlockingIpList.addAll(org.litepal.LitePal.findAll(BlockIp.class));
     }
 
-
-    public static void initIp(){
-        sBlockingIpList = org.litepal.LitePal.findAll(BlockIp.class);
+    public static void initName() {
+        sBlockingNameList.addAll(org.litepal.LitePal.findAll(BlockName.class));
     }
 
-    public static void initName(){
-        sBlockingNameList = org.litepal.LitePal.findAll(BlockName.class);
+    public static void closeIp() {
+        sBlockingIpList.clear();
     }
 
-
-    public static void closeIp(){
-        sBlockingIpList = null;
-    }
-    public static void closeName(){
-        sBlockingNameList = null;
+    public static void closeName() {
+        sBlockingNameList.clear();
     }
 
-
-
-    public static ArrayList<BlockIp> getIpList(){
-
-        if(sBlockingIpList==null){
-            sBlockingIpList = org.litepal.LitePal.findAll(BlockIp.class);
+    @NonNull
+    static ArrayList<BlockIp> getIpList() {
+        if (sBlockingIpList.isEmpty()) {
+            initIp();
         }
-
 
         return (ArrayList<BlockIp>) sBlockingIpList;
     }
 
-    public static ArrayList<BlockName> getNameList(){
-        if(sBlockingNameList==null){
-            sBlockingNameList = org.litepal.LitePal.findAll(BlockName.class);
-
+    @NonNull
+    static ArrayList<BlockName> getNameList() {
+        if (sBlockingNameList.isEmpty()) {
+            initName();
         }
-
         return (ArrayList<BlockName>) sBlockingNameList;
-    }
-
-    /**
-     * 需要传入含有id号的实体类,所以要存储数据库之后再操作
-     * @param blockName
-     */
-    public static void addName(BlockName blockName){
-        sBlockingNameList.add(blockName);
-    }
-    public static void addIp(BlockIp blockIp){
-        sBlockingIpList.add(blockIp);
-    }
-
-
-    public static void removeName(int position){
-        sBlockingNameList.remove(position);
-    }
-    public static void removeIp(int position){
-        sBlockingIpList.remove(position);
     }
 }
