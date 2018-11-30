@@ -136,8 +136,6 @@ public class MainTabbed extends AppCompatActivity {
                     return new MainIp();
                 case 2:
                     return new MainAddress();
-//                case 3:
-//                    return new MainPrefer();
             }
             return null;
             //return PlaceholderFragment.newInstance(position + 1);

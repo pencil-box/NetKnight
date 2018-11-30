@@ -19,12 +19,7 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".view.DairyTabbed"
-            android:label="@string/title_activity_dairy_tabbed"
-            android:theme="@style/AppTheme">
 
-        </activity>
         <activity
             android:name=".view.MainTabbed"
             android:label="@string/appname"
@@ -46,7 +41,7 @@
 
         <receiver android:name=".receiver.NetChangeReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
