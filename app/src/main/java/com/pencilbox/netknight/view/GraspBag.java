@@ -14,20 +14,14 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.presentor.IGraspBagImpl;
-import com.pencilbox.netknight.presentor.IGraspBagPresenter;
 import com.pencilbox.netknight.service.NetKnightService;
 
 
 public class GraspBag extends AppCompatActivity implements View.OnClickListener, IGraspBagView {
 
-    private ImageButton btn_graspleft;
     private PopupWindow popupWindow;
     private Button mCaptureBtn;
-
-
-    private IGraspBagPresenter mGraspPresenter;
-
+    
     private boolean isGrasp = false;
 
     @Override
@@ -36,22 +30,13 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
         //getSupportActionBar().hide();
         setContentView(R.layout.grasp_bag);
         init();
-        mGraspPresenter = new IGraspBagImpl(this);
     }
 
     private void init() {
-
-        btn_graspleft = (ImageButton) this.findViewById(R.id.btn_grasptopleft);
-
+        ImageButton btn_graspleft = (ImageButton) this.findViewById(R.id.btn_grasptopleft);
         btn_graspleft.setOnClickListener(this);
-
-
         mCaptureBtn = (Button) findViewById(R.id.btn_capture);
-
-
-
         mCaptureBtn.setOnClickListener(this);
-
     }
 
     @Override
@@ -111,7 +96,7 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
     private void stopCapture() {
 
         //读写应该放在子线程中操作...
-        mGraspPresenter.stopGraspingBag();
+//        mGraspPresenter.stopGraspingBag();
 
     }
 
@@ -119,22 +104,16 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
      * 开始抓包咯
      */
     private boolean startCapture() {
-
-
-
-
         if (NetKnightService.isRunning) {
             Toast.makeText(this, "正在进行抓包", Toast.LENGTH_SHORT).show();
-
             //传参应该为appId
 //            PCapFilter.startCapPacket(0);
-            mGraspPresenter.startGraspingBag(-1);
+//            mGraspPresenter.startGraspingBag(-1);
             return true;
         } else {
             Toast.makeText(this, "请开启vpn服务", Toast.LENGTH_SHORT).show();
             return false;
         }
-
     }
 
 
@@ -155,13 +134,12 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
                     popupWindow.dismiss();
                     popupWindow = null;
                 }
-
                 return false;
             }
         });
 
 
-        /** 在这里可以实现自定义视图的功能 */
+        /* 在这里可以实现自定义视图的功能 */
         Button btn_wall = (Button) customView.findViewById(R.id.graspbtn_wall);
         Button btn_dariy = (Button) customView.findViewById(R.id.graspbtn_dariy);
         btn_wall.setOnClickListener(this);
@@ -183,15 +161,12 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onGraspFininished(String savePath) {
-
         if (TextUtils.isEmpty(savePath)) {
             Toast.makeText(this, "抓包失败orz", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Toast.makeText(this, "抓包成功,保存路径为:" + savePath, Toast.LENGTH_LONG).show();
-
-
     }
 
 
