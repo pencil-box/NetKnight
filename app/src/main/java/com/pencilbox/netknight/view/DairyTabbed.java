@@ -1,37 +1,28 @@
 package com.pencilbox.netknight.view;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
-import com.github.mikephil.charting.data.Entry;
 import com.pencilbox.netknight.R;
-import com.pencilbox.netknight.presentor.DairyImpl;
-import com.pencilbox.netknight.presentor.IDairyPresenter;
 
-import java.util.ArrayList;
-
-public class DairyTabbed extends AppCompatActivity implements View.OnClickListener, IDairyView {
+public class DairyTabbed extends AppCompatActivity implements View.OnClickListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private PopupWindow popupWindow;
     private ViewPager mViewPager;
-    private IDairyPresenter iDairyPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +35,6 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         TabLayout tabLayout = (TabLayout) findViewById(R.id.dariy_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        iDairyPresenter = new DairyImpl(this);
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.dariy_fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -123,63 +113,6 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onLoadDatachartList(BaseAdapter adapter) {
-
-    }
-
-    @Override
-    public void getshowDataofWifi(long wifiSize) {
-
-    }
-
-    @Override
-    public void getshowDataofCelluar(long mobileSize) {
-
-    }
-
-    @Override
-    public void getshowDataofWifiCelluar(long wificelluarSize) {
-
-    }
-
-    @Override
-    public void getDataOfWifi(ArrayList<Entry> yValue) {
-
-    }
-
-    @Override
-    public void getDataOfCelluar(ArrayList<Entry> yValue) {
-
-    }
-
-    @Override
-    public void getDataOfCelluarWifi(ArrayList<Entry> yValue) {
-
-    }
-
-    @Override
-    public void onDatachartListRefresh() {
-
-    }
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-*/
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -196,11 +129,11 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
                 case 0:
                     return new NetAppUse();
                 case 1:
-                    return new NetCellular();
+                    return new Fragment();
                 case 2:
-                    return new NetWifi();
+                    return new Fragment();
                 case 3:
-                    return new NetCellularWifi();
+                    return new Fragment();
             }
             return null;
         }
