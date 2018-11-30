@@ -84,16 +84,4 @@ public class AppUtils {
         }
     }
 
-    public static String getPackageNameByUid(Context context,int uid){
-
-
-        PackageManager pm = context.getPackageManager();
-        String[] packageName = pm.getPackagesForUid(uid);
-        if(packageName!=null&&packageName.length==1){
-            return packageName[0];
-        }
-
-        return "Null";
-    }
-
 }

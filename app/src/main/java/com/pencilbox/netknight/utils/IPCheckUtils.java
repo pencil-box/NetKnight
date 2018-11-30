@@ -8,29 +8,17 @@ import java.util.regex.Pattern;
  * 检验IP地址合法性的工具类
  */
 public class IPCheckUtils {
+    private static final String REXP = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
 
     /**
      * 判断是否为合法的IP地址
-     * @param addr
-     * @return
      */
-    public boolean isIP(String addr)
-    {
-        if(addr.length() < 7 || addr.length() > 15 || "".equals(addr))
-        {
+    public static boolean isIP(String addr) {
+        if (addr.length() < 7 || addr.length() > 15) {
             return false;
         }
-        /**
-         * 判断IP格式和范围
-         */
-        String rexp = "([1-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}";
-
-        Pattern pat = Pattern.compile(rexp);
-
+        Pattern pat = Pattern.compile(REXP);
         Matcher mat = pat.matcher(addr);
-
-        boolean ipAddress = mat.find();
-
-        return ipAddress;
+        return mat.find();
     }
 }

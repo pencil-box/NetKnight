@@ -24,7 +24,6 @@ import com.pencilbox.netknight.utils.IPCheckUtils;
 public class AddressInputDialog extends DialogFragment {
     private EditText address_start;
     private EditText address_end;
-    private IPCheckUtils ipCheckUtils = new IPCheckUtils();
     @Nullable
     private IBlockingDomainPresenter mIBlockingDomainPresenter;
 
@@ -48,7 +47,7 @@ public class AddressInputDialog extends DialogFragment {
                     Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
                 } else if (address_end.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "输入不能为空", Toast.LENGTH_LONG).show();
-                } else if (ipCheckUtils.isIP(address_end.getText().toString())) {
+                } else if (IPCheckUtils.isIP(address_end.getText().toString())) {
                     if (mIBlockingDomainPresenter != null) {
                         mIBlockingDomainPresenter.addBlockingDomain(address_start.getText().toString(),
                                 address_end.getText().toString());
