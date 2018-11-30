@@ -29,10 +29,10 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary_tabbed);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.dariy_container);
+        mViewPager = findViewById(R.id.dariy_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         init();
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.dariy_tabs);
+        TabLayout tabLayout = findViewById(R.id.dariy_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
 /*
@@ -48,7 +48,7 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
     }
 
     private void init() {
-        ImageButton btn_diarytopleft = (ImageButton) findViewById(R.id.btn_diarytopleft);
+        ImageButton btn_diarytopleft = findViewById(R.id.btn_diarytopleft);
         btn_diarytopleft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,8 +88,8 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
 
 
         /** 在这里可以实现自定义视图的功能 */
-        Button btn_wall = (Button) customView.findViewById(R.id.netbtn_wall);
-        Button btn_bag = (Button) customView.findViewById(R.id.netbtn_bag);
+        Button btn_wall = customView.findViewById(R.id.netbtn_wall);
+        Button btn_bag = customView.findViewById(R.id.netbtn_bag);
         btn_wall.setOnClickListener(this);
         btn_bag.setOnClickListener(this);
     }
@@ -127,7 +127,7 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new NetAppUse();
+                    return new Fragment();
                 case 1:
                     return new Fragment();
                 case 2:
