@@ -37,8 +37,6 @@
     <list>
 
         <mapping class="com.pencilbox.netknight.model.App"></mapping>
-        <mapping class="com.pencilbox.netknight.model.AppIp"></mapping>
-        <mapping class="com.pencilbox.netknight.model.Bag"></mapping>
         <mapping class="com.pencilbox.netknight.model.BlockIp"></mapping>
         <mapping class="com.pencilbox.netknight.model.BlockName"></mapping>
         <mapping class="com.pencilbox.netknight.model.Traffic"></mapping>
