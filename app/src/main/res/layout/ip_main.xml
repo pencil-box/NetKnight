@@ -10,17 +10,7 @@
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#fff"
-        >
-
-        <ImageButton
-            android:id="@+id/btn_iptopleft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/unfold_more" />
+        android:background="#fff">
 
         <TextView
             android:id="@+id/ipwall"
@@ -29,18 +19,18 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="防火墙"
             android:paddingRight="50dp"
+            android:text="防火墙"
             android:textSize="26sp" />
 
         <Switch
             android:id="@+id/btn_ipswitch"
             android:layout_width="100dp"
-            android:paddingRight="20dp"
-            android:checked="false"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btn_ipadd"/>
+            android:layout_toLeftOf="@+id/btn_ipadd"
+            android:checked="false"
+            android:paddingRight="20dp" />
 
 
         <ImageButton
@@ -50,8 +40,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@mipmap/plus"
-            />
+            android:background="@mipmap/plus" />
     </RelativeLayout>
 
     <LinearLayout
@@ -62,8 +51,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/text2"
@@ -74,7 +62,7 @@
                 android:text="阻断起始IP"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="22sp"></TextView>
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/text1"
@@ -85,19 +73,18 @@
                 android:text="阻断终止IP"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="22sp"></TextView>
+                android:textSize="22sp" />
         </LinearLayout>
 
         <ListView
             android:id="@+id/list_ip"
-            android:background="#53d2d1d1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:listSelector="@null"
-            android:layout_marginRight="3dp"
             android:layout_marginLeft="3dp"
-            android:paddingTop="8dp"
-            >
+            android:layout_marginRight="3dp"
+            android:background="#53d2d1d1"
+            android:listSelector="@null"
+            android:paddingTop="8dp">
 
         </ListView>
     </LinearLayout>
