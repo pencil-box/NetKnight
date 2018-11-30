@@ -13,9 +13,4 @@ public class NetKnightApp extends LitePalApplication {
         return LitePalApplication.getContext();
     }
 
-    @Override
-    public void onCreate() {
-        // LitePal.initialize(this); by extends LitePalApplication
-        super.onCreate();
-    }
 }
