@@ -20,46 +20,32 @@ public class IBlockingDomainImpl implements IBlockingDomainPresenter {
     private AddressListAdapter addressListAdapter;
 
     public IBlockingDomainImpl(IBlockingAddressView iBlockingAddressView, Context context) {
-
         this.iBlockingAddressView = iBlockingAddressView;
         mContext = context;
     }
 
     @Override
     public void addBlockingDomain(String cName, String ip) {
-
         BlockName blockName = new BlockName();
         blockName.setcName(cName);
         blockName.setIp(ip);
         if (!blockName.save()) {
             Log.e("BlockingAddressImpl", "blockingIp 保存失败");
             return;
-
         }
         listaddress.add(blockName);
         addressListAdapter.notifyDataSetChanged();
         Log.d("BlockingAddressImpl", "添加数据成功!");
-
-
         //执行完后,更新列表信息,这里持有adapter对象
         iBlockingAddressView.onListRefresh();
-
-
-    }
-
-    @Override
-    public void changeBlockingDomain(long doId, String domainName, String doIp) {
-
     }
 
     @Override
     public void deleteBlockingDomain(int id) {
-
         BlockName blockName = addressListAdapter.getItem(id);
         blockName.delete();
         listaddress.remove(id);
         addressListAdapter.notifyDataSetChanged();
-
     }
 
     @Override
