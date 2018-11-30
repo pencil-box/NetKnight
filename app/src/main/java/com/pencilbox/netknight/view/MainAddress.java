@@ -143,7 +143,6 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
 
 
         Button btn_dariy = customView.findViewById(R.id.btn_dariy);
-        Button btn_bag = customView.findViewById(R.id.btn_bag);
         btn_dariy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,19 +153,6 @@ public class MainAddress extends Fragment implements IBlockingAddressView {
                 getActivity().finish();
             }
         });
-        btn_bag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent();
-                intent1.setClass(getActivity(), GraspBag.class);
-                startActivity(intent1);
-                popupWindow.dismiss();
-                getActivity().finish();
-
-            }
-        });
-
-
     }
 
     /*

@@ -145,7 +145,6 @@ public class MainPrefer extends Fragment {
 
         /** 在这里可以实现自定义视图的功能 */
         Button btn_dariy = (Button) customView.findViewById(R.id.btn_dariy);
-        Button btn_bag = (Button) customView.findViewById(R.id.btn_bag);
         btn_dariy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,18 +155,6 @@ public class MainPrefer extends Fragment {
                 getActivity().finish();
             }
         });
-        btn_bag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent();
-                intent1.setClass(getActivity(), GraspBag.class);
-                startActivity(intent1);
-                popupWindow.dismiss();
-                getActivity().finish();
-
-            }
-        });
-
 
     }
 

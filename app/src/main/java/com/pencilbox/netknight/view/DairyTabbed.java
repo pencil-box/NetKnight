@@ -120,13 +120,6 @@ public class DairyTabbed extends AppCompatActivity implements View.OnClickListen
                 popupWindow.dismiss();
                 this.finish();
                 break;
-            case R.id.netbtn_bag:
-                Intent intent1 = new Intent();
-                startActivity(intent1.setClass(this, GraspBag.class));
-                popupWindow.dismiss();
-                this.finish();
-                break;
-
         }
     }
 
