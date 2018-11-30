@@ -2,7 +2,6 @@ package com.pencilbox.netknight.net;
 
 import android.util.Log;
 
-import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.MyLog;
 
 import java.io.IOException;
@@ -129,7 +128,6 @@ public class NetInput extends Thread {
                 tcb.tcbStatus = TCB.TCB_STATUS_LAST_ACK;
                 responsePacket.updateTCPBuffer(responseBuffer, (byte) (Packet.TCPHeader.FIN | Packet.TCPHeader.ACK), tcb.mySequenceNum, tcb.myAcknowledgementNum, 0);
                 tcb.mySequenceNum++;
-                PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
                 mOutputQueue.offer(responseBuffer);
                 MyLog.logd(this, "数据读取完毕");
                 return;
@@ -145,7 +143,6 @@ public class NetInput extends Thread {
             //之前position之后就不会移动了么,真是神奇~
             responseBuffer.position(Packet.IP4_HEADER_SIZE + Packet.TCP_HEADER_SIZE + readBytes);
         }
-        PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
         mOutputQueue.offer(responseBuffer);
     }
 
@@ -174,8 +171,6 @@ public class NetInput extends Thread {
 
         tcb.tcbStatus = TCB.TCB_STATUS_SYN_RECEIVED;
         tcb.mySequenceNum++;
-
-        PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
 
         mOutputQueue.offer(responseBuffer);
 

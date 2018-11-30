@@ -93,9 +93,6 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
      */
     private void stopCapture() {
 
-        //读写应该放在子线程中操作...
-//        mGraspPresenter.stopGraspingBag();
-
     }
 
     /**
@@ -104,9 +101,6 @@ public class GraspBag extends AppCompatActivity implements View.OnClickListener 
     private boolean startCapture() {
         if (NetKnightService.isRunning) {
             Toast.makeText(this, "正在进行抓包", Toast.LENGTH_SHORT).show();
-            //传参应该为appId
-//            PCapFilter.startCapPacket(0);
-//            mGraspPresenter.startGraspingBag(-1);
             return true;
         } else {
             Toast.makeText(this, "请开启vpn服务", Toast.LENGTH_SHORT).show();

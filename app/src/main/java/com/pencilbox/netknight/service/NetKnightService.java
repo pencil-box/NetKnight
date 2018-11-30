@@ -14,7 +14,6 @@ import com.pencilbox.netknight.net.NetOutput;
 import com.pencilbox.netknight.net.Packet;
 import com.pencilbox.netknight.net.TCB;
 import com.pencilbox.netknight.net.TCBCachePool;
-import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
 
@@ -220,8 +219,6 @@ public class NetKnightService extends VpnService implements Runnable {
 
                             buffer2Net.position(buffer2Net.limit());
                             buffer2Net.limit(buffer2Net.capacity());
-
-                            PCapFilter.filterPacket(buffer2Net, tcb.getAppId());
 
                             buffer2Net.position(curPostion);
                             buffer2Net.limit(curLimit);

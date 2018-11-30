@@ -7,7 +7,6 @@ import com.pencilbox.netknight.Constants;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.model.BlockIp;
 import com.pencilbox.netknight.model.BlockName;
-import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.receiver.NetChangeReceiver;
 import com.pencilbox.netknight.utils.MyLog;
 import com.pencilbox.netknight.utils.NetUtils;
@@ -152,23 +151,14 @@ public class NetOutput extends Thread {
         Log.d(TAG, "sendRST");
         tcb.referencePacket.updateTCPBuffer(buffer, (byte) Packet.TCPHeader.RST, 0, tcb.myAcknowledgementNum + prevPayloadSize, 0);
 
-
-        PCapFilter.filterPacket(buffer, tcb.getAppId());
-
         mOutputQueue.offer(buffer);
         TCBCachePool.closeTCB(ipAndPort);
     }
 
     /**
      * 处理冗余的SYN
-     *
-     * @param tcb
-     * @param ipAndPort
-     * @param currentPacket
-     * @param responseBuffer
      */
     private void dealDuplicatedSYN(TCB tcb, String ipAndPort, Packet currentPacket, ByteBuffer responseBuffer) {
-
         synchronized (tcb) {
             if (tcb.tcbStatus == TCB.TCB_STATUS_SYN_SENT) {
 
@@ -201,10 +191,6 @@ public class NetOutput extends Thread {
                     tcb.mySequenceNum, tcb.myAcknowledgementNum, 0);
             tcb.mySequenceNum++;
             // FIN counts as a byte
-
-            PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
-
-
         }
         TCBCachePool.closeTCB(ipAndPort);
 
@@ -304,7 +290,6 @@ public class NetOutput extends Thread {
 
         }
 
-        PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
         //ack码
         mOutputQueue.offer(responseBuffer);
 
@@ -333,7 +318,6 @@ public class NetOutput extends Thread {
         referencePacket.updateTCPBuffer(sourceBuffer, (byte) Packet.TCPHeader.SYN, referencePacket.tcpHeader.sequenceNumber,
                 referencePacket.tcpHeader.acknowledgementNumber, 0);
 
-        PCapFilter.filterPacket(sourceBuffer, passAppId);
         ByteBufferPool.release(sourceBuffer);
 
 
@@ -399,7 +383,6 @@ public class NetOutput extends Thread {
             throw new RuntimeException(e);
         }
 
-        PCapFilter.filterPacket(responseBuffer, tcb.getAppId());
         mOutputQueue.offer(responseBuffer);
 
     }
