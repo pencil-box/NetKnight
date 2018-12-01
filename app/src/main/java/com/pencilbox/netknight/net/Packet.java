@@ -1,26 +1,25 @@
 /*
-** Copyright 2015, Mohamed Naufal
-**
-** Licensed under the Apache License, Version 2.0 (the "License");
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-**
-**     http://www.apache.org/licenses/LICENSE-2.0
-**
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-*/
+ ** Copyright 2015, Mohamed Naufal
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ **
+ **     http://www.apache.org/licenses/LICENSE-2.0
+ **
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+ */
 
 package com.pencilbox.netknight.net;
 
-import com.pencilbox.netknight.utils.MyLog;
+import android.support.annotation.NonNull;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
 /**
@@ -29,32 +28,17 @@ import java.nio.ByteBuffer;
  */
 // TODO: Reduce public mutability
 public class Packet {
-    public static final int IP4_HEADER_SIZE = 20;
-    public static final int TCP_HEADER_SIZE = 20;
-    public static final int UDP_HEADER_SIZE = 8;
+    static final int IP4_HEADER_SIZE = 20;
+    static final int TCP_HEADER_SIZE = 20;
 
     //IP TCP报文头
     public IP4Header ip4Header;
     public TCPHeader tcpHeader;
-    public UDPHeader udpHeader;
     //实际的传输数据
-    public ByteBuffer backingBuffer;
-
+    ByteBuffer backingBuffer;
+    private UDPHeader udpHeader;
     private boolean isTCP;
     private boolean isUDP;
-
-    /**
-     * 获取payloadSize的大小
-     * @return
-     */
-    public int getPayloadSize(){
-        if(backingBuffer!=null){
-
-          return  backingBuffer.limit() - backingBuffer.position();
-        }
-        return 0;
-    }
-
 
     //通过ByteBuffer获取报文信息
     public Packet(ByteBuffer buffer) throws UnknownHostException {
@@ -69,6 +53,17 @@ public class Packet {
         this.backingBuffer = buffer;
     }
 
+    /**
+     * 获取payloadSize的大小
+     */
+    public int getPayloadSize() {
+        if (backingBuffer != null) {
+            return backingBuffer.limit() - backingBuffer.position();
+        }
+        return 0;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Packet{");
@@ -83,29 +78,13 @@ public class Packet {
         return sb.toString();
     }
 
-//    public String getInfo() {
-//
-////        if(backingBuffer==null){
-////            return "backingBuffer is null";
-////
-////        }
-//
-//        return "info: ip4Header" + ip4Header + " \n tcpHeader" + tcpHeader;
-//
-//    }
-
 
     public boolean isTCP() {
         return isTCP;
     }
 
-    public boolean isUDP() {
-        return isUDP;
-    }
-
-
     //调换源和目的地址
-    public void swapSourceAndDestination() {
+    void swapSourceAndDestination() {
         InetAddress newSourceAddress = ip4Header.destinationAddress;
         ip4Header.destinationAddress = ip4Header.sourceAddress;
         ip4Header.sourceAddress = newSourceAddress;
@@ -122,16 +101,12 @@ public class Packet {
     }
 
 
-
     //更新咯,position从0开始写入到40 buffer 40后的为实际的数据
-    public void updateTCPBuffer(ByteBuffer buffer, byte flags, long sequenceNum, long ackNum, int payloadSize) {
+    void updateTCPBuffer(ByteBuffer buffer, byte flags, long sequenceNum, long ackNum, int payloadSize) {
         buffer.position(0);
         fillHeader(buffer);
         //TODO 交换地址咯
 //        swapSourceAndDestination();
-//
-//        MyLog.logd(this,"##交换地址后##:");
-
 
         backingBuffer = buffer;
 
@@ -152,26 +127,6 @@ public class Packet {
         updateTCPChecksum(payloadSize);
 
         int ip4TotalLength = IP4_HEADER_SIZE + TCP_HEADER_SIZE + payloadSize;
-        backingBuffer.putShort(2, (short) ip4TotalLength);
-        ip4Header.totalLength = ip4TotalLength;
-
-        updateIP4Checksum();
-    }
-
-    public void updateUDPBuffer(ByteBuffer buffer, int payloadSize) {
-        buffer.position(0);
-        fillHeader(buffer);
-        backingBuffer = buffer;
-
-        int udpTotalLength = UDP_HEADER_SIZE + payloadSize;
-        backingBuffer.putShort(IP4_HEADER_SIZE + 4, (short) udpTotalLength);
-        udpHeader.length = udpTotalLength;
-
-        // Disable UDP checksum validation
-        backingBuffer.putShort(IP4_HEADER_SIZE + 6, (short) 0);
-        udpHeader.checksum = 0;
-
-        int ip4TotalLength = IP4_HEADER_SIZE + udpTotalLength;
         backingBuffer.putShort(2, (short) ip4TotalLength);
         ip4Header.totalLength = ip4TotalLength;
 
@@ -200,7 +155,7 @@ public class Packet {
     }
 
     private void updateTCPChecksum(int payloadSize) {
-        int sum = 0;
+        int sum;
         int tcpLength = TCP_HEADER_SIZE + payloadSize;
 
         // Calculate pseudo-header checksum
@@ -244,22 +199,72 @@ public class Packet {
     //IP4报文头
     public static class IP4Header {
         public byte version;
-        public byte IHL;
-        public int headerLength;
-        public short typeOfService;
-        public int totalLength;
-
-        public int identificationAndFlagsAndFragmentOffset;
-
-        public short TTL;
-        private short protocolNum;
-        public TransportProtocol protocol;
-        public int headerChecksum;
-
-        public InetAddress sourceAddress;
         public InetAddress destinationAddress;
+        byte IHL;
+        int headerLength;
+        short typeOfService;
+        int totalLength;
+        int identificationAndFlagsAndFragmentOffset;
+        short TTL;
+        TransportProtocol protocol;
+        int headerChecksum;
+        InetAddress sourceAddress;
+        private short protocolNum;
 
-        public int optionsAndPadding;
+        private IP4Header(ByteBuffer buffer) throws UnknownHostException {
+            byte versionAndIHL = buffer.get();
+            this.version = (byte) (versionAndIHL >> 4);
+            this.IHL = (byte) (versionAndIHL & 0x0F);
+            this.headerLength = this.IHL << 2;
+
+            this.typeOfService = BitUtils.getUnsignedByte(buffer.get());
+            this.totalLength = BitUtils.getUnsignedShort(buffer.getShort());
+
+            this.identificationAndFlagsAndFragmentOffset = buffer.getInt();
+
+            this.TTL = BitUtils.getUnsignedByte(buffer.get());
+            this.protocolNum = BitUtils.getUnsignedByte(buffer.get());
+            this.protocol = TransportProtocol.numberToEnum(protocolNum);
+            this.headerChecksum = BitUtils.getUnsignedShort(buffer.getShort());
+
+            byte[] addressBytes = new byte[4];
+            buffer.get(addressBytes, 0, 4);
+            this.sourceAddress = InetAddress.getByAddress(addressBytes);
+
+            buffer.get(addressBytes, 0, 4);
+            this.destinationAddress = InetAddress.getByAddress(addressBytes);
+        }
+
+        void fillHeader(ByteBuffer buffer) {
+            buffer.put((byte) (this.version << 4 | this.IHL));
+            buffer.put((byte) this.typeOfService);
+            buffer.putShort((short) this.totalLength);
+
+            buffer.putInt(this.identificationAndFlagsAndFragmentOffset);
+
+            buffer.put((byte) this.TTL);
+            buffer.put((byte) this.protocol.getNumber());
+            buffer.putShort((short) this.headerChecksum);
+
+            buffer.put(this.sourceAddress.getAddress());
+            buffer.put(this.destinationAddress.getAddress());
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "IP4Header{" + "version=" + version +
+                    ", IHL=" + IHL +
+                    ", typeOfService=" + typeOfService +
+                    ", totalLength=" + totalLength +
+                    ", identificationAndFlagsAndFragmentOffset=" + identificationAndFlagsAndFragmentOffset +
+                    ", TTL=" + TTL +
+                    ", protocol=" + protocolNum + ":" + protocol +
+                    ", headerChecksum=" + headerChecksum +
+                    ", sourceAddress=" + sourceAddress.getHostAddress() +
+                    ", destinationAddress=" + destinationAddress.getHostAddress() +
+                    '}';
+        }
 
         private enum TransportProtocol {
             TCP(6),
@@ -285,89 +290,28 @@ public class Packet {
                 return this.protocolNumber;
             }
         }
-
-        private IP4Header(ByteBuffer buffer) throws UnknownHostException {
-            byte versionAndIHL = buffer.get();
-            this.version = (byte) (versionAndIHL >> 4);
-            this.IHL = (byte) (versionAndIHL & 0x0F);
-            this.headerLength = this.IHL << 2;
-
-            this.typeOfService = BitUtils.getUnsignedByte(buffer.get());
-            this.totalLength = BitUtils.getUnsignedShort(buffer.getShort());
-
-            this.identificationAndFlagsAndFragmentOffset = buffer.getInt();
-
-            this.TTL = BitUtils.getUnsignedByte(buffer.get());
-            this.protocolNum = BitUtils.getUnsignedByte(buffer.get());
-            this.protocol = TransportProtocol.numberToEnum(protocolNum);
-            this.headerChecksum = BitUtils.getUnsignedShort(buffer.getShort());
-
-            byte[] addressBytes = new byte[4];
-            buffer.get(addressBytes, 0, 4);
-            this.sourceAddress = InetAddress.getByAddress(addressBytes);
-
-            buffer.get(addressBytes, 0, 4);
-            this.destinationAddress = InetAddress.getByAddress(addressBytes);
-
-            //this.optionsAndPadding = buffer.getInt();
-        }
-
-        public void fillHeader(ByteBuffer buffer) {
-            buffer.put((byte) (this.version << 4 | this.IHL));
-            buffer.put((byte) this.typeOfService);
-            buffer.putShort((short) this.totalLength);
-
-            buffer.putInt(this.identificationAndFlagsAndFragmentOffset);
-
-            buffer.put((byte) this.TTL);
-            buffer.put((byte) this.protocol.getNumber());
-            buffer.putShort((short) this.headerChecksum);
-
-            buffer.put(this.sourceAddress.getAddress());
-            buffer.put(this.destinationAddress.getAddress());
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("IP4Header{");
-            sb.append("version=").append(version);
-            sb.append(", IHL=").append(IHL);
-            sb.append(", typeOfService=").append(typeOfService);
-            sb.append(", totalLength=").append(totalLength);
-            sb.append(", identificationAndFlagsAndFragmentOffset=").append(identificationAndFlagsAndFragmentOffset);
-            sb.append(", TTL=").append(TTL);
-            sb.append(", protocol=").append(protocolNum).append(":").append(protocol);
-            sb.append(", headerChecksum=").append(headerChecksum);
-            sb.append(", sourceAddress=").append(sourceAddress.getHostAddress());
-            sb.append(", destinationAddress=").append(destinationAddress.getHostAddress());
-            sb.append('}');
-            return sb.toString();
-        }
     }
 
     public static class TCPHeader {
-        public static final int FIN = 0x01;
-        public static final int SYN = 0x02;
-        public static final int RST = 0x04;
-        public static final int PSH = 0x08;
-        public static final int ACK = 0x10;
-        public static final int URG = 0x20;
+        static final int FIN = 0x01;
+        static final int SYN = 0x02;
+        static final int RST = 0x04;
+        static final int PSH = 0x08;
+        static final int ACK = 0x10;
+        static final int URG = 0x20;
 
         public int sourcePort;
         public int destinationPort;
-
-        public long sequenceNumber;
-        public long acknowledgementNumber;
-
-        public byte dataOffsetAndReserved;
-        public int headerLength;
-        public byte flags;
         public int window;
+        long sequenceNumber;
+        long acknowledgementNumber;
+        byte dataOffsetAndReserved;
+        int headerLength;
+        byte flags;
+        int checksum;
+        int urgentPointer;
 
-        public int checksum;
-        public int urgentPointer;
-
-        public byte[] optionsAndPadding;
+        byte[] optionsAndPadding;
 
         private TCPHeader(ByteBuffer buffer) {
             this.sourcePort = BitUtils.getUnsignedShort(buffer.getShort());
@@ -391,27 +335,27 @@ public class Packet {
             }
         }
 
-        public boolean isFIN() {
+        boolean isFIN() {
             return (flags & FIN) == FIN;
         }
 
-        public boolean isSYN() {
+        boolean isSYN() {
             return (flags & SYN) == SYN;
         }
 
-        public boolean isRST() {
+        boolean isRST() {
             return (flags & RST) == RST;
         }
 
-        public boolean isPSH() {
+        boolean isPSH() {
             return (flags & PSH) == PSH;
         }
 
-        public boolean isACK() {
+        boolean isACK() {
             return (flags & ACK) == ACK;
         }
 
-        public boolean isURG() {
+        boolean isURG() {
             return (flags & URG) == URG;
         }
 
@@ -430,6 +374,7 @@ public class Packet {
             buffer.putShort((short) urgentPointer);
         }
 
+        @NonNull
         @Override
         public String toString() {
             final StringBuilder sb = new StringBuilder("TCPHeader{");
@@ -453,11 +398,10 @@ public class Packet {
     }
 
     public static class UDPHeader {
-        public int sourcePort;
-        public int destinationPort;
-
         public int length;
-        public int checksum;
+        int sourcePort;
+        int destinationPort;
+        int checksum;
 
         private UDPHeader(ByteBuffer buffer) {
             this.sourcePort = BitUtils.getUnsignedShort(buffer.getShort());
@@ -475,15 +419,14 @@ public class Packet {
             buffer.putShort((short) this.checksum);
         }
 
+        @NonNull
         @Override
         public String toString() {
-            final StringBuilder sb = new StringBuilder("UDPHeader{");
-            sb.append("sourcePort=").append(sourcePort);
-            sb.append(", destinationPort=").append(destinationPort);
-            sb.append(", length=").append(length);
-            sb.append(", checksum=").append(checksum);
-            sb.append('}');
-            return sb.toString();
+            return "UDPHeader{" + "sourcePort=" + sourcePort +
+                    ", destinationPort=" + destinationPort +
+                    ", length=" + length +
+                    ", checksum=" + checksum +
+                    '}';
         }
     }
 

@@ -271,14 +271,11 @@ public class NetOutput extends Thread {
      */
     private void initTCB(String ipAndPort, Packet referencePacket, InetAddress desAddress, int desPort, ByteBuffer responseBuffer) {
         Log.d(TAG, "initTcb ...");
-        //TODO 找到对应的uid咯
         long passAppId = filterPacket(referencePacket);
         if (passAppId == -1) {
-            //TODO 主动断开连接,拒绝访问咯
             return;
         }
 
-//        //TODO 抓包咯,这样很不妥呀,还要根据相关信息构建包orz
         ByteBuffer sourceBuffer = ByteBufferPool.acquire();
         referencePacket.updateTCPBuffer(sourceBuffer, (byte) Packet.TCPHeader.SYN, referencePacket.tcpHeader.sequenceNumber,
                 referencePacket.tcpHeader.acknowledgementNumber, 0);
@@ -304,14 +301,12 @@ public class NetOutput extends Thread {
                 tcb.tcbStatus = TCB.TCB_STATUS_SYN_RECEIVED;
                 referencePacket.updateTCPBuffer(responseBuffer, (byte) (Packet.TCPHeader.SYN | Packet.TCPHeader.ACK), tcb.mySequenceNum, tcb.myAcknowledgementNum, 0);
                 tcb.mySequenceNum++;
-                //TODO 不管it
                 mChannelSelector.wakeup();
                 tcb.selectionKey = socketChannel.register(mChannelSelector, SelectionKey.OP_READ, ipAndPort);
             } else {
                 //正在连接,发送了SYN
                 tcb.tcbStatus = TCB.TCB_STATUS_SYN_SENT;
                 mChannelSelector.wakeup();
-                //TODO 将selectionKey存储起来咯
                 tcb.selectionKey = socketChannel.register(mChannelSelector, SelectionKey.OP_CONNECT, ipAndPort);
                 Log.d(TAG, "socketChannel 注册ing");
                 ByteBufferPool.release(responseBuffer);
@@ -333,7 +328,6 @@ public class NetOutput extends Thread {
      */
 
     private long filterPacket(Packet transPacket) {
-        //TODO 根据域名拦截
         if (BlockingPool.isBlockName) {
             if (filterByDomain(transPacket.ip4Header.destinationAddress.getHostName())) {
                 Log.e(TAG, "数据包因为domainName段被拦截了");
@@ -341,7 +335,6 @@ public class NetOutput extends Thread {
             }
         }
 
-        //TODO 根据ip段拦截
         if (BlockingPool.isBlockIp) {
             if (filterByIp(transPacket.ip4Header.destinationAddress.getHostAddress())) {
                 Log.e(TAG, "数据包因为IP段被拦截了");
@@ -357,14 +350,12 @@ public class NetOutput extends Thread {
         }
         //过滤暂且没做呢
 
-        //TODO 通过UID查找appId
         List<App> appList = org.litepal.LitePal.where("uid = ?", String.valueOf(uid)).find(App.class);
         if (appList.size() != 1) {
             return -1;
         }
         Log.d(TAG, "app id 号为:" + appList.get(0).getId());
 
-        //TODO 根据类型信息进行拦截
         boolean isPass = filterByAppSetting(appList.get(0));
         if (!isPass) {
             return -1;
@@ -384,7 +375,6 @@ public class NetOutput extends Thread {
                 case Constants.ACCESS_TYPE_DISALLOW:
                     return false;
                 case Constants.ACCESS_TYPE_DISALLOW_BACK:
-                    //TODO 如何判断手机待机呢
                     break;
                 case Constants.ACCESS_TYPE_REMIND:
                     //通知有网络访问信息咯
@@ -401,7 +391,6 @@ public class NetOutput extends Thread {
                 case Constants.ACCESS_TYPE_DISALLOW:
                     return false;
                 case Constants.ACCESS_TYPE_DISALLOW_BACK:
-                    //TODO 如何判断手机待机呢
                     break;
                 case Constants.ACCESS_TYPE_REMIND:
                     //通知有网络访问信息咯
