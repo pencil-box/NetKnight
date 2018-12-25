@@ -10,12 +10,10 @@ import android.util.Log;
 import com.pencilbox.netknight.model.App;
 import com.pencilbox.netknight.net.ByteBufferPool;
 import com.pencilbox.netknight.net.NetInput;
-import com.pencilbox.netknight.net.NetNotifyThread;
 import com.pencilbox.netknight.net.NetOutput;
 import com.pencilbox.netknight.net.Packet;
 import com.pencilbox.netknight.net.TCB;
 import com.pencilbox.netknight.net.TCBCachePool;
-import com.pencilbox.netknight.pcap.PCapFilter;
 import com.pencilbox.netknight.utils.AppUtils;
 import com.pencilbox.netknight.utils.MyLog;
 
@@ -36,40 +34,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class NetKnightService extends VpnService implements Runnable {
 
 
-
-
-
-
-
-
     //VPN转发的IP地址咯
-    public static String  VPN_ADDRESS = "10.1.10.1";
-
-
+    public static String VPN_ADDRESS = "10.1.10.1";
+    public static volatile boolean isRunning = false;
+    public static volatile boolean isCalledByUser = false;
     //从虚拟网卡拿到的文件描述符
     private ParcelFileDescriptor mInterface;
-
     //来自应用的请求的数据包
     private LinkedBlockingQueue<Packet> mInputQueue;
-
     //即将发送至应用的数据包
     private LinkedBlockingQueue<ByteBuffer> mOutputQueue;
-
     //缓存的appInfo队列,请求被拦截的队列
     private LinkedBlockingQueue<App> mCacheAppInfo;
-    //网络访问通知线程
-    private NetNotifyThread mNetNotify;
-
     //网络输入输出
     private NetInput mNetInput;
     private NetOutput mNetOutput;
-
     private Selector mChannelSelector;
-
-
-    public static volatile boolean isRunning = false;
-    public static volatile boolean isCalledByUser = false;
-
 
     @Override
     public void onCreate() {
@@ -80,7 +60,7 @@ public class NetKnightService extends VpnService implements Runnable {
     }
 
     //建立vpn
-    private void setupVpn(){
+    private void setupVpn() {
 
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -99,7 +79,7 @@ public class NetKnightService extends VpnService implements Runnable {
             for (int i = 0; i < appList.size(); i++) {
                 App app = appList.get(i);
                 if (app.isAccessVpn()) {
-                    Log.d("NetKnightService","拦截应用:"+app.getName());
+                    Log.d("NetKnightService", "拦截应用:" + app.getName());
 
                     try {
                         builder = builder.addAllowedApplication(app.getPkgname());
@@ -110,9 +90,13 @@ public class NetKnightService extends VpnService implements Runnable {
                 }
 
             }
-            mInterface = builder.setSession("NetKnight").setBlocking(false).addAddress(VPN_ADDRESS,32).addRoute("0.0.0.0",0).establish();
-        }else{
-            Log.e("NetKnightService","当前版本的android 不支持vpnservice");
+            mInterface = builder.setSession("NetKnight")
+                    .setBlocking(false)
+                    .addAddress(VPN_ADDRESS, 32)
+                    .addRoute("0.0.0.0", 0)
+                    .establish();
+        } else {
+            Log.e("NetKnightService", "当前版本的android 不支持vpnservice");
         }
 
     }
@@ -120,10 +104,9 @@ public class NetKnightService extends VpnService implements Runnable {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        MyLog.logd(this,"onStartCommand");
+        MyLog.logd(this, "onStartCommand");
 
         setupVpn();
-
 
 
         try {
@@ -133,23 +116,14 @@ public class NetKnightService extends VpnService implements Runnable {
         }
 
 
-
         mCacheAppInfo = new LinkedBlockingQueue<>();
-        mNetNotify = new NetNotifyThread(this,mCacheAppInfo);
-
-
-
         mInputQueue = new LinkedBlockingQueue<>();
         mOutputQueue = new LinkedBlockingQueue<>();
 
 
-
         mNetInput = new NetInput(mOutputQueue, mChannelSelector);
         //这个传参要不要等init好再传呢
-        mNetOutput = new NetOutput(mInputQueue, mOutputQueue, this, mChannelSelector,mCacheAppInfo);
-
-
-
+        mNetOutput = new NetOutput(mInputQueue, mOutputQueue, this, mChannelSelector, mCacheAppInfo);
 
 
         //还是直接start呢?
@@ -159,14 +133,12 @@ public class NetKnightService extends VpnService implements Runnable {
 //        executorService.execute(this);
 
 //        MyLog.logd(this,fd.toString());
-        mNetNotify.start();
         mNetOutput.start();
         mNetInput.start();
         new Thread(this).start();
 
         return super.onStartCommand(intent, flags, startId);
     }
-
 
 
     @Override
@@ -191,15 +163,14 @@ public class NetKnightService extends VpnService implements Runnable {
             while (true) {
 
 
-
-                if(!isRunning){
-                    Log.d("NetKnight","isRunning is false");
-                    if(isCalledByUser){
+                if (!isRunning) {
+                    Log.d("NetKnight", "isRunning is false");
+                    if (isCalledByUser) {
 
 //                        mHandler.sendEmptyMessage(MSG_STOP_VPN_SERVICE);
 
                         close();
-                        Log.d("NetKnight","stopSelf");
+                        Log.d("NetKnight", "stopSelf");
                     }
 
                     break;
@@ -207,9 +178,9 @@ public class NetKnightService extends VpnService implements Runnable {
 
 
                 //数据发送出去了,就get 新的咯
-                if(isDataSend ) {
+                if (isDataSend) {
                     buffer2Net = ByteBufferPool.acquire();
-                }else {
+                } else {
                     //未有数据发送,据清空咯
                     buffer2Net.clear();
                 }
@@ -239,8 +210,7 @@ public class NetKnightService extends VpnService implements Runnable {
                         TCB tcb = TCBCachePool.getTCB(ipAndPort);
 
 
-
-                        if(tcb !=null){
+                        if (tcb != null) {
 
                             //方便包过滤使
                             //注意position 和 limit的位置,执行new Packet操作, position是到tcp头的位置的
@@ -250,22 +220,18 @@ public class NetKnightService extends VpnService implements Runnable {
                             buffer2Net.position(buffer2Net.limit());
                             buffer2Net.limit(buffer2Net.capacity());
 
-                            PCapFilter.filterPacket(buffer2Net,tcb.getAppId());
-
                             buffer2Net.position(curPostion);
                             buffer2Net.limit(curLimit);
                         }
 
 
-
-
                         mInputQueue.offer(packet2net);
                         isDataSend = true;
-                    }else{
-                        MyLog.logd(this,"暂时不支持其他类型数据!!");
+                    } else {
+                        MyLog.logd(this, "暂时不支持其他类型数据!!");
                         isDataSend = false;
                     }
-                }else{
+                } else {
                     //与其release 还不如直接复用
                     isDataSend = false;
 //                    ByteBufferPool.release(buffer2Net);
@@ -281,7 +247,6 @@ public class NetKnightService extends VpnService implements Runnable {
                     buffer4Net.flip();
 
 
-
                     while (buffer4Net.hasRemaining()) {
                         vpnOutput.write(buffer4Net);
                     }
@@ -290,7 +255,7 @@ public class NetKnightService extends VpnService implements Runnable {
 
 
                 //可减少内存抖动??
-                if(!isDataSend) {
+                if (!isDataSend) {
                     Thread.sleep(15);
                 }
 
@@ -314,7 +279,6 @@ public class NetKnightService extends VpnService implements Runnable {
     }
 
 
-
     /**
      * 关闭相关资源
      */
@@ -324,8 +288,6 @@ public class NetKnightService extends VpnService implements Runnable {
         isRunning = false;
         mNetInput.quit();
         mNetOutput.quit();
-        mNetNotify.quit();
-
 
         try {
             mChannelSelector.close();
@@ -335,7 +297,7 @@ public class NetKnightService extends VpnService implements Runnable {
             e.printStackTrace();
         }
 
-        MyLog.logd(this,"等待线程结束..");
+        MyLog.logd(this, "等待线程结束..");
         TCBCachePool.closeAll();
 
         mInputQueue = null;
@@ -352,12 +314,6 @@ public class NetKnightService extends VpnService implements Runnable {
 
         MyLog.logd(this, "onDestroy");
     }
-
-
-
-
-
-
 
 
 }

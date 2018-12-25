@@ -13,14 +13,4 @@ public interface IAppInfoView  {
 
     //添加,删除,修改后的,list回调,数据的更新在adapter里操作就可以
     void onListRefresh(String msg);
-
-    /**
-     * 错误信息回调
-     * @param optionId
-     * @param msg
-     */
-    void onOptionFailed(int optionId,String msg);
-
-
-
 }

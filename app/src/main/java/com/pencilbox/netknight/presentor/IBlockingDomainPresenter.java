@@ -7,8 +7,6 @@ public interface IBlockingDomainPresenter {
 
     void addBlockingDomain(String cName,String ip);
 
-    void changeBlockingDomain(long doId,String domainName,String doIp);
-
     void deleteBlockingDomain(int id);
 
     void loadBlockingDomainList();

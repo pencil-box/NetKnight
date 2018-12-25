@@ -3,13 +3,13 @@ package com.pencilbox.netknight.model;
 import android.graphics.drawable.Drawable;
 
 import org.litepal.annotation.Column;
-import org.litepal.crud.DataSupport;
+import org.litepal.crud.LitePalSupport;
 
 /**
  * Created by pencil-box on 16/6/27.
  * 应用信息表
  */
-public class App extends DataSupport{
+public class App extends LitePalSupport {
 
     private long id;
     //app的label名称
@@ -23,11 +23,14 @@ public class App extends DataSupport{
 
 
     //存储的时app icon的drawable信息
-    @Column(ignore=true)
+    @Column(ignore = true)
     private Drawable icon;
 
     //uid  userId每一个app对应的唯一uid
     private int uid;
+    //wifi类型,移动数据访问类型,具体存储什么查看Constants
+    private int wifiType;
+    private int mobileDataType;
 
     public int getUid() {
         return uid;
@@ -36,12 +39,6 @@ public class App extends DataSupport{
     public void setUid(int uid) {
         this.uid = uid;
     }
-
-
-
-    //wifi类型,移动数据访问类型,具体存储什么查看Constants
-    private int wifiType;
-    private int mobileDataType;
 
     public long getId() {
         return id;
